@@ -26,6 +26,10 @@ Console.WriteLine("#--------------------------#");
 Console.WriteLine();
 Console.WriteLine("-------------- END OF SPOILER ANALYZING --------------");
 Console.WriteLine();
-OptionsSender.SendOptions(archipOptions);
+
+StreamReader init = new StreamReader("E:\\Dev\\git\\Source\\Repos\\SpoilerArchipelagoParser\\ApplicationConsoleReader\\Ressource\\Init.txt");
+string api = init.ReadLine().Trim();
+
+OptionsSender.SendOptions(archipOptions, api);
 
 
