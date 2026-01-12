@@ -30,6 +30,22 @@ namespace NoNiDev.ApplicationConsoleReader
             foreach(var item in optionsToSend)
             {
                 Console.WriteLine($"Player {item.PlayerName}");
+                if (item.PlayerName.Contains("NONO", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    Console.WriteLine("Is this NONO ?");
+                    if (UserReader.GetUserAnswer())
+                    {
+                        item.PlayerName = "Nono";
+                    }
+                }
+                else if (item.PlayerName.Contains("NIKO", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    Console.WriteLine("Is this NIKO ?");
+                    if (UserReader.GetUserAnswer())
+                    {
+                        item.PlayerName = "Niko";
+                    }
+                }
                 Console.WriteLine("OPTIONS : ");
                 foreach (var line in item.Options)
                 {
