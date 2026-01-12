@@ -1,4 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using NoNiDev.ApplicationConsoleReader;
 using NoNiDev.SpoilerArchipelagoParser;
 
 StreamReader sr = new StreamReader("E:\\Dev\\git\\Source\\Repos\\SpoilerArchipelagoParser\\ApplicationConsoleReader\\Ressource\\SpoilerExemple.txt");
@@ -24,5 +25,7 @@ foreach(var item in archipOptions.SOHOptions)
 Console.WriteLine("#--------------------------#");
 Console.WriteLine();
 Console.WriteLine("-------------- END OF SPOILER ANALYZING --------------");
+Console.WriteLine();
+OptionsSender.SendOptions(archipOptions);
 
 
