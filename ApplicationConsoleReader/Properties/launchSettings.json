@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ApplicationConsoleReader": {
+      "commandName": "Project",
+      "commandLineArgs": "E:\\Download\\AP_09645417870430961660\\AP_09645417870430961660_Spoiler.txt"
+    }
+  }
+}

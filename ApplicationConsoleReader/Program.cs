@@ -1,15 +1,41 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using NoNiDev.ApplicationConsoleReader;
 using NoNiDev.SpoilerArchipelagoParser;
+using System.Text;
 
+string spoilerFilePath="";
+string initFilePath="";
 #if RELEASE
-Console.WriteLine("rel");
+if (args.Length < 1)
+{
+    Console.WriteLine("Missing spoiler file, please provide one");
+    Console.WriteLine("Usage : ApplicationConsoleReader.exe spoilerfile_Spoiler.txt");
+    Console.WriteLine("Exiting !!");
+    return;
+}
+spoilerFilePath = args[0];
+var files = Directory.GetFiles(Environment.CurrentDirectory);
+Console.WriteLine(Environment.CurrentDirectory);
+initFilePath = Path.Combine(Environment.CurrentDirectory, "Init.txt");
+if (!files.Contains(initFilePath))
+{
+    Console.WriteLine("init.txt file not found, creating one.");
+    Console.WriteLine("Please provide API URL : ");
+    string readLine = Console.ReadLine();
+    StreamWriter sw = new StreamWriter(initFilePath, false, Encoding.ASCII);
+    sw.WriteLine(readLine);
+    sw.Close();
+    Console.WriteLine($"{initFilePath} file created");
+}
 #else
-Console.WriteLine("Deb");
+spoilerFilePath = "E:\\Dev\\git\\Source\\Repos\\SpoilerArchipelagoParser\\ApplicationConsoleReader\\Ressource\\SpoilerExemple.txt";
+initFilePath = "E:\\Dev\\git\\Source\\Repos\\SpoilerArchipelagoParser\\ApplicationConsoleReader\\Ressource\\Init.txt";
 #endif
-StreamReader sr = new StreamReader("E:\\Dev\\git\\Source\\Repos\\SpoilerArchipelagoParser\\ApplicationConsoleReader\\Ressource\\SpoilerExemple.txt");
+Console.WriteLine($"Analyzing spoiler : {spoilerFilePath}");
+StreamReader sr = new StreamReader(spoilerFilePath);
 SpoilerArchipelagoParser spoilerReader = new();
 var archipOptions = spoilerReader.ReadSpoiler(sr);
+sr.Close();
 Console.WriteLine("-------------- SPOILER ANALYZING --------------");
 Console.WriteLine($"This archipelago contains {archipOptions.Players.Count} players for {archipOptions.Games.Count} games.");
 Console.WriteLine("#--------------------------#");
@@ -31,8 +57,9 @@ Console.WriteLine();
 Console.WriteLine("-------------- END OF SPOILER ANALYZING --------------");
 Console.WriteLine();
 
-StreamReader init = new StreamReader("E:\\Dev\\git\\Source\\Repos\\SpoilerArchipelagoParser\\ApplicationConsoleReader\\Ressource\\Init.txt");
+StreamReader init = new StreamReader(initFilePath);
 string api = init.ReadLine().Trim();
+init.Close();
 OptionsSender.SendOptions(archipOptions, api);
 
 
