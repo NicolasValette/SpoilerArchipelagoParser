@@ -11,6 +11,8 @@ if (args.Length < 1)
     Console.WriteLine("Missing spoiler file, please provide one");
     Console.WriteLine("Usage : ApplicationConsoleReader.exe spoilerfile_Spoiler.txt");
     Console.WriteLine("Exiting !!");
+    Console.WriteLine("Press any keys to quit.");
+    Console.ReadLine();
     return;
 }
 spoilerFilePath = args[0];
@@ -62,4 +64,7 @@ string api = init.ReadLine().Trim();
 init.Close();
 OptionsSender.SendOptions(archipOptions, api);
 
-
+#if RELEASE
+Console.WriteLine("Press any keys to quit.");
+Console.ReadLine();
+#endif
