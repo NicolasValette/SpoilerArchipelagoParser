@@ -103,12 +103,35 @@ namespace NoNiDev.ApplicationConsoleReader
             string jsonString = JsonSerializer.Serialize<SOHPlayerOptions>(optionToSend, options);
             using var client = new HttpClient();
             using var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
-
             var response = await client.PostAsync(api, content);
             var responseText = await response.Content.ReadAsStringAsync();
             Console.WriteLine();
            Console.WriteLine(responseText);
             
+        }
+
+        public static async Task SendPing ()
+        {
+            Console.WriteLine("API URL please : ");
+            string api = Console.ReadLine();
+            Task t = Ping(api);
+            while (!t.IsCompleted)
+            {
+                Console.Write(".");
+                Thread.Sleep(500);
+            }
+            Console.WriteLine("Pinged !");
+        }
+        private static async Task Ping (string api)
+        {
+            string jsonString = "{ \"action\": \"ping\"}";
+            using var client = new HttpClient();
+            using var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
+            var response = await client.PostAsync(api, content);
+            
+            var responseText = await response.Content.ReadAsStringAsync();
+            Console.WriteLine();
+            Console.WriteLine(responseText);
         }
     }
 }

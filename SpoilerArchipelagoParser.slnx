@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="ApplicationConsoleReader/ApplicationConsoleReader.csproj" />
+  <Project Path="ArchipelagoParser/ArchipelagoParser.csproj" Id="d02cf5ce-840c-49b9-bb0d-3c032213e6e1" />
   <Project Path="SOHParserTest/SOHParserTest.csproj" />
   <Project Path="SpoilerArchipelagoParser/SpoilerArchipelagoParser.csproj" />
 </Solution>

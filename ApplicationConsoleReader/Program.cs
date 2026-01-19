@@ -5,6 +5,25 @@ using System.Text;
 
 string spoilerFilePath="";
 string initFilePath="";
+Console.WriteLine("MENU");
+Console.WriteLine("[1] : Send Ship Of Harkinian options");
+Console.WriteLine("[2] : Ping");
+Console.WriteLine("[3] : EXIT");
+int choice = int.Parse(Console.ReadLine());
+if (choice == 2)
+{
+    OptionsSender.SendPing();
+    Console.WriteLine("Press any keys to quit.");
+    Console.ReadLine();
+    return;
+}
+else if (choice == 3)
+{
+    Console.WriteLine("Press any keys to quit.");
+    Console.ReadLine();
+    return;
+}
+
 #if RELEASE
 if (args.Length < 1)
 {
