@@ -1,0 +1,28 @@
+﻿<Window x:Class="NoNiDev.ArchipelagoParser.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NoNiDev.ArchipelagoParser.Views"
+        mc:Ignorable="d"
+        Title="Archipelago Parser" Height="540" Width="960">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Content="Spoiler ici : " Margin="0,5,0,5"/>
+        <TextBox Grid.Row="1" Margin="0,5,0,5" TextWrapping="Wrap" Text="Spoiler path" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <TabControl Grid.Row ="2" Margin="0,5,0,5">
+            <TabItem Header="RandoStats" IsEnabled="False"/>
+            <TabItem Header="SOHAR" >
+                <local:SOHARView/>
+            </TabItem>
+        </TabControl>
+
+
+    </Grid>
+
+</Window>

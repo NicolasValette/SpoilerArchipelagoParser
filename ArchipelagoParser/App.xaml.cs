@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows;
 
-namespace NoNiDev.ArchipelagoParser
+namespace NoNiDev.ArchipelagoParser.Views
 {
     /// <summary>
     /// Interaction logic for App.xaml
