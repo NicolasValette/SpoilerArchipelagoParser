@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -12,18 +14,14 @@ using System.Windows.Shapes;
 namespace NoNiDev.ArchipelagoParser.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for OpenFileButton.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class OpenFileButton : UserControl
     {
-        public MainWindow()
+        public OpenFileButton()
         {
             InitializeComponent();
-        }
-
-        private void SOHARView_Loaded(object sender, RoutedEventArgs e)
-        {
-
+            DataContext = new ViewModel.OpenFileViewModel();
         }
     }
 }

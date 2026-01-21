@@ -7,14 +7,24 @@
              xmlns:vm="clr-namespace:NoNiDev.ArchipelagoParser.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-
-    <UserControl.DataContext>
-        <vm:SOHARViewModel/>
-    </UserControl.DataContext>
-
+    <!-- d:DataContext="{d:DesignInstance Type={x:Type vm:SOHARViewModel_DesignTime}, IsDesignTimeCreatable = True}">-->
+    <!--<d:DesignProperties.DataContext>
+        <vm:SOHARViewModel_DesignTime />
+    </d:DesignProperties.DataContext>-->
+    <!--<d:UserControl.DataContext>
+        <vm:SOHARViewModel>
+            <vm:SOHARViewModel.Players>
+                "Player1"
+                "Player2"
+                "Player3"
+            </vm:SOHARViewModel.Players>
+        </vm:SOHARViewModel>
+    </d:UserControl.DataContext>-->
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -22,13 +32,23 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <ListBox Grid.Column="0" ItemsSource="{Binding Title}" />
+        <ListBox Grid.Column="0" ItemsSource="{Binding Players}" >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <local:SOHARPlayerLine HorizontalContentAlignment="Stretch" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
         <Label Content="API URL : " HorizontalAlignment="Left" Margin="19,10,0,0" Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" Width="150"/>
-        <TextBox HorizontalAlignment="Left" Height="19" Margin="19,41,0,0" Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" Text="API URL" VerticalAlignment="Top" Width="150" Grid.ColumnSpan="2"/>
+        <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
+                 Text="{Binding ApiURL}" HorizontalAlignment="Left" Height="19" Margin="19,41,0,0"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="350" />
 
-
-        <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Content="Button" HorizontalAlignment="Center" VerticalAlignment="Center" Height="39" Margin="61,40,0,0" Width="214"/>
-
+        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+            Text="{Binding RequestResponse}"
+            HorizontalAlignment="Center"/>
+        <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                Command="{Binding ButtonRC}" IsEnabled="{Binding IsEnabled}"
+                Content="Button" HorizontalAlignment="Center" VerticalAlignment="Center" Height="39" Margin="61,40,0,0" Width="214" Background="{Binding StringColor}"/>
     </Grid>
 </UserControl>

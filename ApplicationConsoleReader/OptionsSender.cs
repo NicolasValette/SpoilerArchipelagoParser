@@ -128,7 +128,7 @@ namespace NoNiDev.ApplicationConsoleReader
             using var client = new HttpClient();
             using var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
             var response = await client.PostAsync(api, content);
-            
+            //client.GetAsync()
             var responseText = await response.Content.ReadAsStringAsync();
             Console.WriteLine();
             Console.WriteLine(responseText);

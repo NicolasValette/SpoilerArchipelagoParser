@@ -54,7 +54,7 @@ initFilePath = "E:\\Dev\\git\\Source\\Repos\\SpoilerArchipelagoParser\\Applicati
 #endif
 Console.WriteLine($"Analyzing spoiler : {spoilerFilePath}");
 StreamReader sr = new StreamReader(spoilerFilePath);
-SpoilerArchipelagoParser spoilerReader = new();
+SpoilerArchipelagoReader spoilerReader = new();
 var archipOptions = spoilerReader.ReadSpoiler(sr);
 sr.Close();
 Console.WriteLine("-------------- SPOILER ANALYZING --------------");

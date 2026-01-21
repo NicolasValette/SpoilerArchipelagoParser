@@ -2,7 +2,7 @@
 
 namespace NoNiDev.SpoilerArchipelagoParser
 {
-    public class SpoilerArchipelagoParser
+    public class SpoilerArchipelagoReader
     {
         private HashSet<string> _players = new();
         private HashSet<string> _games = new();

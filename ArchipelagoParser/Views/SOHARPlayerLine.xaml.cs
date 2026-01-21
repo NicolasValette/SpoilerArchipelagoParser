@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -12,16 +14,16 @@ using System.Windows.Shapes;
 namespace NoNiDev.ArchipelagoParser.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for SPHARPlayerLine.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class SOHARPlayerLine : UserControl
     {
-        public MainWindow()
+        public SOHARPlayerLine()
         {
             InitializeComponent();
         }
 
-        private void SOHARView_Loaded(object sender, RoutedEventArgs e)
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }

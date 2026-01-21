@@ -7,5 +7,10 @@ namespace NoNiDev.SpoilerArchipelagoParser
         public HashSet<string> Players { get; set; } = playerNames;
         public HashSet<string> Games { get; set; } = games;
         public List<SOHPlayerOptions> SOHOptions{ get; set; } = sohOptions; 
+
+        public SOHPlayerOptions GetSOHOptions(string playerName)
+        {
+            return SOHOptions.Where(o => o.PlayerName == playerName).First();
+        }
     }
 }

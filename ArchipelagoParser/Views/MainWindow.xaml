@@ -10,15 +10,15 @@
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Content="Spoiler ici : " Margin="0,5,0,5"/>
-        <TextBox Grid.Row="1" Margin="0,5,0,5" TextWrapping="Wrap" Text="Spoiler path" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <!-- Row 0-->
+        <local:OpenFileButton/>
+        <!-- Row 2-->
         <TabControl Grid.Row ="2" Margin="0,5,0,5">
             <TabItem Header="RandoStats" IsEnabled="False"/>
-            <TabItem Header="SOHAR" >
-                <local:SOHARView/>
+            <TabItem Header="SOHAR" IsSelected="True">
+                <local:SOHARView Loaded="SOHARView_Loaded"/>
             </TabItem>
         </TabControl>
 

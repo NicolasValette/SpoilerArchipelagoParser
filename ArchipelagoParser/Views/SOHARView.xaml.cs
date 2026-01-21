@@ -21,7 +21,7 @@ namespace NoNiDev.ArchipelagoParser.Views
         public SOHARView()
         {
             InitializeComponent();
-            //DataContext = new ViewModel.SOHARViewModel();
+            DataContext = new ViewModel.SOHARViewModel();
         }
     }
 }

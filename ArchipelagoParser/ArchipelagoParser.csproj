@@ -13,4 +13,8 @@
     <Page Include="App.xaml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SpoilerArchipelagoParser\SpoilerArchipelagoParser.csproj" />
+  </ItemGroup>
+
 </Project>
