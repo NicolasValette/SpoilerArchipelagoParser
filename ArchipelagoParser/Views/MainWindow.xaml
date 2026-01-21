@@ -16,7 +16,9 @@
         <local:OpenFileButton/>
         <!-- Row 2-->
         <TabControl Grid.Row ="2" Margin="0,5,0,5">
-            <TabItem Header="RandoStats" IsEnabled="False"/>
+            <TabItem Header="RandoStats">
+                <local:RandoStatsView />
+            </TabItem>
             <TabItem Header="SOHAR" IsSelected="True">
                 <local:SOHARView Loaded="SOHARView_Loaded"/>
             </TabItem>
