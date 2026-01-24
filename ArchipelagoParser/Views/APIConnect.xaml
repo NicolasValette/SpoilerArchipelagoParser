@@ -3,23 +3,33 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:draw="clr-namespace:System.Drawing;assembly=System.Drawing"
              xmlns:local="clr-namespace:NoNiDev.ArchipelagoParser.Views"
+             xmlns:conv="clr-namespace:NoNiDev.ArchipelagoParser.Converter"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <conv:IconToImageSourceConverter x:Key="IconToImageSourceConverter"/>
+    </UserControl.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Label Content="API URL : " HorizontalAlignment="Left" Margin="19,10,0,0" Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" Width="150"/>
-        <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
-            Text="{Binding ApiURL}" HorizontalAlignment="Left" Height="19" Margin="19,41,0,0"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="350" />
-        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-            Text="{Binding RequestResponse}"
-            HorizontalAlignment="Center"/>
-        <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
-            Command="{Binding ButtonRC}" IsEnabled="{Binding IsEnabled}"
-            Content="Button" HorizontalAlignment="Center" VerticalAlignment="Center" Height="39" Margin="61,40,0,0" Width="214" Background="{Binding StringColor}"/>
+        <Image Grid.Row="0"
+                Source="{Binding Source={x:Static draw:SystemIcons.Warning},Converter={StaticResource IconToImageSourceConverter},Mode=OneWay}"
+               HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" />
+        <Label Grid.Row="0"
+               Content="API URL : " 
+               HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBox Grid.Row="1"
+            Text="{Binding ApiURL}" />
+        <TextBlock Grid.Row="2" 
+            Text="{Binding RequestResponse}" />
+      
     </Grid>
 </UserControl>

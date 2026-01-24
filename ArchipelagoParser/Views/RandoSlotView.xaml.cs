@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,11 +14,11 @@ using System.Windows.Shapes;
 namespace NoNiDev.ArchipelagoParser.Views
 {
     /// <summary>
-    /// Interaction logic for APIConnect.xaml
+    /// Interaction logic for RandoSlotView.xaml
     /// </summary>
-    public partial class APIConnect : UserControl
+    public partial class RandoSlotView : UserControl
     {
-        public APIConnect()
+        public RandoSlotView()
         {
             InitializeComponent();
         }

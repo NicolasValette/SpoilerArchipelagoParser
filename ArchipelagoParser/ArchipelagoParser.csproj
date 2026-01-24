@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CallAPI\CallAPI.csproj" />
     <ProjectReference Include="..\SpoilerArchipelagoParser\SpoilerArchipelagoParser.csproj" />
   </ItemGroup>
 

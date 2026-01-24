@@ -47,7 +47,7 @@
         <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
             Text="{Binding RequestResponse}"
             HorizontalAlignment="Center"/>
-        <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+        <Button Grid.Row="2" Grid.Column="0"
                 Command="{Binding ButtonRC}" IsEnabled="{Binding IsEnabled}"
                 Content="Button" HorizontalAlignment="Center" VerticalAlignment="Center" Height="39" Margin="61,40,0,0" Width="214" Background="{Binding StringColor}"/>
     </Grid>

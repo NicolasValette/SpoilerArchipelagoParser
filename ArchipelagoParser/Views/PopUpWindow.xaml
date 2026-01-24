@@ -1,0 +1,14 @@
+﻿<Window x:Class="NoNiDev.ArchipelagoParser.Views.PopUpWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NoNiDev.ArchipelagoParser.Views"
+        mc:Ignorable="d"
+        Title="PopUpWindow" Height="314" Width="594">
+    <Grid >
+        <TextBox HorizontalAlignment="Left" Height="187" Margin="91,46,0,0" TextWrapping="Wrap" Text="{Binding Message}" VerticalAlignment="Top" Width="402"/>
+        <Button Content="Close" Command="{Binding ButtonCloseCmd}" HorizontalAlignment="Left" Height="43"  VerticalAlignment="Top" Width="300" Margin="142,233,0,0"/>
+
+    </Grid>
+</Window>
