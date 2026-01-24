@@ -1,13 +1,14 @@
-﻿using NoNiDev.SpoilerArchipelagoParser.SOHOptions;
+﻿using NoNiDev.SpoilerArchipelagoParser.RandoStats;
+using NoNiDev.SpoilerArchipelagoParser.SOHOptions;
 
 namespace NoNiDev.SpoilerArchipelagoParser
 {
-    public class ArchipelagoOption(HashSet<string> playerNames, HashSet<string> games, List<SOHPlayerOptions> sohOptions, List<(string,string, string)> playerOptions)
+    public class ArchipelagoOption(HashSet<string> playerNames, HashSet<string> games, List<SOHPlayerOptions> sohOptions, RandoStat randoStats)
     {
         public HashSet<string> Players { get; set; } = playerNames;
         public HashSet<string> Games { get; set; } = games;
-        public List<(string, string, string)> PlayersOptions { get; set; } = playerOptions;
         public List<SOHPlayerOptions> SOHOptions{ get; set; } = sohOptions; 
+        public RandoStat RandoStats { get; set; } = randoStats;
 
         public SOHPlayerOptions GetSOHOptions(string playerName)
         {
