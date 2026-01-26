@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NoNiDev.ArchipelagoParser.Views"
         mc:Ignorable="d"
-        Title="PopUpWindow" Height="314" Width="594">
+        Title="PopUpWindow" Height="200" Width="300">
     <Grid >
-        <TextBox HorizontalAlignment="Left" Height="187" Margin="91,46,0,0" TextWrapping="Wrap" Text="{Binding Message}" VerticalAlignment="Top" Width="402"/>
-        <Button Content="Close" Command="{Binding ButtonCloseCmd}" HorizontalAlignment="Left" Height="43"  VerticalAlignment="Top" Width="300" Margin="142,233,0,0"/>
+        <TextBox x:Name="UserInput" HorizontalAlignment="Center" Margin="5,55,5,5" Width="200" Text="Nom du joueur" TextWrapping="Wrap"  VerticalAlignment="Top" />
+        <Button Content="Close" Click="Button_Click" ClickMode="Release" HorizontalAlignment="Center" Height="25"  VerticalAlignment="Bottom" Width="75" Margin="5,5,5,5"/>
 
     </Grid>
 </Window>

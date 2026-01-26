@@ -23,8 +23,6 @@
                 <local:SOHARView Loaded="SOHARView_Loaded"/>
             </TabItem>
         </TabControl>
-
-
     </Grid>
 
 </Window>

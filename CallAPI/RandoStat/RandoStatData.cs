@@ -9,8 +9,22 @@ namespace NoNiDev.CallAPI.RandoStat
     public enum RandoStatAction
     {
        addJoueur,
+       AddJeu,
        addArchipel,
        ping
+    }
+
+    public class RandoStatDataGeneric
+    {
+        [JsonIgnore]
+        public RandoStatAction Action { get; set; }
+        [JsonPropertyName("action")]
+        public string ActionStr => Action.ToString();
+        public PayloadGeneric Payload { get; set; }
+    }
+    public class PayloadGeneric
+    {
+        public string Name { get; set; }
     }
 
     public class RandoStatData

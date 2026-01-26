@@ -16,20 +16,13 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Image Grid.Row="0"
-                Source="{Binding Source={x:Static draw:SystemIcons.Warning},Converter={StaticResource IconToImageSourceConverter},Mode=OneWay}"
-               HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" />
-        <Label Grid.Row="0"
-               Content="API URL : " 
-               HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <TextBox Grid.Row="1"
-            Text="{Binding ApiURL}" />
-        <TextBlock Grid.Row="2" 
-            Text="{Binding RequestResponse}" />
-      
+        <StackPanel Grid.Row="0">
+
+            <Label Content="API URL : "/>
+            <TextBox Text="{Binding ApiURL}" />
+            <TextBlock Text="{Binding RequestResponse}" />
+
+        </StackPanel>
     </Grid>
 </UserControl>
