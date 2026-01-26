@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NoNiDev.ArchipelagoParser.Views"
         mc:Ignorable="d"
-        Title="Archipelago Parser" Height="540" Width="960">
+        Title="Archipelago Parser" Height="720" Width="1280">
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -19,7 +19,7 @@
             <TabItem Header="RandoStats">
                 <local:RandoStatsView />
             </TabItem>
-            <TabItem Header="SOHAR" IsSelected="True">
+            <TabItem Header="SOHAR">
                 <local:SOHARView Loaded="SOHARView_Loaded"/>
             </TabItem>
         </TabControl>

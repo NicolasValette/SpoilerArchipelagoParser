@@ -4,8 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NoNiDev.ArchipelagoParser.Views"
+             xmlns:draw="clr-namespace:System.Drawing;assembly=System.Drawing"
+             xmlns:conv="clr-namespace:NoNiDev.ArchipelagoParser.Converter"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <conv:IconToImageSourceConverter x:Key="IconToImageSource"/>
+        <conv:BooleanToCollapsedVisibilityConverter x:Key="BooleanToVisibility" />
+        <conv:BooleanToHiddenVisibilityConverter x:Key="BooleanToHiddenVisibility" />
+    </UserControl.Resources>
     <Grid HorizontalAlignment="Stretch">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -15,8 +22,10 @@
             <ColumnDefinition Width="0.2*"/>
             <ColumnDefinition Width="0.2*" />
             <ColumnDefinition Width="0.2*"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="0.2*"/>
-            <ColumnDefinition Width="0.2*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Label Grid.Column="0" 
             Content="{Binding SlotName}" 
@@ -27,12 +36,31 @@
         <Label Grid.Column="2" 
             Content="{Binding Game}" 
             HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Stretch" Margin="5"/>
+        <Image Grid.Column="3" 
+                Source="{Binding Source={x:Static draw:SystemIcons.Warning},Converter={StaticResource IconToImageSource},Mode=OneWay}" ToolTip="Le jeu n'est pas présent dans la liste"
+               HorizontalAlignment="Center" Height="15" VerticalAlignment="Center" Width="15">
+            <Image.Style>
+                <Style TargetType="{x:Type Image}">
+                    <!--style present = false-->
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsInGameList}" Value="False">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                        <!--style present = true-->
+                        <DataTrigger Binding="{Binding IsInGameList}" Value="True">
+                            <Setter Property="Visibility" Value="Hidden" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Image.Style>
+        </Image>
         <ComboBox 
-            Grid.Column="3" 
-            ItemsSource="{Binding PlayerNames}"  
+            Grid.Column="4" 
+            ItemsSource="{Binding PlayerNames}" SelectedValue="{Binding SelectedName}"
             Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Stretch" Width="150"/>
-        <Image Grid.Column="4" 
-               Source="{Binding SourceImage}" 
-               HorizontalAlignment="Center" Height="50" VerticalAlignment="Center" Width="50"/>
+        <Image Grid.Column="5" 
+        Source="{Binding Source={x:Static draw:SystemIcons.Warning},Converter={StaticResource IconToImageSource},Mode=OneWay}" ToolTip="Selectionner un joueur pour le slot"
+       HorizontalAlignment="Center" Height="15" VerticalAlignment="Center" Width="15" Visibility="{Binding IsNameSelected, Converter={StaticResource BooleanToHiddenVisibility}}"/>
+        
     </Grid>
 </UserControl>

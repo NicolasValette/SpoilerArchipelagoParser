@@ -10,7 +10,8 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <conv:IconToImageSourceConverter x:Key="IconToImageSource"/>
-        <conv:BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
+        <conv:BooleanToCollapsedVisibilityConverter x:Key="BooleanToCollapsedVisibility"/>
+        <conv:BooleanToHiddenVisibilityConverter x:Key="BooleanToHiddenVisibility"/>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -18,18 +19,17 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <!-- label requete ?<RowDefinition Height="auto" />-->
         </Grid.RowDefinitions>
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
         <!-- 0 -->
-        <local:APIConnect Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+        <local:APIConnect Grid.Row="0" 
                                       DataContext="{Binding RandoStatAPIVM}"/>
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" >
             
             <ListBox ItemsSource="{Binding Players}" HorizontalContentAlignment="Stretch">
+                
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <local:RandoSlotView HorizontalContentAlignment="Stretch" />
@@ -40,45 +40,84 @@
 
 
 
-        <!--<Button Grid.Row="2" Grid.Column="0" Command="{Binding ButtonRC}" IsEnabled="{Binding IsEnabled}"
-                Background="{Binding StringColor}">
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}">
-                                -->
-        <!-- style commun -->
-        <!--
-                                <Setter Property="Background" Value="Red"/>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
 
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsReady}" Value="False">
-                                        <Setter Property="Content">
-                                            <Setter.Value>
-                                                <Image Grid.Row="0"
-                                            Source="{Binding Source={x:Static draw:SystemIcons.Warning},Converter={StaticResource IconToImageSource},Mode=OneWay}"
-                                            HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" />
-                                            </Setter.Value>
-                                        </Setter>
-                                        -->
-        <!-- style disabled -->
-        <!--
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding IsReady}" Value="True">
-                                        <Setter Property="Content" Value="GO"/>
-                                        -->
-        <!-- style enabled -->
-        <!--
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    </Button>-->
-        <ProgressBar Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Width="250" Height="20" Margin="10,10,10,10"
-                     Minimum="0" Maximum="100" IsIndeterminate="True" Visibility="{Binding IsAPICallInPrgress, Converter={StaticResource BooleanToVisibility}}"/>
-        <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
-
-            <Button  Command="{Binding ButtonAddJoueurRC}" Content="Ajouter un joueur" Height="25" Width="150" Margin="15,15,15,15" />
-            <Button  Content="Ajouter le(s) jeu(x)" Height="25" Width="150" Margin="15,15,15,15" Visibility="{Binding IsAddJeuVisible, Converter={StaticResource BooleanToVisibility}}" />
+            <Button  Command="{Binding ButtonAddJoueurRC}" Content="Ajouter un joueur" Height="20" Width="150" Margin="15,5,15,5" />
+            <Button  Content="Ajouter le(s) jeu(x)" Height="20" Width="150" Margin="15,5,15,5" Visibility="{Binding IsAddJeuVisible, Converter={StaticResource BooleanToCollapsedVisibility}}" />
 
         </StackPanel>
+        
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Grid.Column="0"
+                   Content="Nom de l'archipel : " />
+            <TextBox Grid.Row="0" Grid.Column="1"
+                     Text="{Binding ArchipelName}" Margin="5"/>
+            <Label Grid.Row="1" Grid.Column="0"
+       Content="URL : " />
+            <TextBox Grid.Row="1" Grid.Column="1"
+         Text="{Binding URL}" Margin="5"/>
+
+        </Grid>
+        <Button Grid.Row="4" Command="{Binding ButtonRC}" IsEnabled="{Binding IsEnabled}"
+        Background="{Binding StringColor}" Height="20" Width="150" Margin="5,5,5,5" Visibility="{Binding IsReadyToAddArchipel, Converter={StaticResource BooleanToCollapsedVisibility}}">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+
+                    <!--style commun-->
+
+                    <Setter Property="Background" Value="Red"/>
+
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsReady}" Value="False">
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <Image Grid.Row="0"
+                                    Source="{Binding Source={x:Static draw:SystemIcons.Warning},Converter={StaticResource IconToImageSource},Mode=OneWay}"
+                                    HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="15" />
+                                </Setter.Value>
+                            </Setter>
+
+                            <!--style disabled-->
+
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsReady}" Value="True">
+                            <Setter Property="Content" Value="Ajouter l'archipel"/>
+
+                            <!--style enabled-->
+
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+        <StatusBar Grid.Row="5" VerticalAlignment="Bottom">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+            <StatusBarItem Grid.Column="0">
+                <TextBlock Text="{Binding StatusBarText}" Margin="5,0,5,0"/>
+            </StatusBarItem>
+            <Separator Grid.Column="1" />
+            <StatusBarItem Grid.Column="2">
+                <ProgressBar   Height="10" Width="100"
+                        Minimum="0" Maximum="100" IsIndeterminate="True" Visibility="{Binding IsAPICallInPrgress, Converter={StaticResource BooleanToCollapsedVisibility}}" />
+            </StatusBarItem>
+        </StatusBar>
     </Grid>
 </UserControl>

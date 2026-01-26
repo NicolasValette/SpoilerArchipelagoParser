@@ -22,12 +22,24 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
         public RandoStatAPIViewModel RandoStatAPIVM { get; private set; }
         private List<string> _names = new List<string>();
         private List<string> _missingGames = new List<string>();
+
+        #region Binded Properties
         public ObservableCollection<RandoSlotViewModel> Players
         {
             get => field;
             private set => field = value;
         } = new ObservableCollection<RandoSlotViewModel>();
 
+        public string StatusBarText
+        {
+            get => field;
+            set
+            {
+                field = value;
+                NotifyPropertyChanged();
+            }
+
+        }
         public string StringColor
         {
             get => field;
@@ -76,17 +88,50 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
                 NotifyPropertyChanged();
             }
         }
+        public bool IsReadyToAddArchipel
+        {
+            get => field;
+            set
+            {
+                field = value;
+                NotifyPropertyChanged();
+
+            }
+        }
+        public string ArchipelName
+        {
+            get => field;
+            set
+            {
+                field = value;
+                NotifyPropertyChanged();
+            }
+        }
+        public string URL
+        {             
+            get => field;
+            set
+            {
+                field = value;
+                NotifyPropertyChanged();
+            }
+        }
+        #endregion
+        #region Relay Commands
         public RelayCommand ButtonRC { get; }
         public RelayCommand ButtonAddJoueurRC { get; }
         public RelayCommand ButtonAddJeuxRC { get; }
+        #endregion
         public RandoStatsViewModel()
         {
+            IsReadyToAddArchipel = false;
             IsAPICallInPrgress = false;
             IsAddJeuVisible = false;
             IsReady = false;
             RandoStatAPIVM = new RandoStatAPIViewModel(APICallType.Get, () => IsReady = true);
             ButtonRC = new RelayCommand(async o => await ButtonCmd());
             ButtonAddJoueurRC = new RelayCommand(async o => await AddJoueur());
+            ButtonAddJeuxRC = new RelayCommand(async o => await AddJeux());
             StringColor = "#FFDDDDDD";
             IsEnabled = true;
             OpenFileViewModel.OnFileOpened += ReadSpoilers;
@@ -103,15 +148,21 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
                 WriteIndented = true
             };
             RandoStatAPIVM.RequestResponse = "Calling...";
-
+            List<NoNiDev.SpoilerArchipelagoParser.RandoStats.ArchippelagoSlot> slotToSent = new List<NoNiDev.SpoilerArchipelagoParser.RandoStats.ArchippelagoSlot>();
+            foreach (var item in Players)
+            {
+                SpoilerArchipelagoParser.RandoStats.ArchippelagoSlot slot = new NoNiDev.SpoilerArchipelagoParser.RandoStats.ArchippelagoSlot(item.SelectedName, item.Game, item.Checks);
+                
+                slotToSent.Add(slot);
+            }
             RandoStatData randostat = new RandoStatData
             {
                 Action = RandoStatAction.addArchipel,
                 Payload = new PayloadAddArchipel
                 {
-                    Url = "URL",
-                    Name = "Magnifigque Archipel",
-                    Slots = _option.RandoStats.Slots
+                    Url = URL,
+                    Name = ArchipelName,
+                    Slots = slotToSent
                 }
             };
 
@@ -157,6 +208,10 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
                 {
                     _missingGames.Add(item.Game);
                 }
+                else
+                {
+                    Players.Where(p => p.SlotName.CompareTo(item.Name) == 0).First().IsInGameList = true;
+                }
             }
             if (_missingGames.Count > 0)
             {
@@ -184,7 +239,7 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
                 {
                     if (Players[0].PlayerNames[i].CompareTo(name) < 0)
                     {
-                        idWhereToAdd = i+1;
+                        idWhereToAdd = i + 1;
                         break;
                     }
 
@@ -231,8 +286,10 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
             }
 
             sr.Close();
+            StatusBarText = spoilerPath + " loaded.";
             GetPlayerNamesFromSheet();
             GetGameNamesFromSheet();
+            IsReadyToAddArchipel = true;
         }
 
     }

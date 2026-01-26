@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.Eventing.Reader;
+using System.Drawing;
 using System.Text;
 
 namespace NoNiDev.ArchipelagoParser.ViewModel
@@ -49,6 +51,15 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
             }
 
         }
+        public bool IsInGameList
+        {
+            get => field;
+            set
+            {
+                field = value;
+                NotifyPropertyChanged();
+            }
+        }
         public string PlayerName
         {
             get => field;
@@ -59,9 +70,31 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
             }
 
         }
+        public bool IsNameSelected
+        {
+            get => field;
+            set
+            {
+                field = value;
+                NotifyPropertyChanged();
+            }
+        }
+        public string SelectedName
+        {
+            get => field;
+            set
+            {
+                field = value;
+                IsNameSelected = string.IsNullOrEmpty(value);
+                
+                NotifyPropertyChanged();
+            }
+        }
 
         public RandoSlotViewModel(string slot, string game, int checks)
         {
+            IsNameSelected = true;
+            IsInGameList = false;
             SlotName = slot;
             Game = game;
             Checks = checks;

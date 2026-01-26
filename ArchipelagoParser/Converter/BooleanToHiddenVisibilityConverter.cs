@@ -7,7 +7,7 @@ using System.Windows.Data;
 
 namespace NoNiDev.ArchipelagoParser.Converter
 {
-    internal class BooleanToVisibilityConverter : IValueConverter
+    internal class BooleanToHiddenVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -18,9 +18,8 @@ namespace NoNiDev.ArchipelagoParser.Converter
             }
             else
             {
-                return Visibility.Collapsed;
+                return Visibility.Hidden;
             }
-
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
