@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NoNiDev.ArchipelagoParser.Views"
+             xmlns:uc="clr-namespace:NoNiDev.ArchipelagoParser.Views.CustomUserControl"
              xmlns:vm="clr-namespace:NoNiDev.ArchipelagoParser.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -26,6 +27,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="50" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -40,15 +42,19 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <Label Content="API URL : " HorizontalAlignment="Left" Margin="19,10,0,0" Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" Width="150"/>
+        <!--<Label Content="API URL : " HorizontalAlignment="Left" Margin="19,10,0,0" Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" Width="150"/>
         <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"
                  Text="{Binding ApiURL}" HorizontalAlignment="Left" Height="19" Margin="19,41,0,0"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="350" />
 
         <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
             Text="{Binding RequestResponse}"
-            HorizontalAlignment="Center"/>
-        <Button Grid.Row="2" Grid.Column="0"
+            HorizontalAlignment="Center"/>-->
+        <local:APIConnect Grid.Row="0" Grid.Column="1"
+                              DataContext="{Binding SoharAPIVM}"/>
+        <Button Grid.Row="2" Grid.Column="0" 
                 Command="{Binding ButtonRC}" IsEnabled="{Binding IsEnabled}"
                 Content="Button" HorizontalAlignment="Center" VerticalAlignment="Center" Height="39" Margin="61,40,0,0" Width="214" Background="{Binding StringColor}"/>
+        <uc:CustomProgressBar Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
+            DataContext="{Binding SoharVM}"/>
     </Grid>
 </UserControl>

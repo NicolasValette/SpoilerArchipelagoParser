@@ -6,6 +6,7 @@ using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Windows;
 using ArchipelagoParser;
 using NoNiDev.ArchipelagoParser.Views;
 using NoNiDev.SpoilerArchipelagoParser;
@@ -16,7 +17,22 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
     public class SOHARViewModel : NotifyableViewModel
     {
         private ArchipelagoOption optionToSend;
-        public string ApiURL
+        public SoharAPIViewModel SoharAPIVM {  get; private set; }
+
+
+        public SOHARViewModel SoharVM => this;
+
+        public string StatusBarText
+        {
+                       get => field;
+            set
+            {
+                field = value;
+                NotifyPropertyChanged();
+            }
+
+        }
+        public bool IsAPICallInPrgress
         {
             get => field;
             set
@@ -24,18 +40,18 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
                 field = value;
                 NotifyPropertyChanged();
             }
-        }
 
-        public string RequestResponse
+        }
+        public string ApiCallName
         {
-            get => field;
+                       get => field;
             set
             {
                 field = value;
-                NotifyPropertyChanged(); 
+                NotifyPropertyChanged();
             }
-        }
 
+        }
         public string StringColor
         {
             get => field;
@@ -56,6 +72,15 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
             }
 
         }
+        public bool IsReady
+        {
+            get => field;
+            set
+            {
+                field = value;
+                NotifyPropertyChanged();
+            }
+        }
 
         public ObservableCollection<SOHARPlayerLineViewModel> Players
         {
@@ -65,8 +90,11 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
         public RelayCommand ButtonRC { get; }
         public SOHARViewModel()
         {
-            ApiURL = "API URL";
-            RequestResponse = "Response will be here";
+            ApiCallName = "";
+            IsAPICallInPrgress = false;
+            StatusBarText = "";
+            SoharAPIVM = new SoharAPIViewModel(APICallType.Get, () => IsReady = true);
+
             ButtonRC = new RelayCommand(async o => await ButtonCmd());
             StringColor = "#FFDDDDDD";
             IsEnabled = true;
@@ -75,32 +103,46 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
 
         private async Task ButtonCmd()
         {
-            RequestResponse = "ButtonCmd";
+           IsAPICallInPrgress = true;
             StringColor = "red";
-            RequestResponse = "Calling...";
             foreach (var item in Players)
             {
                 if (item.IsChecked)
                 {
-                    RequestResponse = "Send " + item.PlayerName;
-                    var opt = optionToSend.GetSOHOptions(item.PlayerName);
-                    opt.PlayerName = item.PlayerToSend.ToString();
-                    var options = new JsonSerializerOptions
+                    ApiCallName = "Send SOHAR Options : " + item.PlayerName;
+                    try
                     {
-                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                        WriteIndented = true
-                    };
-                    string jsonString = JsonSerializer.Serialize<SOHPlayerOptions>(opt, options);
-                    using var client = new HttpClient();
-                    using var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
-                    var response = await client.PostAsync(ApiURL, content);
-                    var responseText = await response.Content.ReadAsStringAsync();
-                    RequestResponse = "Sent";
+
+                        //   RequestResponse = "Send " + item.PlayerName;
+                        var opt = optionToSend.GetSOHOptions(item.PlayerName);
+                        opt.PlayerName = item.PlayerToSend.ToString();
+                        var options = new JsonSerializerOptions
+                        {
+                            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                            WriteIndented = true
+                        };
+                        string jsonString = JsonSerializer.Serialize<SOHPlayerOptions>(opt, options);
+                        using var client = new HttpClient();
+                        using var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
+                        var response = await client.PostAsync(SoharAPIVM.ApiURL, content);
+                        var responseText = await response.Content.ReadAsStringAsync();
+                        MessageBox.Show(responseText);
+
+                        ApiCallName = "Request Succeed";
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                        ApiCallName = "Request failed";
+                    }
+
+                  //  RequestResponse = "Sent";
                 }
             }          
             IsEnabled = true;
+            IsAPICallInPrgress = false;
             StringColor = "#FFDDDDDD";
-            RequestResponse = "Request completed successfully";
+           // RequestResponse = "Request completed successfully";
         }
 
         //Appel GET
@@ -132,7 +174,7 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
 
         private void ReadSpoilers(string spoilerPath)
         {
-            RequestResponse = "Spoiler path : " + spoilerPath;
+         // RequestResponse = "Spoiler path : " + spoilerPath;
             StreamReader sr = new StreamReader(spoilerPath);
             SpoilerArchipelagoReader spoilerReader = new();
             
@@ -145,7 +187,7 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
                 Players.Add(new SOHARPlayerLineViewModel(item.PlayerName));
 
             }
-            
+            StatusBarText = spoilerPath + " loaded.";
             sr.Close();
         }
 
