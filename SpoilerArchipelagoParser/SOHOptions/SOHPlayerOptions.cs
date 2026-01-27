@@ -11,6 +11,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.SOHOptions
         public Dictionary<string, string> Options { get; init; }
         public string Goal { get; init; }
         public int TriforcePieces { get; init; }
+        public int TriforcePercent { get; init; }
         public string Accessibility { get; init; }
         public string ItemPool { get; init; }
         #region Doors
@@ -126,6 +127,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.SOHOptions
                 Goal = "Ganon";
             }
             TriforcePieces = int.Parse(options["Triforce Hunt Pieces Total"]);
+            TriforcePercent = int.Parse(options["Triforce Hunt Pieces Required Percentage"]);
             Accessibility = options["Accessibility"];
             ItemPool = options["Item Pool"];
             #region Doors
