@@ -11,8 +11,9 @@ namespace NoNiDev.SpoilerArchipelagoParser.SOHOptions
         public string Goal { get; init; }
         public int TriforcePieces { get; init; }
         public string Accessibility { get; init; }
+        public string ItemPool { get; init; }
         #region Doors
-        
+
         public string KokiriForest { get; init; }
         public string DekuTree { get; init; }
         public string KakarikoGate { get; set; }
@@ -31,11 +32,29 @@ namespace NoNiDev.SpoilerArchipelagoParser.SOHOptions
         public int GanonBossKeyValue { get; init; }
         #endregion
         #region Dungeons
-        public bool DungeonKeyRings { get; init; }
-        public string MapsAndCompasses { get; init; }
+
+        public string MapsAndCompassesNew { get; init; }
         public string FortressCarpenters { get; init; }
+        public string SmallKey { get; init; }
+        public string GerudoFortressSmallKeys { get; init; }
+        public string BossKey { get; init; }
+
+        #endregion
+        #region KeyRings
+        public string KeyRings { get; init; }
+        public bool GerudoFortressKeyrings { get; init; }
+        public bool ForestTempleKeyrings { get; init; }
+        public bool FireTempleKeyrings { get; init; }
+        public bool WaterTempleKeyrings { get; init; }
+        public bool ShadowTempleKeyrings { get; init; }
+        public bool SpiritTempleKeyrings { get; init; }
+        public bool GanonsCastleKeyrings { get; init; }
+        public bool BottomOfTheWellKeyrings { get; init; }
+        public bool GerudoTrainingGroundsKeyrings { get; init; }
+
         #endregion
         #region Sanity
+        public string KokiriSwordsanity { get; init; }
         public string Mastersanity { get; init; }
         public string Tokensanity { get; init; }
         public string Freestandingsanity { get; init; }
@@ -67,6 +86,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.SOHOptions
         public string FishingPole { get; init; }
         public string SkeletonKey { get; init; }
         public string DungeonRewards { get; init; }
+        public string RocFeather { get; init; }
         #endregion
         #region Shops
         public bool ShuffleShops { get; init; }
@@ -88,6 +108,10 @@ namespace NoNiDev.SpoilerArchipelagoParser.SOHOptions
         public bool SunlightArrows { get; init; }
         public bool FullWallets { get; init; }
         public string InfiniteUpgrades { get; init; }
+        #region LEGACY
+        public bool DungeonKeyRings { get; init; }
+        public string MapsAndCompasses { get; init; }
+        #endregion
         public SOHPlayerOptions(string playerName, Dictionary<string, string> options)
         {
             PlayerName = playerName; Options = options;
@@ -102,7 +126,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.SOHOptions
             }
             TriforcePieces = int.Parse(options["Triforce Hunt Pieces Total"]);
             Accessibility = options["Accessibility"];
-
+            ItemPool = options["Item Pool"];
             #region Doors
 
             switch (options["Closed Forest"].ToLower())
@@ -216,9 +240,25 @@ namespace NoNiDev.SpoilerArchipelagoParser.SOHOptions
             }
             GanonTrials = options["Skip Ganon's Trials"].ToLower() == "yes" ? "All" : "None";
 
-            DungeonKeyRings = string.Compare(options["Key Rings"], "yes", true) == 0 ? true : false;
-            MapsAndCompasses = options["Maps and Compasses"].ToLower() == "shuffle" ? "Shuffled" : "Start with";
+            SmallKey = options["Small Key Shuffle"];
+            GerudoFortressSmallKeys = options["Gerudo Fortress Key Shuffle"];
+            BossKey = options["Boss Key Shuffle"];
 
+            #region Dungeons
+
+            MapsAndCompasses = options["Maps and Compasses"];
+
+            KeyRings = options["Key Rings"];
+            ForestTempleKeyrings = string.Compare(options["Forest Temple Keyring"], "yes", true) == 0 ? true : false;
+            GerudoFortressKeyrings = string.Compare(options["Gerudo Fortress Keyring"], "yes", true) == 0 ? true : false;
+            FireTempleKeyrings = string.Compare(options["Fire Temple Keyring"], "yes", true) == 0 ? true : false;
+            WaterTempleKeyrings = string.Compare(options["Water Temple Keyring"], "yes", true) == 0 ? true : false;
+            ShadowTempleKeyrings = string.Compare(options["Shadow Temple Keyring"], "yes", true) == 0 ? true : false;
+            SpiritTempleKeyrings = string.Compare(options["Spirit Temple Keyring"], "yes", true) == 0 ? true : false;
+            GanonsCastleKeyrings = string.Compare(options["Ganon's Castle Keyring"], "yes", true) == 0 ? true : false;
+            BottomOfTheWellKeyrings = string.Compare(options["Bottom of the Well Keyring"], "yes", true) == 0 ? true : false;
+            GerudoTrainingGroundsKeyrings = string.Compare(options["Gerudo Training Ground Keyring"], "yes", true) == 0 ? true : false;
+            #endregion
             switch (options["Fortress Carpenters"].ToLower())
             {
                 case "normal":
@@ -234,78 +274,84 @@ namespace NoNiDev.SpoilerArchipelagoParser.SOHOptions
 
             };
 
-            Mastersanity            = options["Shuffle Master Sword"].ToLower() == "yes" ?"On":"Off" ;
-            Tokensanity             = options["Shuffle Tokens"].ToLower() switch
+            KokiriSwordsanity = options["Shuffle Kokiri Sword"].ToLower() == "yes" ? "On" : "Off";
+            Mastersanity = options["Shuffle Master Sword"].ToLower() == "yes" ? "On" : "Off";
+            Tokensanity = options["Shuffle Tokens"].ToLower() switch
             {
                 "dungeon" => "Dungeons",
                 "all" => "Everywhere",
                 _ => options["Shuffle Tokens"]
             };
-            Potsanity               = options["Shuffle Pots"].ToLower() switch
+            Potsanity = options["Shuffle Pots"].ToLower() switch
             {
                 "dungeon" => "Dungeons",
                 _ => options["Shuffle Pots"]
             };
-            Freestandingsanity      = options["Shuffle Freestanding Items"].ToLower() switch
+            Freestandingsanity = options["Shuffle Freestanding Items"].ToLower() switch
             {
                 "dungeon" => "Dungeons",
                 "all" => "Everywhere",
                 _ => options["Shuffle Freestanding Items"]
             };
-            Cratesanity             = options["Shuffle Crates"].ToLower() switch
+            Cratesanity = options["Shuffle Crates"].ToLower() switch
             {
                 "dungeon" => "Dungeons",
                 _ => options["Shuffle Crates"]
             };
-            Grasssanity             = options["Shuffle Grass"].ToLower() switch
+            Grasssanity = options["Shuffle Grass"].ToLower() switch
             {
                 "dungeon" => "Dungeons",
                 _ => options["Shuffle Grass"]
             };
-            Scrubsanity             = options["Shuffle Scrubs"].ToLower()=="yes"?"On":"Off";
-            Fishsanity              = options["Shuffle Fish"];
-            Beehivesanity           = options["Shuffle Beehives"].ToLower() == "yes" ? "On" : "Off";
-            Cowsanity               = options["Shuffle Cows"].ToLower() == "yes" ? "On" : "Off";
-            Treesanity              = options["Shuffle Trees"].ToLower() == "yes" ? "On" : "Off";
-            Bosssanity              = options["Shuffle Boss Souls"];
-         
-            Merchantsanity          = options["Shuffle Merchants"];
-            Frogsanity              = options["Shuffle Frog Song Rupees"].ToLower() == "yes" ? "On" : "Off";
-            Ocarinasanity           = options["Shuffle Ocarina Buttons"].ToLower() == "yes" ? "On" : "Off";
-            FairysanityFountains    = options["Shuffle Fairies in Fountains"].ToLower() == "yes" ? "On" : "Off";
-            FairysanityStones       = options["Shuffle Gossip Stone Fairies"].ToLower() == "yes" ? "On" : "Off";
-            FairysanityBeans        = options["Shuffle Bean Fairies"].ToLower() == "yes" ? "On" : "Off";
-            FairysanitySongs        = options["Shuffle Fairy Spots"].ToLower() == "yes" ? "On" : "Off";
+            Scrubsanity = options["Shuffle Scrubs"].ToLower() == "yes" ? "On" : "Off";
+            Fishsanity = options["Shuffle Fish"];
+            Beehivesanity = options["Shuffle Beehives"].ToLower() == "yes" ? "On" : "Off";
+            Cowsanity = options["Shuffle Cows"].ToLower() == "yes" ? "On" : "Off";
+            Treesanity = options["Shuffle Trees"].ToLower() == "yes" ? "On" : "Off";
+            Bosssanity = options["Shuffle Boss Souls"];
 
-            ChildWallet             = options["Shuffle Child's Wallet"].ToLower() == "yes" ? "On" : "Off";
-            BronzeScale             = options["Shuffle Swim"].ToLower() == "yes" ? "On" : "Off";
-            StickBag                = options["Shuffle Deku Stick Bag"].ToLower() == "yes" ? "On" : "Off";
-            NutBag                  = options["Shuffle Deku Nut Bag"].ToLower() == "yes" ? "On" : "Off";
-            BombchuBag              = options["Bombchu Bag"].ToLower() == "yes" ? "On" : "Off";
-            WeirdEgg                = options["Shuffle Weird Egg"].ToLower() == "yes" ? "On" : "Off";
-            AdultTrade              = options["Shuffle Adult Trade Items"].ToLower() == "All Items" ? "On" : "Only Claim Check";
-            FishingPole             = options["Shuffle Fishing Pole"].ToLower() == "yes" ? "On" : "Off";
-            SkeletonKey             = options["Skeleton Key"].ToLower() == "yes" ? "On" : "Off";
-            DungeonRewards          = options["Shuffle Dungeon Rewards"].ToLower() == "yes" ? "On" : "Off";
+            Merchantsanity = options["Shuffle Merchants"];
+            Frogsanity = options["Shuffle Frog Song Rupees"].ToLower() == "yes" ? "On" : "Off";
+            Ocarinasanity = options["Shuffle Ocarina Buttons"].ToLower() == "yes" ? "On" : "Off";
+            FairysanityFountains = options["Shuffle Fairies in Fountains"].ToLower() == "yes" ? "On" : "Off";
+            FairysanityStones = options["Shuffle Gossip Stone Fairies"].ToLower() == "yes" ? "On" : "Off";
+            FairysanityBeans = options["Shuffle Bean Fairies"].ToLower() == "yes" ? "On" : "Off";
+            FairysanitySongs = options["Shuffle Fairy Spots"].ToLower() == "yes" ? "On" : "Off";
 
-            ShuffleShops            = options["Shuffle Shops"] == "Yes";
-            ShuffleShopsItemCount   = int.Parse(options["Shuffle Shops Item Amount"]);
-            ShuffleShopsMinPrice     = int.Parse(options["Shuffle Shops Minimum Price"]);
-            ShuffleShopsMaxPrice    = int.Parse(options["Shuffle Shops Maximum Price"]);
-            ScrubMinPrice           = int.Parse(options["Shuffle Scrubs Minimum Price"]);
-            ScrubMaxPrice           = int.Parse(options["Shuffle Scrubs Maximum Price"]);
+            ChildWallet = options["Shuffle Child's Wallet"].ToLower() == "yes" ? "On" : "Off";
+            BronzeScale = options["Shuffle Swim"].ToLower() == "yes" ? "On" : "Off";
+            StickBag = options["Shuffle Deku Stick Bag"].ToLower() == "yes" ? "On" : "Off";
+            NutBag = options["Shuffle Deku Nut Bag"].ToLower() == "yes" ? "On" : "Off";
+            BombchuBag = options["Bombchu Bag"];
+            WeirdEgg = options["Shuffle Weird Egg"].ToLower() == "yes" ? "On" : "Off";
+            AdultTrade = options["Shuffle Adult Trade Items"].ToLower() == "All Items" ? "On" : "Only Claim Check";
+            FishingPole = options["Shuffle Fishing Pole"].ToLower() == "yes" ? "On" : "Off";
+            SkeletonKey = options["Skeleton Key"].ToLower() == "yes" ? "On" : "Off";
+            DungeonRewards = options["Shuffle Dungeon Rewards"].ToLower() == "yes" ? "On" : "Off";
 
-            HundredTokens           = options["Shuffle 100 GS Reward"] == "Yes";
-            SkipChildZelda          = options["Skip Child Zelda"] == "Yes";
-            SkipMaskQuest           = options["Complete Mask Quest"] == "Yes";
-            SkipEponaRace           = options["Skip Epona Race"] == "Yes";
-            BigPoeCount             = int.Parse(options["Big Poe Target Count"]);
-            IceTrapsCount           = int.Parse(options["Ice Trap Count"]);
-            IceTrapsFillerPercentage= int.Parse(options["Ice Trap Filler Replacement Count"]);
-            BlueFireArrows          = options["Blue Fire Arrows"] == "Yes";
-            SunlightArrows          = options["Sunlight Arrows"] == "Yes";
-            FullWallets             = options["Full Wallets"] == "Yes";
-            InfiniteUpgrades        = options["Infinite Upgrades"];
+            ShuffleShops = options["Shuffle Shops"] == "Yes";
+            ShuffleShopsItemCount = int.Parse(options["Shuffle Shops Item Amount"]);
+            ShuffleShopsMinPrice = int.Parse(options["Shuffle Shops Minimum Price"]);
+            ShuffleShopsMaxPrice = int.Parse(options["Shuffle Shops Maximum Price"]);
+            ScrubMinPrice = int.Parse(options["Shuffle Scrubs Minimum Price"]);
+            ScrubMaxPrice = int.Parse(options["Shuffle Scrubs Maximum Price"]);
+
+            HundredTokens = options["Shuffle 100 GS Reward"] == "Yes";
+            SkipChildZelda = options["Skip Child Zelda"] == "Yes";
+            SkipMaskQuest = options["Complete Mask Quest"] == "Yes";
+            SkipEponaRace = options["Skip Epona Race"] == "Yes";
+            BigPoeCount = int.Parse(options["Big Poe Target Count"]);
+            IceTrapsCount = int.Parse(options["Ice Trap Count"]);
+            IceTrapsFillerPercentage = int.Parse(options["Ice Trap Filler Replacement Count"]);
+            BlueFireArrows = options["Blue Fire Arrows"] == "Yes";
+            SunlightArrows = options["Sunlight Arrows"] == "Yes";
+            FullWallets = options["Full Wallets"] == "Yes";
+            InfiniteUpgrades = options["Infinite Upgrades"];
+            RocFeather = options["Roc's Feather"].ToLower() == "yes" ? "On" : "Off";
+
+            #region LEGACY
+            DungeonKeyRings = false;
+            #endregion
         }
     }
 }
