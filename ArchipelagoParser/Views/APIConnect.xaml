@@ -21,7 +21,6 @@
 
             <Label Content="API URL : "/>
             <TextBox Text="{Binding ApiURL}" />
-            <TextBlock Text="{Binding RequestResponse}" />
 
         </StackPanel>
     </Grid>

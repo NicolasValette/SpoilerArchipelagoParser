@@ -17,7 +17,6 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
     class RandoStatAPIViewModel : NotifyableViewModel
     {
         private Action _readynessCallback;
-        public string ResponseText;
         private APICallType _callTYpe;
         public string ApiURL
         {
@@ -46,15 +45,9 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
         public RandoStatAPIViewModel(APICallType callTYpe, Action callback)
         {
             _readynessCallback = callback;
-            ResponseText = "";
             LoadAPIConfig();
             RequestResponse = "Response will be here";
                    _callTYpe = callTYpe;
-
-
-
-
-
         }
 
         private void LoadAPIConfig()
@@ -73,8 +66,6 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
             {
                 ApiURL = "Enter API URL";
             }
-
-           
         }
         private void SaveAPIConfig()
         {

@@ -16,6 +16,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="75" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
@@ -23,13 +24,36 @@
             <RowDefinition Height="auto" />
             <!-- label requete ?<RowDefinition Height="auto" />-->
         </Grid.RowDefinitions>
-        <!-- 0 -->
+        <!-- API -->
         <local:APIConnect Grid.Row="0" 
                                       DataContext="{Binding RandoStatAPIVM}"/>
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" >
-            
+        <!-- HEADERS -->
+        <Grid Grid.Row="1"
+            HorizontalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.2*"/>
+                <ColumnDefinition Width="75" />
+                <ColumnDefinition Width="0.2*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Content="Slot Name" HorizontalAlignment="Center" />
+            <Label Grid.Column="1" Content="Checks" HorizontalAlignment="Center" />
+            <Label Grid.Column="2" Content="Game" HorizontalAlignment="Center" />
+            <Label Grid.Column="4" Content="Joueur" HorizontalAlignment="Center" />
+        </Grid>
+
+        <!-- LISTE DES JOUEURS -->
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="2">
+
             <ListBox ItemsSource="{Binding Players}" HorizontalContentAlignment="Stretch">
-                
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <local:RandoSlotView HorizontalContentAlignment="Stretch" />
@@ -37,17 +61,14 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </ScrollViewer>
-
-
-
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
 
             <Button  Command="{Binding ButtonAddJoueurRC}" Content="Ajouter un joueur" Height="20" Width="150" Margin="15,5,15,5" />
             <Button  Content="Ajouter le(s) jeu(x)" Height="20" Width="150" Margin="15,5,15,5" Visibility="{Binding IsAddJeuVisible, Converter={StaticResource BooleanToCollapsedVisibility}}" />
 
         </StackPanel>
-        
-        <Grid Grid.Row="3">
+
+        <Grid Grid.Row="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.2*"/>
                 <ColumnDefinition Width="*"/>
@@ -66,7 +87,7 @@
          Text="{Binding URL}" Margin="5"/>
 
         </Grid>
-        <Button Grid.Row="4" Command="{Binding ButtonRC}" IsEnabled="{Binding IsEnabled}"
+        <Button Grid.Row="5" Command="{Binding ButtonRC}" IsEnabled="{Binding IsEnabled}"
         Background="{Binding StringColor}" Height="20" Width="150" Margin="5,5,5,5" Visibility="{Binding IsReadyToAddArchipel, Converter={StaticResource BooleanToCollapsedVisibility}}">
             <Button.Style>
                 <Style TargetType="{x:Type Button}">
@@ -85,20 +106,20 @@
                                 </Setter.Value>
                             </Setter>
 
-                            <!--style disabled-->
+                    <!--style disabled-->
 
                         </DataTrigger>
                         <DataTrigger Binding="{Binding IsReady}" Value="True">
                             <Setter Property="Content" Value="Ajouter l'archipel"/>
 
-                            <!--style enabled-->
+                    <!--style enabled-->
 
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </Button.Style>
         </Button>
-        <StatusBar Grid.Row="5" VerticalAlignment="Bottom">
+        <StatusBar Grid.Row="6" VerticalAlignment="Bottom">
             <StatusBar.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Grid>
@@ -106,17 +127,21 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                     </Grid>
                 </ItemsPanelTemplate>
             </StatusBar.ItemsPanel>
             <StatusBarItem Grid.Column="0">
-                <TextBlock Text="{Binding StatusBarText}" Margin="5,0,5,0"/>
+                <Label Content="{Binding StatusBarText}" Margin="5,0,5,0"/>
             </StatusBarItem>
             <Separator Grid.Column="1" />
             <StatusBarItem Grid.Column="2">
                 <ProgressBar   Height="10" Width="100"
                         Minimum="0" Maximum="100" IsIndeterminate="True" Visibility="{Binding IsAPICallInPrgress, Converter={StaticResource BooleanToCollapsedVisibility}}" />
+            </StatusBarItem>
+            <StatusBarItem Grid.Column="3">
+                <Label Content="{Binding ApiCallName}" />
             </StatusBarItem>
         </StatusBar>
     </Grid>

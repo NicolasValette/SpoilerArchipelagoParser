@@ -10,10 +10,22 @@
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <!-- Row 0-->
-        <local:OpenFileButton/>
+        <Menu Grid.Row="0">
+            <MenuItem Header="_File">
+                <MenuItem Header="Reload Spoiler" />
+                <Separator/>
+                <MenuItem Header="E_xit" Command="{Binding ExitRC}"/>
+            </MenuItem>
+            <MenuItem Header="_Help">
+                <MenuItem Header="_About" Command="{Binding AboutRC}"/>
+            </MenuItem>
+        </Menu>
+        <!-- Row 1-->
+        <local:OpenFileButton Grid.Row="1"/>
         <!-- Row 2-->
         <TabControl Grid.Row ="2" Margin="0,5,0,5">
             <TabItem Header="RandoStats">

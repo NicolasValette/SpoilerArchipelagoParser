@@ -13,9 +13,15 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Button Content="Open Spoiler" 
+        <Button Grid.Column="1"
+            Content="Open Spoiler" 
                 Command="{Binding ButtonCommand}"
                 HorizontalAlignment="center" VerticalAlignment="center"/>
+        <Label Grid.Column="2" 
+            Content="{Binding SpoilerName}"
+               HorizontalAlignment="Left" VerticalAlignment="center" Margin="5"/>
     </Grid>
 </UserControl>

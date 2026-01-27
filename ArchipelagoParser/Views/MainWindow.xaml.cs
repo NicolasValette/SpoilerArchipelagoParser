@@ -19,6 +19,7 @@ namespace NoNiDev.ArchipelagoParser.Views
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new ViewModel.MainWindowViewModel();
         }
 
         private void SOHARView_Loaded(object sender, RoutedEventArgs e)

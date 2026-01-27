@@ -9,7 +9,8 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
 {
     class RandoSlotViewModel : NotifyableViewModel
     {
-      
+        private Func<string, bool> _gameListContainsGameName;
+        #region Properties
         public ObservableCollection<string> PlayerNames
         {
             get => field;
@@ -90,15 +91,45 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
                 NotifyPropertyChanged();
             }
         }
-
-        public RandoSlotViewModel(string slot, string game, int checks)
+        public bool IsManual
         {
+            get => field;
+            set
+            {
+                field = value;
+                if (field)
+                    IsInGameList = true;
+                else
+                {
+                    IsInGameList = false;
+                }
+                NotifyPropertyChanged();
+            }
+        }
+        public bool IsManualCheckboxEnabled
+        {
+            get => field;
+            set
+            {
+                field = value;
+                NotifyPropertyChanged();
+            }
+        }
+        public string IsManualCheckboxStr => IsManualCheckboxEnabled.ToString();
+        #endregion
+
+        public RandoSlotViewModel(string slot, string game, int checks, Func<string, bool> gameListContainsGameName)
+        {
+            IsManual = false;
+            IsManualCheckboxEnabled = false;
             IsNameSelected = true;
             IsInGameList = false;
             SlotName = slot;
             Game = game;
             Checks = checks;
-            
+            _gameListContainsGameName = gameListContainsGameName;
+
+
             RandoStatsViewModel.OnNameListUpdated += UpdateNamesList;
         }
         public void UpdateNamesList(List<string> names)

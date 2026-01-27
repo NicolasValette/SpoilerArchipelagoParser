@@ -16,6 +16,7 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
 {
     class RandoStatsViewModel : NotifyableViewModel
     {
+        public const string MANUAL_GAME_NAME = "Manual";
         public static event Action<List<string>> OnNameListUpdated;
         private ArchipelagoOption _option;
 
@@ -30,6 +31,15 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
             private set => field = value;
         } = new ObservableCollection<RandoSlotViewModel>();
 
+        public string ApiCallName
+        {
+            get => field;
+            set
+            {
+                field = value;
+                NotifyPropertyChanged();
+            }
+        }
         public string StatusBarText
         {
             get => field;
@@ -108,7 +118,7 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
             }
         }
         public string URL
-        {             
+        {
             get => field;
             set
             {
@@ -124,6 +134,7 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
         #endregion
         public RandoStatsViewModel()
         {
+            ApiCallName = "";
             IsReadyToAddArchipel = false;
             IsAPICallInPrgress = false;
             IsAddJeuVisible = false;
@@ -140,6 +151,8 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
 
         private async Task ButtonCmd()
         {
+            IsAPICallInPrgress = true;
+            ApiCallName = "Calling Add Archipel";
             RandoStatAPIVM.RequestResponse = "ButtonCmd";
             StringColor = "red";
             var options = new JsonSerializerOptions
@@ -151,8 +164,13 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
             List<NoNiDev.SpoilerArchipelagoParser.RandoStats.ArchippelagoSlot> slotToSent = new List<NoNiDev.SpoilerArchipelagoParser.RandoStats.ArchippelagoSlot>();
             foreach (var item in Players)
             {
+                if (item.IsManual)
+                {
+                    _missingGames.Remove(item.Game);
+                    item.Game = MANUAL_GAME_NAME;
+                }
                 SpoilerArchipelagoParser.RandoStats.ArchippelagoSlot slot = new NoNiDev.SpoilerArchipelagoParser.RandoStats.ArchippelagoSlot(item.SelectedName, item.Game, item.Checks);
-                
+
                 slotToSent.Add(slot);
             }
             RandoStatData randostat = new RandoStatData
@@ -165,14 +183,33 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
                     Slots = slotToSent
                 }
             };
-
-
-            APIToRandoStat.InitURL(RandoStatAPIVM.ApiURL);
-            var response = await APIToRandoStat.AddArchipel(randostat);
-            MessageBox.Show(response);
+            try
+            {
+                APIToRandoStat.InitURL(RandoStatAPIVM.ApiURL);
+                var response = await APIToRandoStat.AddArchipel(randostat);
+                MessageBox.Show(Application.Current.MainWindow, response);
+                ApiCallName = "Request suceed";
+            }
+            catch (UriFormatException e)
+            {
+                MessageBox.Show("L'URL de l'API est invalide : " + e.Message);
+                ApiCallName = "Request failed";
+            }
+            catch (HttpRequestException e)
+            {
+                MessageBox.Show("La requete HTTP n'a pas abouti : " + e.Message);
+                ApiCallName = "Request failed";
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Une erreur est survenue : " + e.Message);
+                ApiCallName = "Request failed";
+            }
             IsEnabled = true;
             StringColor = "#FFDDDDDD";
             RandoStatAPIVM.RequestResponse = "Request completed successfully";
+            IsAPICallInPrgress = false;
+            
         }
 
         private async void GetPlayerNamesFromSheet()
@@ -181,6 +218,7 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
             try
             {
                 IsAPICallInPrgress = true;
+                ApiCallName = "Calling Get JOueurs";
                 using var client = new HttpClient();
                 var response = await client.GetAsync(url);
                 var responseText = await response.Content.ReadAsStringAsync();
@@ -190,15 +228,18 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
                     OnNameListUpdated?.Invoke(players.ToList());
                 }
                 IsAPICallInPrgress = false;
+                ApiCallName = "Request suceed";
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
+                ApiCallName = "Request failed";
             }
         }
         private async void GetGameNamesFromSheet()
         {
             IsAPICallInPrgress = true;
+            ApiCallName = "Calling Get Jeux";
             APIToRandoStat.InitURL(RandoStatAPIVM.ApiURL);
             string[] gameNames = await APIToRandoStat.GetGameNames();
             _missingGames.Clear();
@@ -218,17 +259,38 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
                 IsAddJeuVisible = true;
             }
             IsAPICallInPrgress = false;
+            ApiCallName = "Request suceed";
         }
 
         private async Task AddJoueur()
         {
+            ApiCallName = "Calling Add Joueur";
             PopUpWindow wind = new PopUpWindow();
             wind.ShowDialog();
             IsAPICallInPrgress = true;
             string name = wind.UserInput.Text;
-            APIToRandoStat.InitURL(RandoStatAPIVM.ApiURL);
+            try
+            {
+                APIToRandoStat.InitURL(RandoStatAPIVM.ApiURL);
 
-            var response = await APIToRandoStat.AddPlayer(name);
+                var response = await APIToRandoStat.AddPlayer(name);
+                ApiCallName = "Request suceed";
+            }
+            catch (UriFormatException e)
+            {
+                MessageBox.Show("L'URL de l'API est invalide : " + e.Message);
+                ApiCallName = "Request failed";
+            }
+            catch (HttpRequestException e)
+            {
+                MessageBox.Show("La requete HTTP n'a pas abouti : " + e.Message);
+                ApiCallName = "Request failed";
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Une erreur est survenue : " + e.Message);
+                ApiCallName = "Request failed";
+            }
 
             IsAddJeuVisible = false;
             int idWhereToAdd = -1;
@@ -255,18 +317,43 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
         }
         private async Task AddJeux()
         {
+            ApiCallName = "Calling Add Jeux";
             IsAPICallInPrgress = true;
             var result = MessageBox.Show("Ajout des jeux manquants : " + string.Join(", ", _missingGames), "Ajout de jeux", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
-                APIToRandoStat.InitURL(RandoStatAPIVM.ApiURL);
-                foreach (var game in _missingGames)
+                try
                 {
-                    var response = await APIToRandoStat.AddGame(game);
+
+                    APIToRandoStat.InitURL(RandoStatAPIVM.ApiURL);
+                    foreach (var game in _missingGames)
+                    {
+                        var response = await APIToRandoStat.AddGame(game);
+                    }
+                    ApiCallName = "Request suceed";
+                }
+                catch (UriFormatException e)
+                {
+                    MessageBox.Show("L'URL de l'API est invalide : " + e.Message);
+                    ApiCallName = "Request failed";
+                }
+                catch (HttpRequestException e)
+                {
+                    MessageBox.Show("La requete HTTP n'a pas abouti : " + e.Message);
+                    ApiCallName = "Request failed";
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Une erreur est survenue : " + e.Message);
+                    ApiCallName = "Request failed";
                 }
                 IsAddJeuVisible = false;
             }
             IsAPICallInPrgress = false;
+        }
+        public bool GameListContainsGameName(string gameName)
+        {
+            return !_missingGames.Contains(gameName);
         }
         private void ReadSpoilers(string spoilerPath)
         {
@@ -280,15 +367,27 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
             foreach (var item in _option.RandoStats.Slots)
             {
                 //Players.Add(item.PlayerName);
-                var slot = new RandoSlotViewModel(item.Name, item.Game, item.LocationCount);
+                var slot = new RandoSlotViewModel(item.Name, item.Game, item.LocationCount, GameListContainsGameName);
+                if (item.Game.Contains("MANUAL",StringComparison.InvariantCultureIgnoreCase))
+                {
+                    slot.IsManualCheckboxEnabled = true;
+                }
                 Players.Add(slot);
 
             }
 
             sr.Close();
             StatusBarText = spoilerPath + " loaded.";
-            GetPlayerNamesFromSheet();
-            GetGameNamesFromSheet();
+            try
+            {
+                GetPlayerNamesFromSheet();
+                GetGameNamesFromSheet();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erreur lors de la récupération des données depuis la feuille Google : " + ex.Message);
+                ApiCallName = "Request failed";
+            }
             IsReadyToAddArchipel = true;
         }
 

@@ -1,17 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using Microsoft.Win32;
 
 namespace NoNiDev.ArchipelagoParser.ViewModel
 {
-    public class OpenFileViewModel
+    public class OpenFileViewModel : NotifyableViewModel
     {
         public static event Action <string>? OnFileOpened;
+        public string SpoilerName
+        {
+            get; 
+            set
+            {
+                field = value;
+                NotifyPropertyChanged();
+            }
+        }
         public RelayCommand ButtonCommand { get; }
 
         public OpenFileViewModel()
             {
+            SpoilerName = "";
             ButtonCommand = new RelayCommand(o => OpenFileWindow());
         }
 
@@ -32,6 +43,7 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
                 // Open document
                 string filename = dialog.FileName;
                 OnFileOpened?.Invoke(filename);
+                SpoilerName = Path.GetFileName(filename);
             }
         }
     }
