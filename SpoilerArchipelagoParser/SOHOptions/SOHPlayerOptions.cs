@@ -6,6 +6,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.SOHOptions
     {
         [JsonPropertyName("joueur")]
         public string PlayerName { get; set; }
+        public DateTime Date { get; set; }
         [JsonIgnore]
         public Dictionary<string, string> Options { get; init; }
         public string Goal { get; init; }
@@ -115,7 +116,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.SOHOptions
         public SOHPlayerOptions(string playerName, Dictionary<string, string> options)
         {
             PlayerName = playerName; Options = options;
-
+            Date = DateTime.Now;
             if (string.Compare(options["Triforce Hunt"], "Yes", true) == 0)
             {
                 Goal = "Triforce Hunt";
