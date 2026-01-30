@@ -18,8 +18,9 @@ namespace NoNiDev.SpoilerArchipelagoParser.Attributes
             _enumType = enumType;
         }
 
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
+           
             if (value is string str)
             {
                 if (Enum.GetNames(_enumType).Any(n => n.Equals(str, StringComparison.OrdinalIgnoreCase)))
