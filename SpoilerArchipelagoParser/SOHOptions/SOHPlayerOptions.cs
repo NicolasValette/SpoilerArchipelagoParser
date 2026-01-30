@@ -1,4 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿using NoNiDev.SpoilerArchipelagoParser.Attributes;
+using NoNiDev.SpoilerArchipelagoParser.Enums;
+using System.Text.Json.Serialization;
 
 namespace NoNiDev.SpoilerArchipelagoParser.SOHOptions
 {
@@ -23,6 +25,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.SOHOptions
         public string ZoraFountain { get; init; }
         public string JabuJabuMouth { get; init; }
         public string OverworldDoors { get; init; }
+        [RestrictValues(typeof(EOpenClosed))]
         public string SleepingWaterfall { get; set; }
         #endregion
         #region Game Requirements

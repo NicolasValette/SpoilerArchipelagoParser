@@ -1,5 +1,6 @@
 ﻿using NoNiDev.SpoilerArchipelagoParser.RandoStats;
 using NoNiDev.SpoilerArchipelagoParser.SOHOptions;
+using System.ComponentModel.DataAnnotations;
 
 namespace NoNiDev.SpoilerArchipelagoParser
 {
@@ -66,7 +67,17 @@ namespace NoNiDev.SpoilerArchipelagoParser
             {
                 Dictionary<string, string> options = ReadSOHOptions(spoilerFile);
                 SOHPlayerOptions sohOptions = new SOHPlayerOptions(playerName, options);
-                return sohOptions;
+                var context = new ValidationContext(sohOptions);
+                var errors = new List<ValidationResult>();
+                if (Validator.TryValidateObject(sohOptions, context, errors, true))
+                {
+                    return sohOptions;
+                }
+                else
+                {
+                    string errorMessages = string.Join("; ", errors.Select(e => e.ErrorMessage));
+                    throw new ValidationException($"SOH Options validation failed for player {playerName}: {errorMessages}");
+                }
             }
             
             return null;
