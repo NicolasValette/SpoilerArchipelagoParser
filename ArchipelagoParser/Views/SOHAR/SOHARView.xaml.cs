@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace NoNiDev.ArchipelagoParser.Views
+namespace NoNiDev.ArchipelagoParser.Views.SOHAR
 {
     /// <summary>
     /// Interaction logic for SOHARView.xaml
