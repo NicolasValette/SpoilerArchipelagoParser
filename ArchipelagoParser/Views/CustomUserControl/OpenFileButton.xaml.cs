@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using NoNiDev.ArchipelagoParser.ViewModel.CustomUserControl;
+using System.Windows.Controls;
 
 namespace NoNiDev.ArchipelagoParser.Views.CustomUserControl
 {
@@ -10,7 +11,7 @@ namespace NoNiDev.ArchipelagoParser.Views.CustomUserControl
         public OpenFileButton()
         {
             InitializeComponent();
-            DataContext = new ViewModel.OpenFileViewModel();
+            DataContext = new OpenFileViewModel();
         }
     }
 }

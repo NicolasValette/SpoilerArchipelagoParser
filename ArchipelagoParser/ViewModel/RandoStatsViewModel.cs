@@ -3,6 +3,7 @@ using System.IO;
 using System.Net.Http;
 using System.Text.Json;
 using System.Windows;
+using NoNiDev.ArchipelagoParser.ViewModel.CustomUserControl;
 using NoNiDev.ArchipelagoParser.Views.CustomWindows;
 using NoNiDev.CallAPI.RandoStat;
 using NoNiDev.SpoilerArchipelagoParser;
