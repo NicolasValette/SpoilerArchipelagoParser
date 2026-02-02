@@ -11,11 +11,12 @@ namespace SOHParserTest
         }
 
         [Test]
-        public void Test1()
+        public void ReadSpoilerTest()
         {
 
             var stream = new StreamReader("E:\\Dev\\git\\Source\\Repos\\SpoilerArchipelagoParser\\SOHParserTest\\Ressource\\SpoilerExemple.txt");
-
+            SpoilerArchipelagoReader spoilerReader = new();
+            var option = spoilerReader.ReadSpoiler(stream);
             
 
 

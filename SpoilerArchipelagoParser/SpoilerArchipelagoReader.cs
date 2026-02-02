@@ -1,18 +1,41 @@
-﻿using NoNiDev.SpoilerArchipelagoParser.RandoStats;
-using NoNiDev.SpoilerArchipelagoParser.SOHOptions;
+﻿using NoNiDev.SpoilerArchipelagoParser.Attributes;
+using NoNiDev.SpoilerArchipelagoParser.Options;
+using NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions;
+using NoNiDev.SpoilerArchipelagoParser.RandoStats;
 using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 
 namespace NoNiDev.SpoilerArchipelagoParser
 {
     public class SpoilerArchipelagoReader
     {
-        private HashSet<string> _players = new();
-        private HashSet<string> _games = new();
-        private List<ArchippelagoSlot> _options = new();
+        private HashSet<string> _players = [];
+        private HashSet<string> _games = [];
+        private List<ArchippelagoSlot> _options = [];
 
+        private Dictionary<string, Type> _gameType = [];
+
+        public SpoilerArchipelagoReader()
+        {
+            var types = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.IsSubclassOf(typeof(GameOptions)));
+            foreach (var type in types)
+            {
+                var attribute = type.GetCustomAttribute<GameAttribute>();
+                if (attribute != null)
+                {
+                    _gameType.Add(attribute.GameName, type);
+                }
+            }
+        }
+        private GameOptions GetGameOptions(string gameName)
+        {
+            if (!_gameType.ContainsKey(gameName))
+                throw new Exception($"Game {gameName} is not supported.");
+            return (GameOptions) Activator.CreateInstance(_gameType[gameName]);
+        }
         public ArchipelagoOption ReadSpoiler(StreamReader spoilerFile)
         {
-            string line = "";
+            string? line = "";
             int nbPlayers = 0;
             line = spoilerFile.ReadLine();
             List<SOHPlayerOptions> listOptions = new List<SOHPlayerOptions>();
@@ -25,7 +48,7 @@ namespace NoNiDev.SpoilerArchipelagoParser
             while (!spoilerFile.EndOfStream)
             {
 
-                if (line.StartsWith("Players", StringComparison.InvariantCultureIgnoreCase))
+                if (line!.StartsWith("Players", StringComparison.InvariantCultureIgnoreCase))
                 {
                     nbPlayers = int.Parse(line.Split(':', StringSplitOptions.TrimEntries)[1]);
                    break;
@@ -37,7 +60,7 @@ namespace NoNiDev.SpoilerArchipelagoParser
             while (!spoilerFile.EndOfStream)
             {
 
-                if (line.StartsWith("Player", StringComparison.InvariantCultureIgnoreCase))
+                if (line!.StartsWith("Player", StringComparison.InvariantCultureIgnoreCase))
                 {
                     currentplayer++;
                     string playerName = line.Trim().Split(':', StringSplitOptions.TrimEntries)[1];
@@ -54,13 +77,14 @@ namespace NoNiDev.SpoilerArchipelagoParser
             return new ArchipelagoOption(_players, _games, listOptions, new RandoStat( _options));
         }
 
+
         private SOHPlayerOptions ReadPlayerOptions(string currentLine, StreamReader spoilerFile)
         {
             string playerName = currentLine.Trim().Split(':', StringSplitOptions.TrimEntries)[1];
-            string line = spoilerFile.ReadLine();
-            string[] game = line.Split(':', StringSplitOptions.TrimEntries);
+            string? line = spoilerFile.ReadLine();
+            string[] game = line!.Split(':', StringSplitOptions.TrimEntries);
             line = spoilerFile.ReadLine();
-            string count = line.Split(':', StringSplitOptions.TrimEntries)[1];
+            string count = line!.Split(':', StringSplitOptions.TrimEntries)[1];
             _options.Add(new ArchippelagoSlot(playerName, game[1], int.Parse(count)));
             _games.Add(game[1]);
             if (game[0].Contains("Game", StringComparison.InvariantCultureIgnoreCase) && game[1].Contains("Ship of Harkinian", StringComparison.InvariantCultureIgnoreCase))

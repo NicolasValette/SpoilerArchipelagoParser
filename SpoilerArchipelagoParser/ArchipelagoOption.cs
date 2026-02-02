@@ -1,5 +1,5 @@
-﻿using NoNiDev.SpoilerArchipelagoParser.RandoStats;
-using NoNiDev.SpoilerArchipelagoParser.SOHOptions;
+﻿using NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions;
+using NoNiDev.SpoilerArchipelagoParser.RandoStats;
 
 namespace NoNiDev.SpoilerArchipelagoParser
 {

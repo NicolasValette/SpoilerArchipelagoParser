@@ -10,7 +10,7 @@ using System.Windows;
 using NoNiDev.ArchipelagoParser.Views;
 using NoNiDev.CallAPI.RandoStat;
 using NoNiDev.SpoilerArchipelagoParser;
-using NoNiDev.SpoilerArchipelagoParser.SOHOptions;
+using NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions;
 
 namespace NoNiDev.ArchipelagoParser.ViewModel
 {

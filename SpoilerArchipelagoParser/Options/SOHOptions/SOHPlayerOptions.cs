@@ -2,15 +2,12 @@
 using NoNiDev.SpoilerArchipelagoParser.Enums;
 using System.Text.Json.Serialization;
 
-namespace NoNiDev.SpoilerArchipelagoParser.SOHOptions
+namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
 {
-    public class SOHPlayerOptions
+    [Game("Ship of Harkinian")]
+    public class SOHPlayerOptions : GameOptions
     {
-        [JsonPropertyName("joueur")]
-        public string PlayerName { get; set; }
-        public DateTime Date { get; set; }
-        [JsonIgnore]
-        public Dictionary<string, string> Options { get; init; }
+        
         public string Goal { get; init; }
         public int TriforcePieces { get; init; }
         public int TriforcePercent { get; init; }
@@ -119,7 +116,8 @@ namespace NoNiDev.SpoilerArchipelagoParser.SOHOptions
         #endregion
         public SOHPlayerOptions(string playerName, Dictionary<string, string> options)
         {
-            PlayerName = playerName; Options = options;
+            PlayerName = playerName; 
+            Options = options;
             Date = DateTime.Now;
             if (string.Compare(options["Triforce Hunt"], "Yes", true) == 0)
             {
