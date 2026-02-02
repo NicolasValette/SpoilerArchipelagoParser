@@ -1,24 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.Http;
 using System.Text;
-using System.Text.Json;
-using System.Windows.Controls;
-using System.Windows.Media;
 
-namespace NoNiDev.ArchipelagoParser.ViewModel
+namespace NoNiDev.ArchipelagoParser.ViewModel.CustomUserControl
 {
     public enum APICallType
     {
         Get,
         Post
     }
-    class RandoStatAPIViewModel : NotifyableViewModel
+    public class APIViewModel : NotifyableViewModel
     {
-        private Action _readynessCallback;
-        private APICallType _callTYpe;
-        public string ApiURL
+        protected Action _readynessCallback;
+        protected APICallType _callTYpe;
+        protected string _initFileName;
+        //"Config-Rando.ini"
+        public string? ApiURL
         {
             get => field;
             set
@@ -40,24 +38,25 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
             }
         }
 
-        
 
-        public RandoStatAPIViewModel(APICallType callTYpe, Action callback)
+
+        public APIViewModel(string initFileName, APICallType callTYpe, Action callback)
         {
             _readynessCallback = callback;
             LoadAPIConfig();
             RequestResponse = "Response will be here";
-                   _callTYpe = callTYpe;
+            _callTYpe = callTYpe;
+            _initFileName = initFileName;
         }
 
         private void LoadAPIConfig()
         {
             var files = Directory.GetFiles(Environment.CurrentDirectory);
-            var initFilePath = Path.Combine(Environment.CurrentDirectory, "Config-Rando.ini");
+            var initFilePath = Path.Combine(Environment.CurrentDirectory, _initFileName);
             if (files.Contains(initFilePath))
             {
                 StreamReader init = new StreamReader(initFilePath);
-                string api = init.ReadLine().Trim();
+                string api = init.ReadLine()?.Trim() ?? "" ;
                 init.Close();
                 ApiURL = api;
                 _readynessCallback();
@@ -69,12 +68,11 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
         }
         private void SaveAPIConfig()
         {
-            var initFilePath = Path.Combine(Environment.CurrentDirectory, "Config-Rando.ini");
+            var initFilePath = Path.Combine(Environment.CurrentDirectory, _initFileName);
             StreamWriter sw = new StreamWriter(initFilePath, false, Encoding.ASCII);
             sw.WriteLine(ApiURL);
             sw.Close();
             _readynessCallback();
         }
-      
     }
 }
