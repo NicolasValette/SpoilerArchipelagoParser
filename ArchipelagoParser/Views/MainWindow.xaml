@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NoNiDev.ArchipelagoParser.Views"
+        xmlns:uc="clr-namespace:NoNiDev.ArchipelagoParser.Views.CustomUserControl"
         mc:Ignorable="d"
         Title="Archipelago Parser" Height="720" Width="1280">
 
@@ -25,7 +26,7 @@
             </MenuItem>
         </Menu>
         <!-- Row 1-->
-        <local:OpenFileButton Grid.Row="1"/>
+        <uc:OpenFileButton Grid.Row="1"/>
         <!-- Row 2-->
         <TabControl Grid.Row ="2" Margin="0,5,0,5">
             <TabItem Header="RandoStats">
