@@ -39,14 +39,13 @@ namespace NoNiDev.ArchipelagoParser.ViewModel.CustomUserControl
         }
 
 
-
         public APIViewModel(string initFileName, APICallType callTYpe, Action callback)
         {
             _readynessCallback = callback;
-            LoadAPIConfig();
             RequestResponse = "Response will be here";
             _callTYpe = callTYpe;
             _initFileName = initFileName;
+            LoadAPIConfig();
         }
 
         private void LoadAPIConfig()
