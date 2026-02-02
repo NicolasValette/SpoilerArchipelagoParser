@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.Json;
 using System.Windows;
 using ArchipelagoParser;
+using NoNiDev.ArchipelagoParser.ViewModel.CustomUserControl;
 using NoNiDev.ArchipelagoParser.Views;
 using NoNiDev.SpoilerArchipelagoParser;
 using NoNiDev.SpoilerArchipelagoParser.SOHOptions;
