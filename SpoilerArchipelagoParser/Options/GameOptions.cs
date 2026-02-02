@@ -11,6 +11,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options
         public string PlayerName { get; set; } = string.Empty;
         public DateTime Date { get; set; }
         [JsonIgnore]
-        public Dictionary<string, string> Options { get; init; } = [];
+        public Dictionary<string, string> Options { get; protected set; } = [];
+       
     }
 }
