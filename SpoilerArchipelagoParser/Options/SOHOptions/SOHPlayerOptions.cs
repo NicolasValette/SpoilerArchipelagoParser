@@ -5,6 +5,12 @@ using System.Text.Json.Serialization;
 
 namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
 {
+    /// <summary>
+    /// 
+    /// Game Options for Ship of Harkinian
+    /// Options up to date to Apworld v1.2 
+    /// 
+    /// </summary>
     [Game("Ship of Harkinian")]
     public class SOHPlayerOptions : GameOptions
     {
@@ -14,9 +20,11 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
         public int TriforcePieces { get; init; }
        // [Range(1, 100)]
         public int TriforcePercent { get; init; }
+        public int ProgressionBalancing { get; init; }
        // [RestrictValues(typeof(EAccessibility))]
         public string Accessibility { get; init; }
-       // [RestrictValues(typeof(EItemPool))]
+        // [RestrictValues(typeof(EItemPool))]
+        [JsonPropertyName("poolBalancing")]
         public string ItemPool { get; init; }
         #region Doors
        // [RestrictValues(typeof(EOpenClosed))]
@@ -84,9 +92,9 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
         #endregion
         #region Sanity
        // [RestrictValues(typeof(EVanillaShuffled))]
-        public string KokiriSwordsanity { get; init; }
+        public string KokiriSwordSanity { get; init; }
        // [RestrictValues(typeof(EVanillaShuffled))]
-        public string Mastersanity { get; init; }
+        public string MasterSwordSanity { get; init; }
        // [RestrictValues(typeof(ELocationSanity))]
         public string Tokensanity { get; init; }
        // [RestrictValues(typeof(ELocationSanity))]
@@ -97,32 +105,31 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
         public string Cratesanity { get; init; }
        // [RestrictValues(typeof(ELocationSanity))]
         public string Grasssanity { get; init; }
-        //[RestrictValues(typeof(ELocationSanity))]
-        public string Scrubsanity { get; init; }
+
        // [RestrictValues(typeof(EFishSanity))]
         public string Fishsanity { get; init; }
        // [RestrictValues(typeof(bool))]
-        public string Beehivesanity { get; init; }
+        public bool Beehivesanity { get; init; }
        // [RestrictValues(typeof(bool))]
-        public string Cowsanity { get; init; }
+        public bool Cowsanity { get; init; }
        // [RestrictValues(typeof(bool))]
-        public string Treesanity { get; init; }
+        public bool Treesanity { get; init; }
        // [RestrictValues(typeof(EBossSanity))]
-        public string Bosssanity { get; init; }
-       // [RestrictValues(typeof(EMerchantSanity))]
-        public string Merchantsanity { get; init; }
+        public string BossSoulSanity { get; init; }
+      
        // [RestrictValues(typeof(bool))]
-        public string Frogsanity { get; init; }
+        public bool Frogsanity { get; init; }
       //  [RestrictValues(typeof(EVanillaShuffled))]
         public string Ocarinasanity { get; init; }
-       // [RestrictValues(typeof(bool))]
-        public string FairysanityFountains { get; init; }
+        public bool OcarinaButtonSanity { get; init; }
+        // [RestrictValues(typeof(bool))]
+        public bool FairysanityFountains { get; init; }
       //  [RestrictValues(typeof(bool))]
-        public string FairysanityStones { get; init; }
+        public bool FairysanityStones { get; init; }
        // [RestrictValues(typeof(bool))]
-        public string FairysanityBeans { get; init; }
+        public bool FairysanityBeans { get; init; }
        // [RestrictValues(typeof(bool))]
-        public string FairysanitySongs { get; init; }
+        public bool FairysanitySongs { get; init; }
         #endregion
         #region Items
         public string ChildWallet { get; init; }
@@ -134,11 +141,18 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
         public string AdultTrade { get; init; }
         public string FishingPole { get; init; }
         public string SkeletonKey { get; init; }
+        public string TycoonWallet { get; init; }
         public string DungeonRewards { get; init; }
-        public string RocFeather { get; init; }
+        public string RocsFeather { get; init; }
+        public string GerudoCard { get; init; }
         #endregion
         #region Shops
+        //[RestrictValues(typeof(ELocationSanity))]
+        public bool ShuffleScrubs { get; init; }
+        // [RestrictValues(typeof(EMerchantSanity))]
+        public string ShuffleMerchants { get; init; }
         public bool ShuffleShops { get; init; }
+        [JsonPropertyName("shuffleShopsItems")]
         public int ShuffleShopsItemCount { get; init; }
         public int ShuffleShopsMinPrice { get; init; }
         public int ShuffleShopsMaxPrice { get; init; }
@@ -152,6 +166,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
         public bool SkipEponaRace { get; init; }
         public int BigPoeCount { get; init; }
         public int IceTrapsCount { get; init; }
+        [JsonPropertyName("iceTrapsPercent")]
         public int IceTrapsFillerPercentage { get; init; }
         public bool BlueFireArrows { get; init; }
         public bool SunlightArrows { get; init; }
@@ -176,6 +191,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
             }
             TriforcePieces = int.Parse(options["Triforce Hunt Pieces Total"]);
             TriforcePercent = int.Parse(options["Triforce Hunt Pieces Required Percentage"]);
+            ProgressionBalancing = int.Parse(options["Progression Balancing"]);
             Accessibility = options["Accessibility"];
             ItemPool = options["Item Pool"];
             #region Doors
@@ -325,60 +341,103 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
 
             };
 
-            KokiriSwordsanity = options["Shuffle Kokiri Sword"].ToLower() == "yes" ? "On" : "Off";
-            Mastersanity = options["Shuffle Master Sword"].ToLower() == "yes" ? "On" : "Off";
+            KokiriSwordSanity = options["Shuffle Kokiri Sword"].ToLower() == "yes" ? "Shuffled" : "Vanilla";
+            MasterSwordSanity = options["Shuffle Master Sword"].ToLower() == "yes" ? "Shuffled" : "Vanilla";
             Tokensanity = options["Shuffle Tokens"].ToLower() switch
             {
+                "off" => "Off",
+                "overworld" => "Overworld",
                 "dungeon" => "Dungeons",
                 "all" => "Everywhere",
                 _ => options["Shuffle Tokens"]
             };
             Potsanity = options["Shuffle Pots"].ToLower() switch
             {
+                "off" => "Off",
+                "overworld" => "Overworld",
                 "dungeon" => "Dungeons",
+                "all" => "Everywhere",
                 _ => options["Shuffle Pots"]
             };
             Freestandingsanity = options["Shuffle Freestanding Items"].ToLower() switch
             {
+                "off" => "Off",
+                "overworld" => "Overworld",
                 "dungeon" => "Dungeons",
                 "all" => "Everywhere",
                 _ => options["Shuffle Freestanding Items"]
             };
             Cratesanity = options["Shuffle Crates"].ToLower() switch
             {
+                "off" => "Off",
+                "overworld" => "Overworld",
                 "dungeon" => "Dungeons",
+                "all" => "Everywhere",
                 _ => options["Shuffle Crates"]
             };
             Grasssanity = options["Shuffle Grass"].ToLower() switch
             {
+                "off" => "Off",
+                "overworld" => "Overworld",
                 "dungeon" => "Dungeons",
+                "all" => "Everywhere",
                 _ => options["Shuffle Grass"]
             };
-            Scrubsanity = options["Shuffle Scrubs"].ToLower() == "yes" ? "On" : "Off";
-            Fishsanity = options["Shuffle Fish"];
-            Beehivesanity = options["Shuffle Beehives"].ToLower() == "yes" ? "On" : "Off";
-            Cowsanity = options["Shuffle Cows"].ToLower() == "yes" ? "On" : "Off";
-            Treesanity = options["Shuffle Trees"].ToLower() == "yes" ? "On" : "Off";
-            Bosssanity = options["Shuffle Boss Souls"];
+            ShuffleScrubs = options["Shuffle Scrubs"].ToLower() == "yes" ? true : false;
+            Fishsanity = options["Shuffle Fish"].ToLower() switch
+            {
+                "off" => "Off",
+                "overworld" => "Overworld",
+                "all" => "Everywhere",
+                "pond" => "Ponds"
+            };
+            Beehivesanity = options["Shuffle Beehives"].ToLower() == "yes" ? true : false;
+            Cowsanity = options["Shuffle Cows"].ToLower() == "yes" ? true : false;
+            Treesanity = options["Shuffle Trees"].ToLower() == "yes" ? true : false;
+            BossSoulSanity = options["Shuffle Boss Souls"].ToLower() switch
+            {
+                "off" => "None",
+                "on" => "All Except Ganon",
+                "on plus ganons" => "All Bosses"
+            };
 
-            Merchantsanity = options["Shuffle Merchants"];
-            Frogsanity = options["Shuffle Frog Song Rupees"].ToLower() == "yes" ? "On" : "Off";
-            Ocarinasanity = options["Shuffle Ocarina Buttons"].ToLower() == "yes" ? "On" : "Off";
-            FairysanityFountains = options["Shuffle Fairies in Fountains"].ToLower() == "yes" ? "On" : "Off";
-            FairysanityStones = options["Shuffle Gossip Stone Fairies"].ToLower() == "yes" ? "On" : "Off";
-            FairysanityBeans = options["Shuffle Bean Fairies"].ToLower() == "yes" ? "On" : "Off";
-            FairysanitySongs = options["Shuffle Fairy Spots"].ToLower() == "yes" ? "On" : "Off";
+            ShuffleMerchants = options["Shuffle Merchants"].ToLower() switch
+            {
+                "off" => "Off",
+                "bean merchant only" => "Only Beans",
+                "all but beans" => "All But Beans",
+                "all" => "All"
+            };
+            Frogsanity = options["Shuffle Frog Song Rupees"].ToLower() == "yes" ? true : false;
+            Ocarinasanity = options["Shuffle Ocarinas"].ToLower() == "yes" ? "Shuffled" : "Vanilla";
+            OcarinaButtonSanity = options["Shuffle Ocarina Buttons"].ToLower() == "yes" ? true : false;
+            FairysanityFountains = options["Shuffle Fairies in Fountains"].ToLower() == "yes" ? true : false;
+            FairysanityStones = options["Shuffle Gossip Stone Fairies"].ToLower() == "yes" ? true : false;
+            FairysanityBeans = options["Shuffle Bean Fairies"].ToLower() == "yes" ? true : false;
+            FairysanitySongs = options["Shuffle Fairy Spots"].ToLower() == "yes" ? true : false;
 
-            ChildWallet = options["Shuffle Child's Wallet"].ToLower() == "yes" ? "On" : "Off";
-            BronzeScale = options["Shuffle Swim"].ToLower() == "yes" ? "On" : "Off";
-            StickBag = options["Shuffle Deku Stick Bag"].ToLower() == "yes" ? "On" : "Off";
-            NutBag = options["Shuffle Deku Nut Bag"].ToLower() == "yes" ? "On" : "Off";
-            BombchuBag = options["Bombchu Bag"];
-            WeirdEgg = options["Shuffle Weird Egg"].ToLower() == "yes" ? "On" : "Off";
+            ChildWallet = options["Shuffle Child's Wallet"].ToLower() == "yes" ? "Shuffled" : "Start with";
+            BronzeScale = options["Shuffle Swim"].ToLower() == "yes" ? "Shuffled" : "Start with";
+            StickBag = options["Shuffle Deku Stick Bag"].ToLower() == "yes" ? "Shuffled" : "Start with";
+            NutBag = options["Shuffle Deku Nut Bag"].ToLower() == "yes" ? "Shuffled" : "Start with";
+            BombchuBag = options["Bombchu Bag"].ToLower() switch
+            {
+                "none" => "Vanilla",
+                "single bag" => "Single Bag",
+                "progressive bags" => "Three Bags",
+            };
+            WeirdEgg = options["Shuffle Weird Egg"].ToLower() == "yes" ? "Shuffled" : "Vanilla";
             AdultTrade = options["Shuffle Adult Trade Items"].ToLower() == "All Items" ? "On" : "Only Claim Check";
-            FishingPole = options["Shuffle Fishing Pole"].ToLower() == "yes" ? "On" : "Off";
-            SkeletonKey = options["Skeleton Key"].ToLower() == "yes" ? "On" : "Off";
-            DungeonRewards = options["Shuffle Dungeon Rewards"].ToLower() == "yes" ? "On" : "Off";
+            FishingPole = options["Shuffle Fishing Pole"].ToLower() == "yes" ? "Shuffled" : "Start with";
+            SkeletonKey = options["Skeleton Key"].ToLower() == "yes" ? "Added" : "Without";
+            TycoonWallet = options["Shuffle Tycoon Wallet"].ToLower() == "yes" ? "Added" : "Without";
+            DungeonRewards = options["Shuffle Dungeon Rewards"].ToLower() switch
+            {
+                "off" => "Vanilla",
+                "anywhere" => "Anywhere",
+                "dungeons" => "Dungeons"
+            };
+            GerudoCard = options["Shuffle Gerudo Membership Card"].ToLower() == "yes" ? "Shuffled" : "Vanilla";
 
             ShuffleShops = options["Shuffle Shops"] == "Yes";
             ShuffleShopsItemCount = int.Parse(options["Shuffle Shops Item Amount"]);
@@ -397,8 +456,12 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
             BlueFireArrows = options["Blue Fire Arrows"] == "Yes";
             SunlightArrows = options["Sunlight Arrows"] == "Yes";
             FullWallets = options["Full Wallets"] == "Yes";
-            InfiniteUpgrades = options["Infinite Upgrades"];
-            RocFeather = options["Roc's Feather"].ToLower() == "yes" ? "On" : "Off";
+            InfiniteUpgrades = options["Infinite Upgrades"].ToLower() switch
+            {
+                "condensed progressive" => "Condensed",
+                _ => options["Infinite Upgrades"]
+            };
+            RocsFeather = options["Roc's Feather"].ToLower() == "yes" ? "Added" : "Without";
 
             #region LEGACY
             DungeonKeyRings = false;
