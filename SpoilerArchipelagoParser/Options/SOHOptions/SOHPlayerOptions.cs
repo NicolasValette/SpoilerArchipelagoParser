@@ -1,41 +1,59 @@
-﻿using System.Text.Json.Serialization;
+﻿using NoNiDev.SpoilerArchipelagoParser.Attributes;
+using NoNiDev.SpoilerArchipelagoParser.Enums;
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
-namespace NoNiDev.SpoilerArchipelagoParser.SOHOptions
+namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
 {
-    public class SOHPlayerOptions
+    [Game("Ship of Harkinian")]
+    public class SOHPlayerOptions : GameOptions
     {
-        [JsonPropertyName("joueur")]
-        public string PlayerName { get; set; }
-        public DateTime Date { get; set; }
-        [JsonIgnore]
-        public Dictionary<string, string> Options { get; init; }
+       // [RestrictValues(typeof(EGoal))]
         public string Goal { get; init; }
+       // [Range(1, 100)]
         public int TriforcePieces { get; init; }
+       // [Range(1, 100)]
         public int TriforcePercent { get; init; }
+       // [RestrictValues(typeof(EAccessibility))]
         public string Accessibility { get; init; }
+       // [RestrictValues(typeof(EItemPool))]
         public string ItemPool { get; init; }
         #region Doors
-
+       // [RestrictValues(typeof(EOpenClosed))]
         public string KokiriForest { get; init; }
+       // [RestrictValues(typeof(EOpenClosed))]
         public string DekuTree { get; init; }
+       // [RestrictValues(typeof(EOpenClosed))]
         public string KakarikoGate { get; set; }
+       // [RestrictValues(typeof(EDoorOfTime))]
         public string DoorOfTime { get; init; }
+       // [RestrictValues(typeof(EOpenClosedClosedAsChild))]
         public string ZoraFountain { get; init; }
+       // [RestrictValues(typeof(EOpenClosed))]
         public string JabuJabuMouth { get; init; }
+       // [RestrictValues(typeof(EOpenClosed))]
         public string OverworldDoors { get; init; }
+       // [RestrictValues(typeof(EOpenClosed))]
         public string SleepingWaterfall { get; set; }
         #endregion
         #region Game Requirements
+       // [RestrictValues(typeof(EStartingAge))]
         public string StartAge { get; init; }
+       // [RestrictValues(typeof(EBridgeCondition))]
         public string RainbowBridgeCondition { get; init; }
+       // [Range(1,100)]
         public int RainbowBridgeValue { get; init; }
+       // [RestrictValues(typeof(ETrials))]
         public string GanonTrials { get; init; }
+       // [RestrictValues(typeof(EBossKeyCondition))]
         public string GanonBossKeyCondition { get; init; }
+       // [Range(1, 100)]
         public int GanonBossKeyValue { get; init; }
         #endregion
         #region Dungeons
-
+       // [RestrictValues(typeof(EMapAndCompass))]
         public string MapsAndCompassesNew { get; init; }
+        //[RestrictValues(typeof(ECarpenters))]
         public string FortressCarpenters { get; init; }
         public string SmallKey { get; init; }
         public string GerudoFortressSmallKeys { get; init; }
@@ -44,37 +62,66 @@ namespace NoNiDev.SpoilerArchipelagoParser.SOHOptions
         #endregion
         #region KeyRings
         public string KeyRings { get; init; }
+       // [RestrictValues(typeof(bool))]
         public bool GerudoFortressKeyrings { get; init; }
+       // [RestrictValues(typeof(bool))]
         public bool ForestTempleKeyrings { get; init; }
+       // [RestrictValues(typeof(bool))]
         public bool FireTempleKeyrings { get; init; }
+       // [RestrictValues(typeof(bool))]
         public bool WaterTempleKeyrings { get; init; }
+       // [RestrictValues(typeof(bool))]
         public bool ShadowTempleKeyrings { get; init; }
+       // [RestrictValues(typeof(bool))]
         public bool SpiritTempleKeyrings { get; init; }
+       // [RestrictValues(typeof(bool))]
         public bool GanonsCastleKeyrings { get; init; }
+       // [RestrictValues(typeof(bool))]
         public bool BottomOfTheWellKeyrings { get; init; }
+       // [RestrictValues(typeof(bool))]
         public bool GerudoTrainingGroundsKeyrings { get; init; }
 
         #endregion
         #region Sanity
+       // [RestrictValues(typeof(EVanillaShuffled))]
         public string KokiriSwordsanity { get; init; }
+       // [RestrictValues(typeof(EVanillaShuffled))]
         public string Mastersanity { get; init; }
+       // [RestrictValues(typeof(ELocationSanity))]
         public string Tokensanity { get; init; }
+       // [RestrictValues(typeof(ELocationSanity))]
         public string Freestandingsanity { get; init; }
+       // [RestrictValues(typeof(ELocationSanity))]
         public string Potsanity { get; set; }
+       // [RestrictValues(typeof(ELocationSanity))]
         public string Cratesanity { get; init; }
+       // [RestrictValues(typeof(ELocationSanity))]
         public string Grasssanity { get; init; }
+        //[RestrictValues(typeof(ELocationSanity))]
         public string Scrubsanity { get; init; }
+       // [RestrictValues(typeof(EFishSanity))]
         public string Fishsanity { get; init; }
+       // [RestrictValues(typeof(bool))]
         public string Beehivesanity { get; init; }
+       // [RestrictValues(typeof(bool))]
         public string Cowsanity { get; init; }
+       // [RestrictValues(typeof(bool))]
         public string Treesanity { get; init; }
+       // [RestrictValues(typeof(EBossSanity))]
         public string Bosssanity { get; init; }
+       // [RestrictValues(typeof(EMerchantSanity))]
         public string Merchantsanity { get; init; }
+       // [RestrictValues(typeof(bool))]
         public string Frogsanity { get; init; }
+      //  [RestrictValues(typeof(EVanillaShuffled))]
         public string Ocarinasanity { get; init; }
+       // [RestrictValues(typeof(bool))]
         public string FairysanityFountains { get; init; }
+      //  [RestrictValues(typeof(bool))]
         public string FairysanityStones { get; init; }
+       // [RestrictValues(typeof(bool))]
         public string FairysanityBeans { get; init; }
+       // [RestrictValues(typeof(bool))]
         public string FairysanitySongs { get; init; }
         #endregion
         #region Items
@@ -116,7 +163,8 @@ namespace NoNiDev.SpoilerArchipelagoParser.SOHOptions
         #endregion
         public SOHPlayerOptions(string playerName, Dictionary<string, string> options)
         {
-            PlayerName = playerName; Options = options;
+            PlayerName = playerName; 
+            Options = options;
             Date = DateTime.Now;
             if (string.Compare(options["Triforce Hunt"], "Yes", true) == 0)
             {

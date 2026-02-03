@@ -1,6 +1,6 @@
-﻿
-namespace NoNiDev.SpoilerArchipelagoParser.SOHOptions
+﻿namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
 {
+    [Obsolete("SOH Random Options are deprecated and will be removed in future versions.")]
     public enum SOHRandomOptions
     {
         ACCESSIBILITY,

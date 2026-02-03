@@ -1,5 +1,5 @@
 ﻿using NoNiDev.SpoilerArchipelagoParser;
-using NoNiDev.SpoilerArchipelagoParser.SOHOptions;
+using NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions;
 using System.Text;
 using System.Text.Json;
 

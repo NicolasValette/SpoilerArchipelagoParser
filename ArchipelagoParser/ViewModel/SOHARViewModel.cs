@@ -6,7 +6,7 @@ using System.Text.Json;
 using System.Windows;
 using NoNiDev.ArchipelagoParser.ViewModel.CustomUserControl;
 using NoNiDev.SpoilerArchipelagoParser;
-using NoNiDev.SpoilerArchipelagoParser.SOHOptions;
+using NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions;
 
 namespace NoNiDev.ArchipelagoParser.ViewModel
 {
