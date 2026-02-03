@@ -20,10 +20,11 @@ namespace NoNiDev.SpoilerArchipelagoParser.Attributes
 
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
-           
+            List<string> names;
             if (value is string str)
             {
-                if (Enum.GetNames(_enumType).Any(n => n.Equals(str, StringComparison.OrdinalIgnoreCase)))
+                names = Enum.GetNames(_enumType).Select(x=> x.Replace("_", " ", StringComparison.OrdinalIgnoreCase)).ToList();
+                if (names.Any(n => n.Equals(str, StringComparison.OrdinalIgnoreCase)))
                 {
                     return ValidationResult.Success;
                 }

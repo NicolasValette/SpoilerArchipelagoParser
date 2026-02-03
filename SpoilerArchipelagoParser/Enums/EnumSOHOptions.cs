@@ -56,7 +56,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.Enums
         All,
         None
     }
-    public enum EBossKeyCOndition
+    public enum EBossKeyCondition
     {
         Vanilla,
         Anywhere,
@@ -92,6 +92,11 @@ namespace NoNiDev.SpoilerArchipelagoParser.Enums
     }
     #endregion
     #region SANITY
+    public enum EVanillaShuffled
+    {
+        Vanilla,
+        Shuffled
+    }
     public enum ELocationSanity
     {
         Off,
@@ -130,6 +135,13 @@ namespace NoNiDev.SpoilerArchipelagoParser.Enums
     }
     #endregion
     #region ITEMS
+    public enum  EItemPool
+    {
+        Balanced,
+        Plentiful,
+        Scarce,
+        Minimal
+    }
     /// <summary>
     /// shuffle_adult_trade_items options
     /// </summary>
