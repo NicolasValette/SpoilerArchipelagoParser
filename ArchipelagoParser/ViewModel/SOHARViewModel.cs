@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Drawing.Imaging.Effects;
+﻿using System.Collections.ObjectModel;
 using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Windows;
-using ArchipelagoParser;
-using NoNiDev.ArchipelagoParser.Views;
+using NoNiDev.ArchipelagoParser.ViewModel.CustomUserControl;
 using NoNiDev.SpoilerArchipelagoParser;
 using NoNiDev.SpoilerArchipelagoParser.SOHOptions;
 
@@ -174,7 +170,6 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
 
         private void ReadSpoilers(string spoilerPath)
         {
-         // RequestResponse = "Spoiler path : " + spoilerPath;
             StreamReader sr = new StreamReader(spoilerPath);
             SpoilerArchipelagoReader spoilerReader = new();
             
@@ -183,9 +178,7 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
             Players.Clear();
             foreach (var item in optionToSend.SOHOptions)
             {
-                //Players.Add(item.PlayerName);
                 Players.Add(new SOHARPlayerLineViewModel(item.PlayerName));
-
             }
             StatusBarText = spoilerPath + " loaded.";
             sr.Close();
@@ -199,9 +192,5 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
     public class SOHARViewModel_DesignTime : SOHARViewModel
     {
         public new List<string> Players => new List<string>();
-        //public SOHARViewModel_DesignTime()
-        //{
-        //    Players.AddRange(new []{ "SOHAR View Model", "2", "3" });
-        //}
     }
 }

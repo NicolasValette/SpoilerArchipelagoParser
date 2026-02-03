@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 using Microsoft.Win32;
 
-namespace NoNiDev.ArchipelagoParser.ViewModel
+namespace NoNiDev.ArchipelagoParser.ViewModel.CustomUserControl
 {
     public class OpenFileViewModel : NotifyableViewModel
     {

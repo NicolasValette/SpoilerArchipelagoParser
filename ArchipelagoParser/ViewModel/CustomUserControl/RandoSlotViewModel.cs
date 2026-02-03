@@ -5,7 +5,7 @@ using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Text;
 
-namespace NoNiDev.ArchipelagoParser.ViewModel
+namespace NoNiDev.ArchipelagoParser.ViewModel.CustomUserControl
 {
     class RandoSlotViewModel : NotifyableViewModel
     {

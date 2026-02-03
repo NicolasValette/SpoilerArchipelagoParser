@@ -1,7 +1,7 @@
 ﻿using System.Windows.Controls;
 using NoNiDev.ArchipelagoParser.ViewModel;
 
-namespace NoNiDev.ArchipelagoParser.Views
+namespace NoNiDev.ArchipelagoParser.Views.RandoStat
 {
     /// <summary>
     /// Interaction logic for RandoStatsView.xaml
