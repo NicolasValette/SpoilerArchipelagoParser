@@ -389,7 +389,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
                 "off" => "Off",
                 "overworld" => "Overworld",
                 "all" => "Everywhere",
-                "pond" => "Ponds"
+                "pond" => "Pond"
             };
             Beehivesanity = options["Shuffle Beehives"].ToLower() == "yes" ? true : false;
             Cowsanity = options["Shuffle Cows"].ToLower() == "yes" ? true : false;
