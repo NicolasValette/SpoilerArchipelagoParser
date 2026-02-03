@@ -14,11 +14,11 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
     [Game("Ship of Harkinian")]
     public class SOHPlayerOptions : GameOptions
     {
-       // [RestrictValues(typeof(EGoal))]
+        // [RestrictValues(typeof(EGoal))]
         public string Goal { get; init; }
-       // [Range(1, 100)]
+        // [Range(1, 100)]
         public int TriforcePieces { get; init; }
-       // [Range(1, 100)]
+        // [Range(1, 100)]
         public int TriforcePercent { get; init; }
         public int ProgressionBalancing { get; init; }
        // [RestrictValues(typeof(EAccessibility))]
@@ -148,7 +148,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
         #endregion
         #region Shops
         //[RestrictValues(typeof(ELocationSanity))]
-        public bool ShuffleScrubs { get; init; }
+        public string ShuffleScrubs { get; init; }
         // [RestrictValues(typeof(EMerchantSanity))]
         public string ShuffleMerchants { get; init; }
         public bool ShuffleShops { get; init; }
@@ -383,7 +383,12 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
                 "all" => "Everywhere",
                 _ => options["Shuffle Grass"]
             };
-            ShuffleScrubs = options["Shuffle Scrubs"].ToLower() == "yes" ? true : false;
+            ShuffleScrubs = options["Shuffle Scrubs"].ToLower() switch
+            {
+                "off" => "None",
+                "one time only" => "One-Time Only",
+                _ => options["Shuffle Scrubs"]
+            };
             Fishsanity = options["Shuffle Fish"].ToLower() switch
             {
                 "off" => "Off",
