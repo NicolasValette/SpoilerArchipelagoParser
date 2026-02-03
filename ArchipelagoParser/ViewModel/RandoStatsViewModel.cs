@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Dynamic;
 using System.IO;
 using System.Net.Http;
-using System.Text;
 using System.Text.Json;
 using System.Windows;
-using NoNiDev.ArchipelagoParser.Views;
+using NoNiDev.ArchipelagoParser.ViewModel.CustomUserControl;
+using NoNiDev.ArchipelagoParser.Views.CustomWindows;
 using NoNiDev.CallAPI.RandoStat;
 using NoNiDev.SpoilerArchipelagoParser;
 using NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions;

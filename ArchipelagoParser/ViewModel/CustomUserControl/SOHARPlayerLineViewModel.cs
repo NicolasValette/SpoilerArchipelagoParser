@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NoNiDev.ArchipelagoParser.ViewModel
+namespace NoNiDev.ArchipelagoParser.ViewModel.CustomUserControl
 {
     public enum SoharPlayer
     {
