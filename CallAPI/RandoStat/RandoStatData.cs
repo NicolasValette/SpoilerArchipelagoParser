@@ -9,7 +9,7 @@ namespace NoNiDev.CallAPI.RandoStat
     public enum RandoStatAction
     {
        addJoueur,
-       AddJeu,
+       addJeu,
        addArchipel,
        ping
     }
