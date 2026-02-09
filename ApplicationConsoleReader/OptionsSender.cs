@@ -44,7 +44,7 @@ namespace NoNiDev.ApplicationConsoleReader
                     }
                 }
                 Console.WriteLine("OPTIONS : ");
-                foreach (var line in item.Options)
+                foreach (var line in item.GameOptionsDictionnary)
                 {
                     if (!string.IsNullOrEmpty(line.Value))
                     {

@@ -179,7 +179,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
         public SOHPlayerOptions(string playerName, Dictionary<string, string> options)
         {
             PlayerName = playerName; 
-            Options = options;
+            GameOptionsDictionnary = options;
             Date = DateTime.Now;
             if (string.Compare(options["Triforce Hunt"], "Yes", true) == 0)
             {
@@ -471,6 +471,11 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
             #region LEGACY
             DungeonKeyRings = false;
             #endregion
+        }
+
+        public void Process()
+        {
+
         }
     }
 }
