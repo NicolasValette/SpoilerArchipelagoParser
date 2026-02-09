@@ -4,8 +4,8 @@ using System.Text;
 
 namespace NoNiDev.SpoilerArchipelagoParser.Options.Converter
 {
-    public interface IConverter
+    public interface IConverter <T, U>
     {
-        public string Convert(string spoilerValue);
+        public U Convert(T value);
     }
 }

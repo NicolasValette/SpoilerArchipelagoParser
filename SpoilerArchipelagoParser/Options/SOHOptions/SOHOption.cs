@@ -28,8 +28,9 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
             }
             set;
         } = string.Empty;
-       // [ConvertValue(new ClosedForestToKokiri())]
+        [SpoilerName("Closed Forest"), ConvertValue<string, string>(typeof(ClosedForestToKokiri))]
         public string DekuTree { get; set; } = string.Empty;
+        public string AAAAAAAAAA { get; set; } = string.Empty;
         public string Kakariko_Gate { get; set; } = string.Empty;
         public string Door_of_Time { get; set; } = string.Empty;
         public string Sleeping_Waterfall { get; set; } = string.Empty;

@@ -44,7 +44,7 @@ namespace SOHParserTest
                 var option = spoilerReader.ReadSpoiler(stream);
                 SOHOption sohOption = new SOHOption(option.SOHOptions[0].GameOptionsDictionnary);
                 sohOption.Process();
-
+                 
                 var options = new JsonSerializerOptions
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -53,9 +53,9 @@ namespace SOHParserTest
                 
                 string jsonString = JsonSerializer.Serialize<SOHOption>(sohOption, options);
             }
-            catch
+            catch (Exception ex)
             {
-                Assert.Fail();
+                Assert.Fail(ex.Message);
             }
         }
     }
