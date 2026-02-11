@@ -13,4 +13,11 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options
         public Func<bool> IsValid = () => true;
         public IConverter<string, string>? Converter;
     }
+    public class ComboField
+    {
+        public PropertyInfo? Property;
+        public string[] SpoilerNames = Array.Empty<string>();
+        public Func<bool> IsValid = () => true;
+        public IComboConverter<string>? Converter;
+    }
 }

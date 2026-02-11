@@ -22,12 +22,25 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options
         [NotParserValue]
         [JsonIgnore]
         public Dictionary<string, Field> Prop { get; protected set; } = [];
+        [NotParserValue]
+        [JsonIgnore]
+        public Dictionary<string, ComboField> ComboProp { get; protected set; } = [];
 
         public GameOptions()
         {
             foreach (var prop in this.GetType().GetProperties())
             {
                 if (prop.GetCustomAttribute<NotParserValueAttribute>() != null) continue;
+                var comboAttributes = prop.GetCustomAttribute<ComboConverterAttribute<string>>();
+                if (comboAttributes != null)
+                {
+                    ComboField comboField = new ComboField();
+                    comboField.Property = prop;
+                    comboField.SpoilerNames = comboAttributes.Values;
+                    comboField.Converter = comboAttributes.Converter;
+                    ComboProp.Add(prop.Name, comboField);
+                    continue;
+                }
                 var attributes = prop.GetCustomAttribute<SpoilerNameAttribute>();
                 Field field = new Field();
                 if (attributes != null)
@@ -63,7 +76,18 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options
                // string value  = GameOptionsDictionnary[spoilerName]?? string.Empty;
                 this.GetType().GetProperty(item.Key.Replace(" ", string.Empty))?.SetValue(this, spoilerValue);
             }
+            foreach (var item in ComboProp)
+            {
+                string[] spoilerNames = item.Value.SpoilerNames;
+                Dictionary<string, object> values = new Dictionary<string, object>();
+                foreach (var spoilerName in spoilerNames)
+                {
+                    GameOptionsDictionnary.TryGetValue(spoilerName, out string? spoilerValue);
+                    values.Add(spoilerName, spoilerValue ?? string.Empty);
+                }
+                string convertedValue = item.Value.Converter?.Convert(values) ?? string.Empty;
+                this.GetType().GetProperty(item.Key.Replace(" ", string.Empty))?.SetValue(this, convertedValue);
+            }
         }
-
     }
 }
