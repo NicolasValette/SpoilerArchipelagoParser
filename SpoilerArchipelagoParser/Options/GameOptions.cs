@@ -1,4 +1,5 @@
 ﻿using NoNiDev.SpoilerArchipelagoParser.Attributes;
+using NoNiDev.SpoilerArchipelagoParser.Options.Converter;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -11,7 +12,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options
 {
     public abstract class GameOptions
     {
-        
+
         [JsonPropertyName("joueur")]
         public string PlayerName { get; set; } = string.Empty;
         [NotParserValue]
@@ -52,10 +53,10 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options
                     field.SpoilerName = prop.Name;
                 }
 
-                var convertAttributes = prop.GetCustomAttribute<ConvertValueAttribute<string,string>>();
+                var convertAttributes = prop.GetCustomAttribute<ConvertValueAttribute>();
                 if (convertAttributes != null)
                 {
-                    field.Converter = convertAttributes.Converter;
+                    field.ConverterAttribute = convertAttributes;
                 }
 
                 field.Property = prop;
@@ -72,9 +73,23 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options
                 if (key == null)
                     continue;
                 GameOptionsDictionnary.TryGetValue(spoilerName, out string? spoilerValue);
-                spoilerValue = item.Value.Converter?.Convert(spoilerValue) ?? spoilerValue;
-               // string value  = GameOptionsDictionnary[spoilerName]?? string.Empty;
-                this.GetType().GetProperty(item.Key.Replace(" ", string.Empty))?.SetValue(this, spoilerValue);
+                object spoilerValueCast = spoilerValue;
+                if (item.Value.ConverterAttribute != null)
+                {
+                    Type converterType = item.Value.ConverterAttribute.ConverterType;
+                    var converterInterface = converterType.GetInterfaces().FirstOrDefault
+                        (i => i.IsGenericType &&
+                                i.GetGenericTypeDefinition() == typeof(IConverter<,>) &&
+                                i.GetGenericArguments()[0] == spoilerValue?.GetType());
+                    if (converterInterface != null)
+                    {
+                        object instance = Activator.CreateInstance(converterType);
+                        MethodInfo method = converterInterface.GetMethod("Convert");
+                        spoilerValueCast = method.Invoke(instance, new object[] { spoilerValue });
+                    }
+                }
+                //object spoilerValueCast = item.Value.Converter?.Convert(spoilerValue) ?? spoilerValue;
+                this.GetType().GetProperty(item.Key.Replace(" ", string.Empty))?.SetValue(this, spoilerValueCast);
             }
             foreach (var item in ComboProp)
             {
