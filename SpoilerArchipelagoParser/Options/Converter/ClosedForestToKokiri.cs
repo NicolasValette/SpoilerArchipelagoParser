@@ -15,4 +15,15 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.Converter
         };
        
     }
+    public class ClosedForestToDekuTree : IConverter<string, string>
+    {
+        public string Convert(string spoilerValue) => spoilerValue switch
+        {
+            "On" => "Closed",
+            "Deku only" => "Closed",
+            "Off" => "Open",
+            _ => "unknown"
+        };
+
+    }
 }

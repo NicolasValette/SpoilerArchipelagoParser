@@ -15,7 +15,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.Converter
         }
     }
 
-    public class StringToBool : IConverter<string, bool>
+    public class YesNoToBool : IConverter<string, bool>
     {
         public bool Convert(string value)
         {
