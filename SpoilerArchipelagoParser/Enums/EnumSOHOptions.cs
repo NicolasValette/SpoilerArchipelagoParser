@@ -17,6 +17,12 @@ namespace NoNiDev.SpoilerArchipelagoParser.Enums
     }
     #endregion
     #region DOORS
+    public enum EForestOpenClosed
+    {
+        On,
+        Off,
+        Deku_Only
+    }
     public enum EOpenClosed
     {
         Open,
@@ -35,7 +41,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.Enums
         Song_Only
     }
     #endregion
-    #region GANON
+    #region CONDITIONS
     public enum EStartingAge
     {
         Child,
@@ -50,11 +56,6 @@ namespace NoNiDev.SpoilerArchipelagoParser.Enums
         Dungeon_Rewards,
         Token,
         Greg
-    }
-    public enum ETrials
-    {
-        All,
-        None
     }
     public enum EBossKeyCondition
     {
@@ -92,11 +93,6 @@ namespace NoNiDev.SpoilerArchipelagoParser.Enums
     }
     #endregion
     #region SANITY
-    public enum EVanillaShuffled
-    {
-        Vanilla,
-        Shuffled
-    }
     public enum ELocationSanity
     {
         Off,
@@ -121,8 +117,26 @@ namespace NoNiDev.SpoilerArchipelagoParser.Enums
     {
         On,
         Off,
-        On_Plus_Ganon
+        On_Plus_Ganons
     }
+   
+    #endregion
+    #region ITEMS
+    public enum  EItemPool
+    {
+        Balanced,
+        Plentiful,
+        Scarce,
+        Minimal
+    }
+    public enum EBombchuBag
+    {
+        None,
+        Single_Bag,
+        Progressive_Bag
+    }
+    #endregion
+    #region SHOPS
     /// <summary>
     /// shuffle_merchants options
     /// </summary>
@@ -134,32 +148,18 @@ namespace NoNiDev.SpoilerArchipelagoParser.Enums
         All
     }
     #endregion
-    #region ITEMS
-    public enum  EItemPool
-    {
-        Balanced,
-        Plentiful,
-        Scarce,
-        Minimal
-    }
-    /// <summary>
-    /// shuffle_adult_trade_items options
-    /// </summary>
-    public enum  EAdultTrade
-    {
-        Only_Claim_Check,   //false
-        All_Items           //true
-    }
-    #endregion
-    #region SHOPS
-    #endregion
     #region SKIPS
     #endregion
     #region MISC
-    public enum  EOnOFf
+    public enum  EOnOff
     {
         On,
         Off
+    }
+    public enum EYesNo
+    {
+        Yes,
+        No
     }
     /// <summary>
     /// infinite_upgrade options

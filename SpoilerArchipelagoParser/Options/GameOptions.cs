@@ -1,4 +1,5 @@
 ﻿using NoNiDev.SpoilerArchipelagoParser.Attributes;
+using NoNiDev.SpoilerArchipelagoParser.Enums;
 using NoNiDev.SpoilerArchipelagoParser.Options.Converter;
 using System;
 using System.Collections.Generic;
@@ -60,6 +61,22 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options
                 }
 
                 field.Property = prop;
+
+                var validAttributes = prop.GetCustomAttribute<RestrictValuesBaseAttribute>();
+                if (validAttributes != null)
+                {
+                    field.IsValid = validAttributes.IsValid;
+                }
+                else if (prop.PropertyType == typeof(bool))
+                {
+                    RestrictValuesBaseAttribute boolValidAttribute = new RestrictEnumValuesAttribute<EYesNo>();
+                    field.IsValid = boolValidAttribute.IsValid;
+                }
+                else if (prop.PropertyType == typeof(int))
+                {
+                    RestrictValuesBaseAttribute boolValidAttribute = new RestrictIntValuesAttribute();
+                    field.IsValid = boolValidAttribute.IsValid;
+                }
                 //string name = attributes is not null ? attributes.SpoilerName : prop.Name;
                 Prop.Add(prop.Name, field);
             }
@@ -74,6 +91,10 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options
                     continue;
                 GameOptionsDictionnary.TryGetValue(spoilerName, out string? spoilerValue);
                 object spoilerValueCast = spoilerValue;
+                if (!item.Value.IsValid(spoilerValue ?? string.Empty))
+                {
+                    throw new SpoilerDataValidationException($"The value '{spoilerValue}' is not valid for the field '{spoilerName}'.");
+                }
                 if (item.Value.ConverterAttribute != null)
                 {
                     Type converterType = item.Value.ConverterAttribute.ConverterType;

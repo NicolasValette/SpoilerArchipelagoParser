@@ -11,7 +11,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options
     {
         public PropertyInfo? Property;
         public string SpoilerName = string.Empty;
-        public Func<bool> IsValid = () => true;
+        public Func<string, bool> IsValid = (x) => true;
         //public IConverter<string, string>? Converter;
         public ConvertValueAttribute? ConverterAttribute;
     }

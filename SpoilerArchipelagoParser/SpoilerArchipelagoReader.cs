@@ -38,7 +38,7 @@ namespace NoNiDev.SpoilerArchipelagoParser
             string? line = "";
             int nbPlayers = 0;
             line = spoilerFile.ReadLine();
-            List<SOHPlayerOptions> listOptions = new List<SOHPlayerOptions>();
+            List<GameOptions> listOptions = new List<GameOptions>();
             if (line == null)
                 throw new Exception("Unexpected error during file reading.");
             if (!line.Trim().Contains("Archipelago", StringComparison.InvariantCultureIgnoreCase))
