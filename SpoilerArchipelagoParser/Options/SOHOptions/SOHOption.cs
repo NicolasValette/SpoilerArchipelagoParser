@@ -8,9 +8,10 @@ using System.Text.Json.Serialization;
 
 namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
 {
+    [Game("Ship of Harkinian")]
     public class SOHOption : GameOptions
     {
-        #region GREEN
+        #region PLAYER
         [NotParserValue]
         public string Goal
         {
@@ -23,7 +24,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
         [SpoilerName("Triforce Hunt Pieces Total"), ConvertValue(typeof(StringToInt))]
         public int TriforcePieces { get; set; } = 0;
         [SpoilerName("Triforce Hunt Pieces Required Percentage"), ConvertValue(typeof(StringToInt))]
-        public int TriforcePercentage { get; set; } = 0;
+        public int TriforcePercent { get; set; } = 0;
         [RestrictEnumValues<EAccessibility>]
         public string Accessibility { get; set; } = string.Empty;
         [SpoilerName("Progression Balancing"), ConvertValue(typeof(StringToInt))]
@@ -36,7 +37,6 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
         //[NotParserValue]
         [SpoilerName("Closed Forest"), ConvertValue(typeof(ClosedForestToDekuTree))]
         public string DekuTree { get; set; } = string.Empty;
-        [NotParserValue]
         [SpoilerName("Closed Forest"), ConvertValue(typeof(ClosedForestToKokiri))]
         public string KokiriForest { get; set; } = string.Empty;
         [SpoilerName("Kakariko Gate"), RestrictEnumValues<EOpenClosed>]
@@ -46,159 +46,163 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
         [SpoilerName("Sleeping Waterfall"), RestrictEnumValues<EOpenClosed>]
         public string SleepingWaterfall { get; set; } = string.Empty;
         [SpoilerName("Zora's Domain"), RestrictEnumValues<EOpenClosedClosedAsChild>]
-        public string ZorasDomain { get; set; } = string.Empty;
+        public string ZoraFountain { get; set; } = string.Empty;
         [SpoilerName("Jabu-Jabu"), RestrictEnumValues<EOpenClosed>]
-        public string JabuJabu { get; set; } = string.Empty;
-        [SpoilerName("Lock Overworld Doors"), RestrictEnumValues<EYesNo>]
-        public string LockOverworldDoors { get; set; } = string.Empty;
+        public string JabuJabuMouth { get; set; } = string.Empty;
+        [SpoilerName("Lock Overworld Doors"), RestrictEnumValues<EYesNo>, ConvertValue(typeof(LockOverworldConverter))]
+        public string OverworldDoors { get; set; } = string.Empty;
         #endregion
-        #region CONDITIONS
+        #region GANON
         [SpoilerName("Starting Age"), RestrictEnumValues<EStartingAge>]
-        public string StartingAge { get; set; } = string.Empty;
+        public string StartAge { get; set; } = string.Empty;
         [SpoilerName("Rainbow Bridge"), RestrictEnumValues<EBridgeCondition>]
-        public string RainbowBridge { get; set; } = string.Empty;
-        [ComboConverter<string>(["Rainbow Bridge",
+        public string RainbowBridgeCondition { get; set; } = string.Empty;
+        [ComboConverter<int>(["Rainbow Bridge",
             "Rainbow Bridge Stones Required", 
             "Rainbow Bridge Medallions Required", 
             "Rainbow Bridge Dungeon Rewards Required", 
             "Rainbow Bridge Dungeons Required", 
-            "Rainbow Bridge Skull Tokens Required", 
-            "Rainbow Bridge Greg Modifier"],
+            "Rainbow Bridge Skull Tokens Required"],
             typeof(RainbowBridgeComboConverter))]
-        public string RainbowBridgeValues { get; set; } = string.Empty;
-        [SpoilerName("Skip Ganon's Trials"), RestrictEnumValues<EYesNo>]
-        public string SkipGanonsTrials { get; set; } = string.Empty;
-        [SpoilerName("Ganons Castle Boss Key"), RestrictEnumValues<EBossKeyCondition>]
-        public string GanonsCastleBossKey { get; set; } = string.Empty;
-        [ComboConverter<string>(["Ganons Castle Boss Key",
+        public int RainbowBridgeValue { get; set; } = 0;
+        [SpoilerName("Rainbow Bridge Greg Modifier"), ConvertValue(typeof(GregConverter))]
+        public string RainbowBridgeGregModifier { get; set; } = string.Empty;
+        [SpoilerName("Skip Ganon's Trials"), RestrictEnumValues<EYesNo>, ConvertValue(typeof(SkipTrialsConverter))]
+        public string GanonTrials { get; set; } = string.Empty;
+        [SpoilerName("Ganons Castle Boss Key"), RestrictEnumValues<EBossKeyCondition>, ConvertValue(typeof(GanonBossKeyConditionConverter))]
+        public string GanonBossKeyCondition { get; set; } = string.Empty;
+        [ComboConverter<int>(["Ganons Castle Boss Key",
             "Ganons Castle Boss Key Stones Required",
             "Ganons Castle Boss Key Medallions Required",
             "Ganons Castle Boss Key Dungeon Rewards Required",
             "Ganons Castle Boss Key Dungeons Required",
-            "Ganons Castle Boss Key Skull Tokens Required",
-            "Ganons Castle Boss Key Greg Wildcard"],
+            "Ganons Castle Boss Key Skull Tokens Required"],
             typeof(GanonCastleBossKeyComboConverter))]
-        public string GanonsCastleBossKeyValues { get; set; } = string.Empty;
+        public int GanonBossKeyValue { get; set; } = 0;
+        [SpoilerName("Ganons Castle Boss Key Greg Wildcard"), ConvertValue(typeof(GregConverter))]
+        public string GanonBossKeyGregModifier { get; set; } = string.Empty;
         #endregion
         #region DUNGEONS
         [SpoilerName("Maps and Compasses"), RestrictEnumValues<EMapAndCompass>]
         public string MapsAndCompasses { get; set; } = string.Empty;
         [SpoilerName("Bottom of the Well Keyring"), ConvertValue(typeof(YesNoToBool))]
-        public bool BottomOfTheWellKeyring { get; set; } = false;
+        public bool BottomOfTheWellKeyrings { get; set; } = false;
         [SpoilerName("Forest Temple Keyring"), ConvertValue(typeof(YesNoToBool))]
-        public bool ForestTempleKeyring { get; set; } = false;
+        public bool ForestTempleKeyrings { get; set; } = false;
         [SpoilerName("Fire Temple Keyring"), ConvertValue(typeof(YesNoToBool))]
-        public bool FireTempleKeyring { get; set; } = false;
+        public bool FireTempleKeyrings { get; set; } = false;
         [SpoilerName("Water Temple Keyring"), ConvertValue(typeof(YesNoToBool))]
-        public bool WaterTempleKeyring { get; set; } = false;
+        public bool WaterTempleKeyrings { get; set; } = false;
         [SpoilerName("Shadow Temple Keyring"), ConvertValue(typeof(YesNoToBool))]
-        public bool ShadowTempleKeyring { get; set; } = false;
+        public bool ShadowTempleKeyrings { get; set; } = false;
         [SpoilerName("Spirit Temple Keyring"), ConvertValue(typeof(YesNoToBool))]
-        public bool SpiritTempleKeyring { get; set; } = false;
+        public bool SpiritTempleKeyrings { get; set; } = false;
         [SpoilerName("Gerudo Fortress Keyring"), ConvertValue(typeof(YesNoToBool))]
-        public bool GerudoFortressKeyring { get; set; } = false;
+        public bool GerudoFortressKeyrings { get; set; } = false;
         [SpoilerName("Gerudo Training Ground Keyring"), ConvertValue(typeof(YesNoToBool))]
-        public bool GerudoTrainingGroundKeyring { get; set; } = false;
+        public bool GerudoTrainingGroundsKeyrings { get; set; } = false;
         [SpoilerName("Ganon's Castle Keyring"), ConvertValue(typeof(YesNoToBool))]
-        public bool GanonsCastleKeyring { get; set; } = false;
-        [SpoilerName("Fortress Carpenters"), RestrictEnumValues<ECarpenters>]
+        public bool GanonsCastleKeyrings { get; set; } = false;
+        [SpoilerName("Fortress Carpenters"), RestrictEnumValues<ECarpenters>, ConvertValue(typeof(CarpentersConverter))]
         public string FortressCarpenters { get; set; } = string.Empty;
         #endregion
         #region SANITY
-        [SpoilerName("Shuffle Master Sword"), RestrictEnumValues<EYesNo>]
-        public string ShuffleMasterSword { get; set; } = string.Empty;
-        [SpoilerName("Shuffle Kokiri Sword"), RestrictEnumValues<EYesNo>]
-        public string ShuffleKokiriSword { get; set; } = string.Empty;
-        [SpoilerName("Shuffle Tokens"), RestrictEnumValues<ELocationSanity>]
-        public string ShuffleTokens { get; set; } = string.Empty;
-        [SpoilerName("Shuffle Freestanding Items"), RestrictEnumValues<ELocationSanity>]
-        public string ShuffleFreestandingItems { get; set; } = string.Empty;
-        [SpoilerName("Shuffle Pots"), RestrictEnumValues<ELocationSanity>]
-        public string ShufflePots { get; set; } = string.Empty;
-        [SpoilerName("Shuffle Crates"), RestrictEnumValues<ELocationSanity>]
-        public string ShuffleCrates { get; set; } = string.Empty;
-        [SpoilerName("Shuffle Grass"), RestrictEnumValues<ELocationSanity>]
-        public string ShuffleGrass { get; set; } = string.Empty;
-        [SpoilerName("Shuffle Fish"), RestrictEnumValues<EFishSanity>]
-        public string ShuffleFish { get; set; } = string.Empty;
+        [SpoilerName("Shuffle Master Sword"), RestrictEnumValues<EYesNo>, ConvertValue(typeof(YesNoToVanillaShuffled))]
+        public string MasterSwordSanity { get; set; } = string.Empty;
+        [SpoilerName("Shuffle Kokiri Sword"), RestrictEnumValues<EYesNo>, ConvertValue(typeof(YesNoToVanillaShuffled))]
+        public string KokiriSwordSanity { get; set; } = string.Empty;
+        [SpoilerName("Shuffle Tokens"), RestrictEnumValues<ELocationSanity>, ConvertValue(typeof(LocationConverter))]
+        public string Tokensanity { get; set; } = string.Empty;
+        [SpoilerName("Shuffle Freestanding Items"), RestrictEnumValues<ELocationSanity>, ConvertValue(typeof(LocationConverter))]
+        public string Freestandingsanity { get; set; } = string.Empty;
+        [SpoilerName("Shuffle Pots"), RestrictEnumValues<ELocationSanity>, ConvertValue(typeof(LocationConverter))]
+        public string Potsanity { get; set; } = string.Empty;
+        [SpoilerName("Shuffle Crates"), RestrictEnumValues<ELocationSanity>, ConvertValue(typeof(LocationConverter))]
+        public string Cratesanity { get; set; } = string.Empty;
+        [SpoilerName("Shuffle Grass"), RestrictEnumValues<ELocationSanity>, ConvertValue(typeof(LocationConverter))]
+        public string Grasssanity { get; set; } = string.Empty;
+        [SpoilerName("Shuffle Fish"), RestrictEnumValues<EFishSanity>, ConvertValue(typeof(LocationConverter))]
+        public string Fishsanity { get; set; } = string.Empty;
         [SpoilerName("Shuffle Beehives"), ConvertValue(typeof(YesNoToBool))]
-        public bool ShuffleBeehives { get; set; } = false;
+        public bool Beehivesanity { get; set; } = false;
         [SpoilerName("Shuffle Cows"), ConvertValue(typeof(YesNoToBool))]
-        public bool ShuffleCows { get; set; } = false;
+        public bool Cowsanity { get; set; } = false;
         [SpoilerName("Shuffle Trees"), ConvertValue(typeof(YesNoToBool))]
-        public bool ShuffleTrees { get; set; } = false;
-        [SpoilerName("Shuffle Boss Souls"), RestrictEnumValues<EBossSanity>]
-        public string ShuffleBossSouls { get; set; } = string.Empty;
+        public bool Treesanity { get; set; } = false;
+        [SpoilerName("Shuffle Boss Souls"), RestrictEnumValues<EBossSanity>, ConvertValue(typeof(BossSoulsConverter))]
+        public string BossSoulSanity { get; set; } = string.Empty;
         [SpoilerName("Shuffle Frog Song Rupees"), ConvertValue(typeof(YesNoToBool))]
-        public bool ShuffleFrogSongRupees { get; set; } = false;
-        [SpoilerName("Shuffle Ocarinas"), RestrictEnumValues<EYesNo>]
-        public string ShuffleOcarinas { get; set; } = string.Empty;
+        public bool Frogsanity { get; set; } = false;
+        [SpoilerName("Shuffle Ocarinas"), RestrictEnumValues<EYesNo>, ConvertValue(typeof(YesNoToVanillaShuffled))]
+        public string Ocarinasanity { get; set; } = string.Empty;
         [SpoilerName("Shuffle Ocarina Buttons"), ConvertValue(typeof(YesNoToBool))]
-        public bool ShuffleOcarinaButtons { get; set; } = false;
+        public bool OcarinaButtonSanity { get; set; } = false;
         [SpoilerName("Shuffle Fairies in Fountains"), ConvertValue(typeof(YesNoToBool))]
-        public bool ShuffleFairiesinFountains { get; set; } = false;
+        public bool FairysanityFountains { get; set; } = false;
         [SpoilerName("Shuffle Gossip Stone Fairies"), ConvertValue(typeof(YesNoToBool))]
-        public bool ShuffleGossipStoneFairies { get; set; } = false;
+        public bool FairysanityStones { get; set; } = false;
         [SpoilerName("Shuffle Bean Fairies"), ConvertValue(typeof(YesNoToBool))]
-        public bool ShuffleBeanFairies { get; set; } = false;
+        public bool FairysanityBeans { get; set; } = false;
         [SpoilerName("Shuffle Fairy Spots"), ConvertValue(typeof(YesNoToBool))]
-        public bool ShuffleFairySpots { get; set; } = false;
+        public bool FairysanitySongs { get; set; } = false;
         #endregion
-        #region ITEMS
+        #region POOL
+        [JsonPropertyName("poolBalancing")]
         [SpoilerName("Item Pool"), RestrictEnumValues<EItemPool>]
         public string ItemPool { get; set; } = string.Empty;
-        [SpoilerName("Shuffle Child's Wallet"), RestrictEnumValues<EYesNo>]
-        public string ShuffleChildsWallet { get; set; } = string.Empty;
-        [SpoilerName("Shuffle Tycoon Wallet"), RestrictEnumValues<EYesNo>]
-        public string ShuffleTycoonWallet { get; set; } = string.Empty;
-        [SpoilerName("Shuffle Swim"), RestrictEnumValues<EYesNo>]
-        public string ShuffleSwim { get; set; } = string.Empty;
-        [SpoilerName("Shuffle Deku Nut Bag"), RestrictEnumValues<EYesNo>]
-        public string ShuffleDekuNutBag { get; set; } = string.Empty;
-        [SpoilerName("Bombchu Bag"), RestrictEnumValues<EBombchuBag>]
-        public string ShuffleBombchuBag { get; set; } = string.Empty;
-        [SpoilerName("Shuffle Weird Egg"), RestrictEnumValues<EYesNo>]
-        public string ShuffleWeirdEgg { get; set; } = string.Empty;
-        [SpoilerName("Shuffle Adult Trade Items"), RestrictEnumValues<EYesNo>] 
-        public string ShuffleAdultTradeItems { get; set; } = string.Empty;
-        [SpoilerName("Shuffle Gerudo Membership Card"), RestrictEnumValues<EYesNo>] 
-        public string ShuffleGerudoMembershipCard { get; set; } = string.Empty;
-        [SpoilerName("Shuffle Fishing Pole"), RestrictEnumValues<EYesNo>] 
-        public string ShuffleFishingPole { get; set; } = string.Empty;
-        [SpoilerName("Skeleton Key"), RestrictEnumValues<EYesNo>] 
+        [SpoilerName("Shuffle Child's Wallet"), RestrictEnumValues<EYesNo>, ConvertValue(typeof(YesNoToStartWithShuffled))]
+        public string ChildWallet { get; set; } = string.Empty;
+        [SpoilerName("Shuffle Tycoon Wallet"), RestrictEnumValues<EYesNo>, ConvertValue(typeof(YesNoToAddedWithout))]
+        public string TycoonWallet { get; set; } = string.Empty;
+        [SpoilerName("Shuffle Swim"), RestrictEnumValues<EYesNo>, ConvertValue(typeof(YesNoToStartWithShuffled))]
+        public string BronzeScale { get; set; } = string.Empty;
+        [SpoilerName("Shuffle Deku Stick Bag"), RestrictEnumValues<EYesNo>, ConvertValue(typeof(YesNoToStartWithShuffled))]
+        public string StickBag { get; set; } = string.Empty;
+        [SpoilerName("Shuffle Deku Nut Bag"), RestrictEnumValues<EYesNo>, ConvertValue(typeof(YesNoToStartWithShuffled))]
+        public string NutBag { get; set; } = string.Empty;
+        [SpoilerName("Bombchu Bag"), RestrictEnumValues<EBombchuBag>, ConvertValue(typeof(BombchuBagConverter))]
+        public string BombchuBag { get; set; } = string.Empty;
+        [SpoilerName("Shuffle Weird Egg"), RestrictEnumValues<EYesNo>, ConvertValue(typeof(YesNoToVanillaShuffled))]
+        public string WeirdEgg { get; set; } = string.Empty;
+        [SpoilerName("Shuffle Adult Trade Items"), RestrictEnumValues<EYesNo>, ConvertValue(typeof(AdultTradeConverter))] 
+        public string AdultTrade { get; set; } = string.Empty;
+        [SpoilerName("Shuffle Gerudo Membership Card"), RestrictEnumValues<EYesNo>, ConvertValue(typeof(YesNoToVanillaShuffled))] 
+        public string GerudoCard { get; set; } = string.Empty;
+        [SpoilerName("Shuffle Fishing Pole"), RestrictEnumValues<EYesNo>, ConvertValue(typeof(YesNoToStartWithShuffled))] 
+        public string FishingPole { get; set; } = string.Empty;
+        [SpoilerName("Skeleton Key"), RestrictEnumValues<EYesNo>, ConvertValue(typeof(YesNoToAddedWithout))] 
         public string SkeletonKey { get; set; } = string.Empty;
-        [SpoilerName("Roc's Feather"), RestrictEnumValues<EYesNo>] 
+        [SpoilerName("Roc's Feather"), RestrictEnumValues<EYesNo>, ConvertValue(typeof(YesNoToAddedWithout))] 
         public string RocsFeather { get; set; } = string.Empty;
         [SpoilerName("Shuffle Dungeon Rewards")] 
-        public string ShuffleDungeonRewards { get; set; } = string.Empty;
+        public string DungeonRewards { get; set; } = string.Empty;
         #endregion
         #region SHOPS
         [SpoilerName("Shuffle Shops"), ConvertValue(typeof(YesNoToBool))] 
         public bool ShuffleShops { get; set; } = false;
-        [SpoilerName("Shuffle Shops Item Amount")] 
-        public string ShuffleShopsItemAmount { get; set; } = string.Empty;
+        [SpoilerName("Shuffle Shops Item Amount"), ConvertValue(typeof(StringToInt))] 
+        public int ShuffleShopsItems { get; set; } = 0;
         [SpoilerName("Shuffle Scrubs")] 
         public string ShuffleScrubs { get; set; } = string.Empty;
-        [SpoilerName("Shuffle Merchants"), RestrictEnumValues<EMerchantSanity>] 
+        [SpoilerName("Shuffle Merchants"), RestrictEnumValues<EMerchantSanity>, ConvertValue(typeof(MerchantConverter))] 
         public string ShuffleMerchants { get; set; } = string.Empty;
         #endregion
-        #region SKIP&TRAPS
+        #region EXTRA
         [SpoilerName("Shuffle 100 GS Reward"), ConvertValue(typeof(YesNoToBool))] 
-        public bool Shuffle100GSReward { get; set; } = false;
+        public bool Token100 { get; set; } = false;
         [SpoilerName("Skip Child Zelda"), ConvertValue(typeof(YesNoToBool))] 
         public bool SkipChildZelda { get; set; } = false;
         [SpoilerName("Skip Epona Race"), ConvertValue(typeof(YesNoToBool))] 
         public bool SkipEponaRace { get; set; } = false;
         [SpoilerName("Ice Trap Count"), ConvertValue(typeof(StringToInt))] 
-        public int IceTrapCount { get; set; } = 0;
+        public int IceTrapsCount { get; set; } = 0;
         [SpoilerName("Ice Trap Filler Replacement Count"), ConvertValue(typeof(StringToInt))] 
-        public int IceTrapFillerReplacementCount { get; set; } = 0;
+        public int IceTrapsPercent { get; set; } = 0;
         #endregion
-        
-        #region MISC
+        #region QOL
         [SpoilerName("Full Wallets"), ConvertValue(typeof(YesNoToBool))] 
         public bool FullWallets { get; set; } = false;
-        [SpoilerName("Infinite Upgrades"), RestrictEnumValues<EInfiniteUpgrade>] 
+        [SpoilerName("Infinite Upgrades"), RestrictEnumValues<EInfiniteUpgrade>, ConvertValue(typeof(InfiniteUpgradesConverter))] 
         public string InfiniteUpgrades { get; set; } = string.Empty;
         #endregion
         public static string ConvertFromForestToDekuTreeColumn(string spoilerValue) => spoilerValue switch
@@ -209,7 +213,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
             _=> "unknown"
         };
 
-        public SOHOption(Dictionary<string, string> opt)
+        public SOHOption(string name, Dictionary<string, string> opt):base(name)
         {
             GameOptionsDictionnary = opt;
         }

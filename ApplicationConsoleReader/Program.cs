@@ -69,7 +69,7 @@ Console.WriteLine("#--------------------------#");
 Console.WriteLine();
 Console.WriteLine("#--------------------------#");
 Console.WriteLine("These players play Ship of Harkinian");
-foreach(var item in archipOptions.SOHOptions)
+foreach(var item in archipOptions.SOHOptionsList)
 {
     Console.WriteLine(item.PlayerName);
 }

@@ -9,13 +9,16 @@ namespace NoNiDev.ApplicationConsoleReader
     {
         public static async Task SendOptions(ArchipelagoOption options, string apiUrl)
         {
-            List<SOHPlayerOptions> optionsToSend = new();
-            foreach(var item in options.SOHOptions)
+            List<SOHOption> optionsToSend = new();
+            foreach(var item in options.SOHOptionsList)
             {
-                Console.WriteLine($"Player {item.PlayerName}, send this slot ?");
-                if (UserReader.GetUserAnswer())
+                if (item is SOHOption itemSOH)
                 {
-                    optionsToSend.Add(item);
+                    Console.WriteLine($"Player {item.PlayerName}, send this slot ?");
+                    if (UserReader.GetUserAnswer())
+                    {
+                        optionsToSend.Add(itemSOH);
+                    }
                 }
             }
 
@@ -92,7 +95,7 @@ namespace NoNiDev.ApplicationConsoleReader
             
 
         }
-        private static async Task SentToApiAsync(SOHPlayerOptions optionToSend, string api)
+        private static async Task SentToApiAsync(SOHOption optionToSend, string api)
         {
             var options = new JsonSerializerOptions
             {
@@ -100,7 +103,7 @@ namespace NoNiDev.ApplicationConsoleReader
                 WriteIndented = true
             };
             
-            string jsonString = JsonSerializer.Serialize<SOHPlayerOptions>(optionToSend, options);
+            string jsonString = JsonSerializer.Serialize<SOHOption>(optionToSend, options);
             using var client = new HttpClient();
             using var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
             var response = await client.PostAsync(api, content);

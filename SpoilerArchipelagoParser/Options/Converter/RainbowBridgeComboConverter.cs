@@ -4,18 +4,18 @@ using System.Text;
 
 namespace NoNiDev.SpoilerArchipelagoParser.Options.Converter
 {
-    public class RainbowBridgeComboConverter : IComboConverter<string>
+    public class RainbowBridgeComboConverter : IComboConverter<int>
     {
-        public string Convert(Dictionary<string, object> values) => values["Rainbow Bridge"] switch
+        public int Convert(Dictionary<string, object> values) => values["Rainbow Bridge"] switch
         {
-            "Vanilla" => "2",
-            "Always_Open" => "0",
-            "Stones" => values["Rainbow Bridge Stones Required"] as string ?? string.Empty,
-            "Medallions" => values["Rainbow Bridge Medallions Required"] as string ?? string.Empty,
-            "Dungeon Rewards" => values["Rainbow Bridge Dungeon Rewards Required"] as string ?? string.Empty,
-            "Dungeons" => values["Rainbow Bridge Dungeons Required"] as string ?? string.Empty,
-            "Tokens" => values["Rainbow Bridge Skull Tokens Required"] as string ?? string.Empty,
-            "Greg" => values["Rainbow Bridge Greg Modifier"] as string ?? string.Empty,
+            "Vanilla"           => 2,
+            "Always_Open"       => 0,
+            "Stones"            => int.Parse((string)values["Rainbow Bridge Stones Required"]),
+            "Medallions"        => int.Parse((string)values["Rainbow Bridge Medallions Required"]),
+            "Dungeon Rewards"   => int.Parse((string)values["Rainbow Bridge Dungeon Rewards Required"]),
+            "Dungeons"          => int.Parse((string)values["Rainbow Bridge Dungeons Required"]),
+            "Tokens"            => int.Parse((string)values["Rainbow Bridge Skull Tokens Required"]),
+            "Greg"              => 1,//int.Parse((string)values["Rainbow Bridge Greg Modifier"]),
             _ => throw new KeyNotFoundException($"Cannont find key \"{values["Rainbow Bridge"]}\" in the dictionnary for {this.GetType().Name}")
         };
     }

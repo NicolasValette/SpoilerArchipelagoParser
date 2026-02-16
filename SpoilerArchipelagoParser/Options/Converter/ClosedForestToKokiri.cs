@@ -9,7 +9,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.Converter
         public string Convert(string spoilerValue) => spoilerValue switch
         {
             "On" => "Closed",
-            "Deku only" => "Open",
+            "Deku Only" => "Open",
             "Off" => "Open",
             _ => "unknown"
         };
@@ -20,7 +20,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.Converter
         public string Convert(string spoilerValue) => spoilerValue switch
         {
             "On" => "Closed",
-            "Deku only" => "Closed",
+            "Deku Only" => "Closed",
             "Off" => "Open",
             _ => "unknown"
         };

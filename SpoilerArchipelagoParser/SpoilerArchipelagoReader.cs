@@ -67,7 +67,7 @@ namespace NoNiDev.SpoilerArchipelagoParser
                     _players.Add(playerName);
                     try
                     { 
-                        if (ReadPlayerOptions(line, spoilerFile) is SOHPlayerOptions player)
+                        if (ReadPlayerOptions(line, spoilerFile) is SOHOption player)
                         {
                             listOptions.Add(player);
                         }
@@ -84,7 +84,7 @@ namespace NoNiDev.SpoilerArchipelagoParser
         }
 
 
-        private Options.GameOptions ReadPlayerOptions(string currentLine, StreamReader spoilerFile)
+        private GameOptions ReadPlayerOptions(string currentLine, StreamReader spoilerFile)
         {
             string playerName = currentLine.Trim().Split(':', StringSplitOptions.TrimEntries)[1];
             string? line = spoilerFile.ReadLine();
@@ -97,8 +97,8 @@ namespace NoNiDev.SpoilerArchipelagoParser
             {
                 Dictionary<string, string> options = ReadSOHOptions(spoilerFile);
 
-                Options.GameOptions option = GetGameOptions(game[1], playerName, options);
-                
+                GameOptions option = GetGameOptions(game[1], playerName, options);
+                options.Add("Game", game[1]);
                 var context = new ValidationContext(option);
                 var errors = new List<ValidationResult>();
                 if (Validator.TryValidateObject(option, context, errors, true))

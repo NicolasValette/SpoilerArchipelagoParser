@@ -111,20 +111,29 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
 
                         //   RequestResponse = "Send " + item.PlayerName;
                         var opt = optionToSend.GetSOHOptions(item.PlayerName);
-                        opt.PlayerName = item.PlayerToSend.ToString();
-                        var options = new JsonSerializerOptions
+                        if (opt is SOHOption sohOption)
                         {
-                            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                            WriteIndented = true
-                        };
-                        string jsonString = JsonSerializer.Serialize<SOHPlayerOptions>(opt, options);
-                        using var client = new HttpClient();
-                        using var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
-                        var response = await client.PostAsync(SoharAPIVM.ApiURL, content);
-                        var responseText = await response.Content.ReadAsStringAsync();
-                        MessageBox.Show(responseText);
 
-                        ApiCallName = "Request Succeed";
+                            opt.PlayerName = item.PlayerToSend.ToString();
+                            var options = new JsonSerializerOptions
+                            {
+                                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                                WriteIndented = true
+                            };
+                            string jsonString = JsonSerializer.Serialize<SOHOption>(sohOption, options);
+                            using var client = new HttpClient();
+                            using var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
+                            var response = await client.PostAsync(SoharAPIVM.ApiURL, content);
+                            var responseText = await response.Content.ReadAsStringAsync();
+                            MessageBox.Show(responseText);
+
+                            ApiCallName = "Request Succeed";
+                        }
+                        else
+                        {
+                            ApiCallName = "Failed";
+
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -176,7 +185,7 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
             optionToSend = spoilerReader.ReadSpoiler(sr);
             
             Players.Clear();
-            foreach (var item in optionToSend.SOHOptions)
+            foreach (var item in optionToSend.SOHOptionsList)
             {
                 Players.Add(new SOHARPlayerLineViewModel(item.PlayerName));
             }

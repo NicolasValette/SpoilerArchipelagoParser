@@ -13,7 +13,9 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options
 {
     public abstract class GameOptions
     {
-
+        [SpoilerName("Game")]
+        public string Game { get; set; } = string.Empty;
+        [NotParserValue]
         [JsonPropertyName("joueur")]
         public string PlayerName { get; set; } = string.Empty;
         [NotParserValue]
@@ -28,12 +30,13 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options
         [JsonIgnore]
         public Dictionary<string, ComboField> ComboProp { get; protected set; } = [];
 
-        public GameOptions()
+        public GameOptions(string name)
         {
+            PlayerName = name;
             foreach (var prop in this.GetType().GetProperties())
             {
                 if (prop.GetCustomAttribute<NotParserValueAttribute>() != null) continue;
-                var comboAttributes = prop.GetCustomAttribute<ComboConverterAttribute<string>>();
+                var comboAttributes = prop.GetCustomAttribute<ComboConverterAttribute<int>>();
                 if (comboAttributes != null)
                 {
                     ComboField comboField = new ComboField();
@@ -77,7 +80,6 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options
                     RestrictValuesBaseAttribute boolValidAttribute = new RestrictIntValuesAttribute();
                     field.IsValid = boolValidAttribute.IsValid;
                 }
-                //string name = attributes is not null ? attributes.SpoilerName : prop.Name;
                 Prop.Add(prop.Name, field);
             }
         }
@@ -109,7 +111,6 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options
                         spoilerValueCast = method.Invoke(instance, new object[] { spoilerValue });
                     }
                 }
-                //object spoilerValueCast = item.Value.Converter?.Convert(spoilerValue) ?? spoilerValue;
                 this.GetType().GetProperty(item.Key.Replace(" ", string.Empty))?.SetValue(this, spoilerValueCast);
             }
             foreach (var item in ComboProp)
@@ -121,7 +122,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options
                     GameOptionsDictionnary.TryGetValue(spoilerName, out string? spoilerValue);
                     values.Add(spoilerName, spoilerValue ?? string.Empty);
                 }
-                string convertedValue = item.Value.Converter?.Convert(values) ?? string.Empty;
+                int? convertedValue = item.Value.Converter?.Convert(values);
                 this.GetType().GetProperty(item.Key.Replace(" ", string.Empty))?.SetValue(this, convertedValue);
             }
         }

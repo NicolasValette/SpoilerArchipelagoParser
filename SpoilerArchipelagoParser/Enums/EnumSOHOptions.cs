@@ -54,7 +54,8 @@ namespace NoNiDev.SpoilerArchipelagoParser.Enums
         Stones,
         Medallions,
         Dungeon_Rewards,
-        Token,
+        Dungeons,
+        Tokens,
         Greg
     }
     public enum EBossKeyCondition
@@ -66,7 +67,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.Enums
         LACS_MEdallions,
         LACS_Rewards,
         LACS_Dungeons,
-        LACS_Token
+        LACS_Tokens
     }
     #endregion
     #region DUNGEONS
@@ -133,7 +134,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.Enums
     {
         None,
         Single_Bag,
-        Progressive_Bag
+        Progressive_Bags
     }
     #endregion
     #region SHOPS
@@ -143,7 +144,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.Enums
     public enum EMerchantSanity
     {
         Off,
-        Only_Beans,
+        Bean_Merchant_Only,
         All_But_Beans,
         All
     }
@@ -168,7 +169,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.Enums
     {
         Off,
         Progressive,
-        Condensed
+        Condensed_Progressive
     }
     #endregion
 

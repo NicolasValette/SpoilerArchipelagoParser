@@ -42,8 +42,8 @@ namespace SOHParserTest
             try
             {
                 var option = spoilerReader.ReadSpoiler(stream);
-                SOHOption sohOption = new SOHOption(option.SOHOptions[0].GameOptionsDictionnary);
-                sohOption.Process();
+                SOHOption sohOption = new SOHOption(option.SOHOptionsList[0].PlayerName,option.SOHOptionsList[0].GameOptionsDictionnary);
+               
                  
                 var options = new JsonSerializerOptions
                 {
