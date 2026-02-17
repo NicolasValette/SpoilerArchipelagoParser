@@ -325,6 +325,7 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
                     APIToRandoStat.InitURL(RandoStatAPIVM.ApiURL);
                     foreach (var game in _missingGames)
                     {
+                        ApiCallName = $"Calling Add Jeux : {game}";
                         var response = await APIToRandoStat.AddGame(game);
                     }
                     ApiCallName = "Request suceed";
@@ -364,7 +365,18 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
             foreach (var item in _option.RandoStats.Slots)
             {
                 //Players.Add(item.PlayerName);
-                var slot = new RandoSlotViewModel(item.Name, item.Game, item.LocationCount, GameListContainsGameName);
+                var slot = new RandoSlotViewModel(item.Name, item.Game, item.LocationCount, GameListContainsGameName,
+                (str) =>
+                {
+                    if (_missingGames.Contains(str))
+                    {
+                        _missingGames.Remove(str);
+                    }
+                    else
+                    {
+                        _missingGames.Add(str);
+                    }
+                });
                 if (item.Game.Contains("MANUAL",StringComparison.InvariantCultureIgnoreCase))
                 {
                     slot.IsManualCheckboxEnabled = true;

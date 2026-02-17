@@ -10,6 +10,7 @@ namespace NoNiDev.ArchipelagoParser.ViewModel.CustomUserControl
     class RandoSlotViewModel : NotifyableViewModel
     {
         private Func<string, bool> _gameListContainsGameName;
+        private Action<string> IsManualToggle;
         #region Properties
         public ObservableCollection<string> PlayerNames
         {
@@ -103,6 +104,7 @@ namespace NoNiDev.ArchipelagoParser.ViewModel.CustomUserControl
                 {
                     IsInGameList = false;
                 }
+                IsManualToggle?.Invoke(Game);
                 NotifyPropertyChanged();
             }
         }
@@ -118,7 +120,7 @@ namespace NoNiDev.ArchipelagoParser.ViewModel.CustomUserControl
         public string IsManualCheckboxStr => IsManualCheckboxEnabled.ToString();
         #endregion
 
-        public RandoSlotViewModel(string slot, string game, int checks, Func<string, bool> gameListContainsGameName)
+        public RandoSlotViewModel(string slot, string game, int checks, Func<string, bool> gameListContainsGameName, Action<string> isManualToggle)
         {
             IsManual = false;
             IsManualCheckboxEnabled = false;
@@ -128,7 +130,7 @@ namespace NoNiDev.ArchipelagoParser.ViewModel.CustomUserControl
             Game = game;
             Checks = checks;
             _gameListContainsGameName = gameListContainsGameName;
-
+            IsManualToggle = isManualToggle;
 
             RandoStatsViewModel.OnNameListUpdated += UpdateNamesList;
         }

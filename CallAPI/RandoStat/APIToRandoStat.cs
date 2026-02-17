@@ -56,7 +56,7 @@ namespace NoNiDev.CallAPI.RandoStat
 
             RandoStatDataGeneric randoStat = new RandoStatDataGeneric
             {
-                Action = RandoStatAction.AddJeu,
+                Action = RandoStatAction.addJeu,
                 Payload = new PayloadGeneric
                 {
                     Name = gameName
