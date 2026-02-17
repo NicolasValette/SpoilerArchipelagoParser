@@ -11,6 +11,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
     [Game("Ship of Harkinian")]
     public class SOHOption : GameOptions
     {
+       
         #region PLAYER
         [NotParserValue]
         public string Goal
@@ -212,10 +213,9 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
             "off" => "Open",
             _=> "unknown"
         };
-
-        public SOHOption(string name, Dictionary<string, string> opt):base(name)
+        public SOHOption(string name, Dictionary<string, string> opt) : base(name, opt)
         {
-            GameOptionsDictionnary = opt;
         }
+
     }
 }

@@ -1,4 +1,6 @@
 ﻿using NoNiDev.SpoilerArchipelagoParser;
+using NoNiDev.SpoilerArchipelagoParser.Options;
+using NoNiDev.SpoilerArchipelagoParser.Options.OWOptions;
 using NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions;
 using System.Text.Json;
 
@@ -42,7 +44,7 @@ namespace SOHParserTest
             try
             {
                 var option = spoilerReader.ReadSpoiler(stream);
-                SOHOption sohOption = new SOHOption(option.SOHOptionsList[0].PlayerName,option.SOHOptionsList[0].GameOptionsDictionnary);
+                //SOHOption sohOption = new SOHOption(option.SOHOptionsList[0].PlayerName,option.SOHOptionsList[0].GameOptionsDictionnary);
                
                  
                 var options = new JsonSerializerOptions
@@ -50,8 +52,16 @@ namespace SOHParserTest
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                     WriteIndented = true
                 };
+                foreach(GameOptions opt in option.SOHOptionsList)
+                {
+                    string jsonString = string.Empty;
+                    if (opt is SOHOption sohOption)
+                        jsonString = JsonSerializer.Serialize<SOHOption>(sohOption, options);
+                    else if (opt is OWOption owOption)
+                        jsonString = JsonSerializer.Serialize<OWOption>(owOption, options);
+                }
                 
-                string jsonString = JsonSerializer.Serialize<SOHOption>(sohOption, options);
+
             }
             catch (Exception ex)
             {

@@ -67,7 +67,7 @@ namespace NoNiDev.SpoilerArchipelagoParser
                     _players.Add(playerName);
                     try
                     { 
-                        if (ReadPlayerOptions(line, spoilerFile) is SOHOption player)
+                        if (ReadPlayerOptions(line, spoilerFile) is GameOptions player)
                         {
                             listOptions.Add(player);
                         }

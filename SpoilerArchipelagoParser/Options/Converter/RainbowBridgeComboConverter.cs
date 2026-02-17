@@ -9,7 +9,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.Converter
         public int Convert(Dictionary<string, object> values) => values["Rainbow Bridge"] switch
         {
             "Vanilla"           => 2,
-            "Always_Open"       => 0,
+            "Always Open"       => 0,
             "Stones"            => int.Parse((string)values["Rainbow Bridge Stones Required"]),
             "Medallions"        => int.Parse((string)values["Rainbow Bridge Medallions Required"]),
             "Dungeon Rewards"   => int.Parse((string)values["Rainbow Bridge Dungeon Rewards Required"]),
