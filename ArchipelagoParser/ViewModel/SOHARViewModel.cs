@@ -6,6 +6,8 @@ using System.Text.Json;
 using System.Windows;
 using NoNiDev.ArchipelagoParser.ViewModel.CustomUserControl;
 using NoNiDev.SpoilerArchipelagoParser;
+using NoNiDev.SpoilerArchipelagoParser.Options;
+using NoNiDev.SpoilerArchipelagoParser.Options.OWOptions;
 using NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions;
 
 namespace NoNiDev.ArchipelagoParser.ViewModel
@@ -111,7 +113,7 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
 
                         //   RequestResponse = "Send " + item.PlayerName;
                         var opt = optionToSend.GetSOHOptions(item.PlayerName);
-                        if (opt is SOHOption sohOption)
+                        if (opt is GameOptions sohOption)
                         {
 
                             opt.PlayerName = item.PlayerToSend.ToString();
@@ -120,7 +122,11 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
                                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                                 WriteIndented = true
                             };
-                            string jsonString = JsonSerializer.Serialize<SOHOption>(sohOption, options);
+                            string jsonString = string.Empty;
+                            if (opt is SOHOption optsoh)
+                                 jsonString = JsonSerializer.Serialize<SOHOption>(optsoh, options);
+                            else if (opt is OWOption optow)
+                                jsonString = JsonSerializer.Serialize<OWOption>(optow, options);
                             using var client = new HttpClient();
                             using var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
                             var response = await client.PostAsync(SoharAPIVM.ApiURL, content);
