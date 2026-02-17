@@ -76,5 +76,29 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.Converter
             _ => spoilerValue
         };
     }
+    public class ScrubsCoverter : IConverter<string, string>
+    {
+        public string Convert(string spoilerValue) => spoilerValue switch
+        {
+            "Off" => "None",
+            _ => spoilerValue
+        };
+    }
+    public class RainbowBridgeConditionCoverter : IConverter<string, string>
+    {
+        public string Convert(string spoilerValue) => spoilerValue switch
+        {
+            "Always Open" => "Open",
+            _ => spoilerValue
+        };
+    }
+    public class ZoraFountainCoverter : IConverter<string, string>
+    {
+        public string Convert(string spoilerValue) => spoilerValue switch
+        {
+            "Closed As Child" => "Closed for Child",
+            _ => spoilerValue
+        };
+    }
 
 }

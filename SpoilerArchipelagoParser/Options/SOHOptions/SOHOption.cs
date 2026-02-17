@@ -46,7 +46,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
         public string DoorOfTime { get; set; } = string.Empty;
         [SpoilerName("Sleeping Waterfall"), RestrictEnumValues<EOpenClosed>]
         public string SleepingWaterfall { get; set; } = string.Empty;
-        [SpoilerName("Zora's Domain"), RestrictEnumValues<EOpenClosedClosedAsChild>]
+        [SpoilerName("Zora's Domain"), RestrictEnumValues<EOpenClosedClosedAsChild>, ConvertValue(typeof(ZoraFountainCoverter))]
         public string ZoraFountain { get; set; } = string.Empty;
         [SpoilerName("Jabu-Jabu"), RestrictEnumValues<EOpenClosed>]
         public string JabuJabuMouth { get; set; } = string.Empty;
@@ -56,7 +56,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
         #region GANON
         [SpoilerName("Starting Age"), RestrictEnumValues<EStartingAge>]
         public string StartAge { get; set; } = string.Empty;
-        [SpoilerName("Rainbow Bridge"), RestrictEnumValues<EBridgeCondition>]
+        [SpoilerName("Rainbow Bridge"), RestrictEnumValues<EBridgeCondition>, ConvertValue(typeof(RainbowBridgeConditionCoverter))]
         public string RainbowBridgeCondition { get; set; } = string.Empty;
         [ComboConverter<int>(["Rainbow Bridge",
             "Rainbow Bridge Stones Required", 
@@ -183,7 +183,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
         public bool ShuffleShops { get; set; } = false;
         [SpoilerName("Shuffle Shops Item Amount"), ConvertValue(typeof(StringToInt))] 
         public int ShuffleShopsItems { get; set; } = 0;
-        [SpoilerName("Shuffle Scrubs")] 
+        [SpoilerName("Shuffle Scrubs"), ConvertValue(typeof(ScrubsCoverter))] 
         public string ShuffleScrubs { get; set; } = string.Empty;
         [SpoilerName("Shuffle Merchants"), RestrictEnumValues<EMerchantSanity>, ConvertValue(typeof(MerchantConverter))] 
         public string ShuffleMerchants { get; set; } = string.Empty;

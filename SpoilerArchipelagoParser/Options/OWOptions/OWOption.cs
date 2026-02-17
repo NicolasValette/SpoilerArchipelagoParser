@@ -1,8 +1,6 @@
 ﻿using NoNiDev.SpoilerArchipelagoParser.Attributes;
 using NoNiDev.SpoilerArchipelagoParser.Options.Converter;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using NoNiDev.SpoilerArchipelagoParser.Options.Converter.OuterWildsConverter;
 
 namespace NoNiDev.SpoilerArchipelagoParser.Options.OWOptions
 {
@@ -10,22 +8,24 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.OWOptions
     public class OWOption : GameOptions
     {
         #region PLAYER
+        [ConvertValue(typeof(GoalOWConverter))]
         public string Goal { get;set; } = string.Empty;
         public string Accessibility { get; set; } = string.Empty;
         [SpoilerName("Progression Balancing"), ConvertValue(typeof(StringToInt))]
         public int ProgressionBalancing { get; set; } = 0;
         #endregion
         #region UNIVERSE
+        [ConvertValue(typeof(SpawnConverter))]
         public string Spawn { get; set; } = string.Empty;
-        [SpoilerName("Randomize Coordinates")]
+        [SpoilerName("Randomize Coordinates"), ConvertValue(typeof(YesNoToRandomVanilla))]
         public string EyeCoordinates { get; set; } = string.Empty;
-        [SpoilerName("Randomize Orbits")]
+        [SpoilerName("Randomize Orbits"), ConvertValue(typeof(YesNoToRandomVanilla))]
         public string PlanetOrbits { get; set; } = string.Empty;
-        [SpoilerName("Randomize Rotations")]
+        [SpoilerName("Randomize Rotations"), ConvertValue(typeof(YesNoToRandomVanilla))]
         public string PlanetRotations { get; set; } = string.Empty;
-        [SpoilerName("Randomize Warp Platforms")]
+        [SpoilerName("Randomize Warp Platforms"), ConvertValue(typeof(YesNoToRandomVanilla))]
         public string WarpPlatforms { get; set; } = string.Empty;
-        [SpoilerName("Randomize Dark Bramble Layout")]
+        [SpoilerName("Randomize Dark Bramble Layout"), ConvertValue(typeof(DarkBrambleLayoutConverter))]
         public string Sombronces { get; set; } = string.Empty;
         #endregion
         #region SANITY
