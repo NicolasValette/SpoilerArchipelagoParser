@@ -17,7 +17,7 @@ namespace NoNiDev.SpoilerArchipelagoParser
 
         public SpoilerArchipelagoReader()
         {
-            var types = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.IsSubclassOf(typeof(GameOptions)));
+            var types = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.IsSubclassOf(typeof(Options.GameOptions)));
             foreach (var type in types)
             {
                 var attribute = type.GetCustomAttribute<GameAttribute>();
@@ -27,18 +27,18 @@ namespace NoNiDev.SpoilerArchipelagoParser
                 }
             }
         }
-        private GameOptions GetGameOptions(string gameName, string playerName, Dictionary<string, string> gameOptions)
+        private Options.GameOptions GetGameOptions(string gameName, string playerName, Dictionary<string, string> gameOptions)
         {
             if (!_gameType.ContainsKey(gameName))
                 throw new Exception($"Game {gameName} is not supported.");
-            return (GameOptions) Activator.CreateInstance(_gameType[gameName], new Object[] { playerName, gameOptions });
+            return (Options.GameOptions)Activator.CreateInstance(_gameType[gameName], new Object[] { playerName, gameOptions });
         }
         public ArchipelagoOption ReadSpoiler(StreamReader spoilerFile)
         {
             string? line = "";
             int nbPlayers = 0;
             line = spoilerFile.ReadLine();
-            List<SOHPlayerOptions> listOptions = new List<SOHPlayerOptions>();
+            List<GameOptions> listOptions = new List<GameOptions>();
             if (line == null)
                 throw new Exception("Unexpected error during file reading.");
             if (!line.Trim().Contains("Archipelago", StringComparison.InvariantCultureIgnoreCase))
@@ -67,7 +67,7 @@ namespace NoNiDev.SpoilerArchipelagoParser
                     _players.Add(playerName);
                     try
                     { 
-                        if (ReadPlayerOptions(line, spoilerFile) is SOHPlayerOptions player)
+                        if (ReadPlayerOptions(line, spoilerFile) is SOHOption player)
                         {
                             listOptions.Add(player);
                         }
@@ -96,9 +96,9 @@ namespace NoNiDev.SpoilerArchipelagoParser
             if (game[0].Contains("Game", StringComparison.InvariantCultureIgnoreCase))
             {
                 Dictionary<string, string> options = ReadSOHOptions(spoilerFile);
-                
+
                 GameOptions option = GetGameOptions(game[1], playerName, options);
-                
+                options.Add("Game", game[1]);
                 var context = new ValidationContext(option);
                 var errors = new List<ValidationResult>();
                 if (Validator.TryValidateObject(option, context, errors, true))

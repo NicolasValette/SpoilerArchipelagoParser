@@ -1,35 +1,44 @@
-﻿using System;
+﻿using NoNiDev.SpoilerArchipelagoParser.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace NoNiDev.SpoilerArchipelagoParser.Attributes
 {
-    public class RestrictValuesAttribute : ValidationAttribute
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
+    public class RestrictEnumValuesAttribute<T> : RestrictValuesBaseAttribute where T : Enum
     {
-        private readonly Type _enumType;
-
-        public RestrictValuesAttribute(Type enumType)
+        public override bool IsValid(string value)
         {
-            if (!enumType.IsEnum)
-            {
-                throw new ArgumentException("Type must be an enum.");
-            }
-            _enumType = enumType;
-        }
-
-        protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
-        {
+            
             List<string> names;
             if (value is string str)
             {
-                names = Enum.GetNames(_enumType).Select(x=> x.Replace("_", " ", StringComparison.OrdinalIgnoreCase)).ToList();
+                names = Enum.GetNames(typeof(T)).Select(x=> x.Replace("_", " ", StringComparison.OrdinalIgnoreCase)).ToList();
                 if (names.Any(n => n.Equals(str, StringComparison.OrdinalIgnoreCase)))
                 {
-                    return ValidationResult.Success;
+                    return true;
                 }
             }
-            return new ValidationResult($"The value '{value}' is not valid for enum type '{_enumType.Name}'.");
+
+            return false;
         }
+    }
+    public class RestrictIntValuesAttribute : RestrictValuesBaseAttribute
+    {
+        public override bool IsValid(string value)
+        {
+            return int.TryParse(value, out _);
+        }
+    }
+    public class RestrictBoolValuesAttribute : RestrictEnumValuesAttribute<EYesNo>
+    {
+    }
+
+
+    public abstract class RestrictValuesBaseAttribute : Attribute
+    {
+        public abstract bool IsValid(string value);
     }
 }

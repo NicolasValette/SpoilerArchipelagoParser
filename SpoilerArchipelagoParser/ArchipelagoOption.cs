@@ -1,18 +1,32 @@
-﻿using NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions;
+﻿using NoNiDev.SpoilerArchipelagoParser.Options;
+using NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions;
 using NoNiDev.SpoilerArchipelagoParser.RandoStats;
+using System.Numerics;
 
 namespace NoNiDev.SpoilerArchipelagoParser
 {
-    public class ArchipelagoOption(HashSet<string> playerNames, HashSet<string> games, List<SOHPlayerOptions> sohOptions, RandoStat randoStats)
+    public class ArchipelagoOption
     {
-        public HashSet<string> Players { get; set; } = playerNames;
-        public HashSet<string> Games { get; set; } = games;
-        public List<SOHPlayerOptions> SOHOptions{ get; set; } = sohOptions; 
-        public RandoStat RandoStats { get; set; } = randoStats;
+        public HashSet<string> Players { get; set; } 
+        public HashSet<string> Games { get; set; }
+        public List<GameOptions> SOHOptionsList{ get; set; }
+        public RandoStat RandoStats { get; set; }
 
-        public SOHPlayerOptions GetSOHOptions(string playerName)
+        public ArchipelagoOption(HashSet<string> playerNames, HashSet<string> games, List<GameOptions> sohOptions, RandoStat randoStats)
         {
-            return SOHOptions.Where(o => o.PlayerName == playerName).First();
+            Players = playerNames;
+            Games = games;
+            SOHOptionsList = sohOptions;
+            RandoStats = randoStats;
+            foreach (GameOptions opt in SOHOptionsList)
+            {
+                opt.Process();
+            }
+        }
+
+        public GameOptions GetSOHOptions(string playerName)
+        {
+            return SOHOptionsList.Where(o => o.PlayerName == playerName).First();
         }
     }
 }

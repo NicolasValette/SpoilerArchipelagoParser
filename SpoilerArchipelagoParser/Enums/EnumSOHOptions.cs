@@ -17,6 +17,12 @@ namespace NoNiDev.SpoilerArchipelagoParser.Enums
     }
     #endregion
     #region DOORS
+    public enum EForestOpenClosed
+    {
+        On,
+        Off,
+        Deku_Only
+    }
     public enum EOpenClosed
     {
         Open,
@@ -35,7 +41,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.Enums
         Song_Only
     }
     #endregion
-    #region GANON
+    #region CONDITIONS
     public enum EStartingAge
     {
         Child,
@@ -48,13 +54,9 @@ namespace NoNiDev.SpoilerArchipelagoParser.Enums
         Stones,
         Medallions,
         Dungeon_Rewards,
-        Token,
+        Dungeons,
+        Tokens,
         Greg
-    }
-    public enum ETrials
-    {
-        All,
-        None
     }
     public enum EBossKeyCondition
     {
@@ -65,7 +67,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.Enums
         LACS_MEdallions,
         LACS_Rewards,
         LACS_Dungeons,
-        LACS_Token
+        LACS_Tokens
     }
     #endregion
     #region DUNGEONS
@@ -92,11 +94,6 @@ namespace NoNiDev.SpoilerArchipelagoParser.Enums
     }
     #endregion
     #region SANITY
-    public enum EVanillaShuffled
-    {
-        Vanilla,
-        Shuffled
-    }
     public enum ELocationSanity
     {
         Off,
@@ -121,18 +118,9 @@ namespace NoNiDev.SpoilerArchipelagoParser.Enums
     {
         On,
         Off,
-        On_Plus_Ganon
+        On_Plus_Ganons
     }
-    /// <summary>
-    /// shuffle_merchants options
-    /// </summary>
-    public enum EMerchantSanity
-    {
-        Off,
-        Only_Beans,
-        All_But_Beans,
-        All
-    }
+   
     #endregion
     #region ITEMS
     public enum  EItemPool
@@ -142,24 +130,37 @@ namespace NoNiDev.SpoilerArchipelagoParser.Enums
         Scarce,
         Minimal
     }
-    /// <summary>
-    /// shuffle_adult_trade_items options
-    /// </summary>
-    public enum  EAdultTrade
+    public enum EBombchuBag
     {
-        Only_Claim_Check,   //false
-        All_Items           //true
+        None,
+        Single_Bag,
+        Progressive_Bags
     }
     #endregion
     #region SHOPS
+    /// <summary>
+    /// shuffle_merchants options
+    /// </summary>
+    public enum EMerchantSanity
+    {
+        Off,
+        Bean_Merchant_Only,
+        All_But_Beans,
+        All
+    }
     #endregion
     #region SKIPS
     #endregion
     #region MISC
-    public enum  EOnOFf
+    public enum  EOnOff
     {
         On,
         Off
+    }
+    public enum EYesNo
+    {
+        Yes,
+        No
     }
     /// <summary>
     /// infinite_upgrade options
@@ -168,7 +169,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.Enums
     {
         Off,
         Progressive,
-        Condensed
+        Condensed_Progressive
     }
     #endregion
 

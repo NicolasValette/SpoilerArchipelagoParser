@@ -1,0 +1,24 @@
+﻿using NoNiDev.SpoilerArchipelagoParser.Attributes;
+using NoNiDev.SpoilerArchipelagoParser.Options.Converter;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Text;
+
+namespace NoNiDev.SpoilerArchipelagoParser.Options
+{
+    public class Field
+    {
+        public PropertyInfo? Property;
+        public string SpoilerName = string.Empty;
+        public Func<string, bool> IsValid = (x) => true;
+        public ConvertValueAttribute? ConverterAttribute;
+    }
+    public class ComboField
+    {
+        public PropertyInfo? Property;
+        public string[] SpoilerNames = Array.Empty<string>();
+        public Func<bool> IsValid = () => true;
+        public IComboConverter<int>? Converter;
+    }
+}
