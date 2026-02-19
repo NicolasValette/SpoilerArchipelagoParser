@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -73,6 +73,30 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.Converter
             "Lacs Dungeon Rewards"  => "LACS Dungeon Rewards",
             "Lacs Dungeons"         => "LACS Dungeons"       ,
             "Lacs Skull Tokens"     => "LACS Tokens",
+            _ => spoilerValue
+        };
+    }
+    public class ScrubsCoverter : IConverter<string, string>
+    {
+        public string Convert(string spoilerValue) => spoilerValue switch
+        {
+            "Off" => "None",
+            _ => spoilerValue
+        };
+    }
+    public class RainbowBridgeConditionCoverter : IConverter<string, string>
+    {
+        public string Convert(string spoilerValue) => spoilerValue switch
+        {
+            "Always Open" => "Open",
+            _ => spoilerValue
+        };
+    }
+    public class ZoraFountainCoverter : IConverter<string, string>
+    {
+        public string Convert(string spoilerValue) => spoilerValue switch
+        {
+            "Closed As Child" => "Closed for Child",
             _ => spoilerValue
         };
     }

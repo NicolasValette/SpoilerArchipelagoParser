@@ -1,4 +1,4 @@
-﻿using NoNiDev.SpoilerArchipelagoParser.Attributes;
+using NoNiDev.SpoilerArchipelagoParser.Attributes;
 using NoNiDev.SpoilerArchipelagoParser.Enums;
 using NoNiDev.SpoilerArchipelagoParser.Options.Converter;
 using System;
@@ -29,9 +29,10 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options
         [NotParserValue]
         [JsonIgnore]
         public Dictionary<string, ComboField> ComboProp { get; protected set; } = [];
-
-        public GameOptions(string name)
+      
+        public GameOptions(string name, Dictionary<string, string> opt)
         {
+            GameOptionsDictionnary = opt;
             PlayerName = name;
             foreach (var prop in this.GetType().GetProperties())
             {

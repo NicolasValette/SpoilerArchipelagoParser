@@ -1,4 +1,4 @@
-﻿using NoNiDev.SpoilerArchipelagoParser.Attributes;
+using NoNiDev.SpoilerArchipelagoParser.Attributes;
 using NoNiDev.SpoilerArchipelagoParser.Options;
 using NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions;
 using NoNiDev.SpoilerArchipelagoParser.RandoStats;
@@ -67,7 +67,7 @@ namespace NoNiDev.SpoilerArchipelagoParser
                     _players.Add(playerName);
                     try
                     { 
-                        if (ReadPlayerOptions(line, spoilerFile) is SOHOption player)
+                        if (ReadPlayerOptions(line, spoilerFile) is GameOptions player)
                         {
                             listOptions.Add(player);
                         }
