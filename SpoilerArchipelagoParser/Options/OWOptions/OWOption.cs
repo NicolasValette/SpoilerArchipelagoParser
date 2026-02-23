@@ -4,12 +4,14 @@ using NoNiDev.SpoilerArchipelagoParser.Options.Converter.OuterWildsConverter;
 
 namespace NoNiDev.SpoilerArchipelagoParser.Options.OWOptions
 {
-    [Game(gameName:"Outer Wilds", version:"1.1")]
+    [Game(gameName:"Outer Wilds", version:"1.2")]
     public class OWOption : GameOptions
     {
         #region PLAYER
         [ConvertValue(typeof(GoalOWConverter))]
         public string Goal { get;set; } = string.Empty;
+        [SpoilerName("Required Friends"), ConvertValue(typeof(StringToInt))]
+        public int RequiredFriends { get; set; } = 0;
         public string Accessibility { get; set; } = string.Empty;
         [SpoilerName("Progression Balancing"), ConvertValue(typeof(StringToInt))]
         public int ProgressionBalancing { get; set; } = 0;

@@ -14,6 +14,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.Converter.OuterWildsConverter
             "Song Of the Stranger" => "Song of the Stranger",
             "Song Of Six" => "Song of Six",
             "Song Of Seven" => "Song of Seven",
+            "Song Of the Universe" => "Song of the Universe",
             "Echoes Of the Eye" => "Echoes of the Eye",
             _ => "unknown"
         };
