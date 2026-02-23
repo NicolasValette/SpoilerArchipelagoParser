@@ -8,7 +8,7 @@ using System.Text.Json.Serialization;
 
 namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
 {
-    [Game("Ship of Harkinian")]
+    [Game(gameName:"Ship of Harkinian", version:"1.2.0")]
     public class SOHOption : GameOptions
     {
        

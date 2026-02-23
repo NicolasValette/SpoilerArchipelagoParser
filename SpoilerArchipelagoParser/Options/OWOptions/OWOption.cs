@@ -4,7 +4,7 @@ using NoNiDev.SpoilerArchipelagoParser.Options.Converter.OuterWildsConverter;
 
 namespace NoNiDev.SpoilerArchipelagoParser.Options.OWOptions
 {
-    [Game("Outer Wilds")]
+    [Game(gameName:"Outer Wilds", version:"1.1")]
     public class OWOption : GameOptions
     {
         #region PLAYER
