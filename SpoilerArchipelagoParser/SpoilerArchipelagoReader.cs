@@ -41,7 +41,10 @@ namespace NoNiDev.SpoilerArchipelagoParser
         private Options.GameOptions GetGameOptions(string gameName, string playerName, Dictionary<string, string> gameOptions)
         {
             if (!_gameType.ContainsKey(gameName))
-                throw new Exception($"Game {gameName} is not supported.");
+                {
+                //    throw new Exception($"Game {gameName} is not supported."); 
+                return new GameOptions(playerName, gameOptions, gameName);
+            }
             return (Options.GameOptions)Activator.CreateInstance(_gameType[gameName], new Object[] { playerName, gameOptions });
         }
         public ArchipelagoOption ReadSpoiler(StreamReader spoilerFile)

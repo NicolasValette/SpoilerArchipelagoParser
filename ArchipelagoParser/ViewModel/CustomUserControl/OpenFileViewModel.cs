@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using Microsoft.Win32;
+using NoNiDev.ArchipelagoParser.SpoilerLoader;
 
 namespace NoNiDev.ArchipelagoParser.ViewModel.CustomUserControl
 {
@@ -27,6 +28,7 @@ namespace NoNiDev.ArchipelagoParser.ViewModel.CustomUserControl
         public void OpenFileWindow()
         {
             OpenFileDialog dialog = new OpenFileDialog();
+            SpoilerHandler.ArchiOption = null;
             dialog.FileName = "Document"; // Default file name
             dialog.DefaultExt = ".txt"; // Default file extension
             dialog.Filter = "Text documents (.txt)|*.txt"; // Filter files by extension

@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:NoNiDev.ArchipelagoParser.Views"
         xmlns:rando="clr-namespace:NoNiDev.ArchipelagoParser.Views.RandoStat"
         xmlns:sohar="clr-namespace:NoNiDev.ArchipelagoParser.Views.SOHAR"
+         xmlns:spoiler="clr-namespace:NoNiDev.ArchipelagoParser.Views.SpoilerView"
         xmlns:uc="clr-namespace:NoNiDev.ArchipelagoParser.Views.CustomUserControl"
         mc:Ignorable="d"
         Title="Archipelago Parser" Height="720" Width="1280">
@@ -36,6 +37,9 @@
             </TabItem>
             <TabItem Header="SOHAR">
                 <sohar:SOHARView Loaded="SOHARView_Loaded"/>
+            </TabItem>
+            <TabItem Header="Spoiler View">
+                <spoiler:SpoilerView />
             </TabItem>
         </TabControl>
     </Grid>

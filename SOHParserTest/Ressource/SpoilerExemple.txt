@@ -360,6 +360,7 @@ Enable Hearth's Neighbor 2: Magistarium Story Mod:No
 Enable Fret's Quest Story Mod:   No
 Enable Forgotten Castaways Story Mod:No
 Enable Echo Hike Story Mod:      No
+Required Friends:                0
 
 Player 6: Nikozzle
 Game:                            Jigsaw
@@ -561,6 +562,7 @@ Enable Hearth's Neighbor 2: Magistarium Story Mod:No
 Enable Fret's Quest Story Mod:   No
 Enable Forgotten Castaways Story Mod:No
 Enable Echo Hike Story Mod:      No
+Required Friends:                0
 
 Player 9: Nonozzle
 Game:                            Manual_Puzzle1000_Elayan
