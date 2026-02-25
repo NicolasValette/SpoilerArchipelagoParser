@@ -11,7 +11,7 @@ using System.Xml.Linq;
 
 namespace NoNiDev.SpoilerArchipelagoParser.Options
 {
-    public abstract class GameOptions
+    public class GameOptions
     {
         [SpoilerName("Game")]
         public string Game { get; set; } = string.Empty;
@@ -29,9 +29,15 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options
         [NotParserValue]
         [JsonIgnore]
         public Dictionary<string, ComboField> ComboProp { get; protected set; } = [];
-      
-        public GameOptions(string name, Dictionary<string, string> opt)
+
+       
+        
+        public GameOptions(string name, Dictionary<string, string> opt, string? gameName=null)
         {
+            if (gameName != null)
+            {
+                Game = gameName;
+            }
             GameOptionsDictionnary = opt;
             PlayerName = name;
             foreach (var prop in this.GetType().GetProperties())
@@ -96,7 +102,8 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options
                 object spoilerValueCast = spoilerValue;
                 if (!item.Value.IsValid(spoilerValue ?? string.Empty))
                 {
-                    throw new SpoilerDataValidationException($"The value '{spoilerValue}' is not valid for the field '{spoilerName}'.");
+                    string val = spoilerValue == null ? "null" : spoilerValue;
+                    throw new SpoilerDataValidationException($"The value '{val}' is not valid for the field '{spoilerName}'.");
                 }
                 if (item.Value.ConverterAttribute != null)
                 {
