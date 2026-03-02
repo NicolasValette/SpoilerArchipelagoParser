@@ -15,7 +15,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.Converter
             "Lacs Medallions"       => int.Parse((string)values["Ganons Castle Boss Key Medallions Required"]),
             "Lacs Dungeon Rewards"  => int.Parse((string)values["Ganons Castle Boss Key Dungeon Rewards Required"]),
             "Lacs Dungeons"         => int.Parse((string)values["Ganons Castle Boss Key Dungeons Required"]),
-            "Lacs Tokens"           => int.Parse((string)values["Ganons Castle Boss Key Skull Tokens Required"]),
+            "Lacs Skull Tokens"     => int.Parse((string)values["Ganons Castle Boss Key Skull Tokens Required"]),
             _ => throw new KeyNotFoundException($"Cannont find key \"{values["Ganons Castle Boss Key"]}\" in the dictionnary for {this.GetType().Name}")
         };
     }

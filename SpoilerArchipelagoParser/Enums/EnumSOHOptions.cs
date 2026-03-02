@@ -67,7 +67,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.Enums
         LACS_MEdallions,
         LACS_Rewards,
         LACS_Dungeons,
-        LACS_Tokens
+        LACS_Skull_Tokens
     }
     #endregion
     #region DUNGEONS
