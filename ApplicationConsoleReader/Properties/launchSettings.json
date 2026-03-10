@@ -2,7 +2,7 @@
   "profiles": {
     "ApplicationConsoleReader": {
       "commandName": "Project",
-      "commandLineArgs": "-a -g \"Ship of Harkinian\" -g \"Outer Wilds\" -c \"E:\\\\Dev\\\\git\\\\Source\\\\Repos\\\\SpoilerArchipelagoParser\\\\ApplicationConsoleReader\\\\Ressource\\\\config.json\" \"E:\\Download\\AP_39818916018271536012\\AP_39818916018271536012_Spoiler.txt\""
+      "commandLineArgs": "-a -g \"Ship of Harkinian\" -g \"Outer Wilds\" \"E:\\Download\\AP_39818916018271536012\\AP_39818916018271536012_Spoiler.txt\""
     }
   }
 }

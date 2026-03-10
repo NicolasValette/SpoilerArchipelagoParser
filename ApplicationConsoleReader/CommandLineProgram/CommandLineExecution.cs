@@ -32,31 +32,28 @@ namespace NoNiDev.ApplicationConsoleReader.CommandLineProgram
             Console.WriteLine("Execution completed.");
         }
 
-        public static void SaveConfigFile(string path)
+        public static void SaveConfigFile()
         {
-            ConfigOption conf = new();
-            conf.ApiRandomStat = "https://api.random.com";
-            conf.ApiAllRandom = "https://api.allrandom.com";
+            
             var jsonOptions = new JsonSerializerOptions
             {
                 WriteIndented = true
             };
-            var configContent = JsonSerializer.Serialize<ConfigOption>(conf, jsonOptions);
-            StreamWriter sw = new StreamWriter(path, false, Encoding.ASCII);
+            var configContent = JsonSerializer.Serialize<ConfigOption>(_confOption, jsonOptions);
+            StreamWriter sw = new StreamWriter(Path.Combine(Environment.CurrentDirectory, "Config.json"), false, Encoding.ASCII);
             sw.WriteLine(configContent);
             sw.Close();
         }
         public static void ReadConfigFile(string configFilePath)
         {
-            if (File.Exists(configFilePath))
+            string initFilePath = Path.Combine(Environment.CurrentDirectory, "Config.json");
+            if (configFilePath != string.Empty && File.Exists(configFilePath))
             {
-                string configContent = File.ReadAllText(configFilePath);
-                _confOption = JsonSerializer.Deserialize<ConfigOption>(configContent);
+                initFilePath = configFilePath;
             }
-            else
-            {
-                Console.WriteLine($"Config file not found at path: {configFilePath}");
-            }
+            string configContent = File.ReadAllText(initFilePath);
+            _confOption = JsonSerializer.Deserialize<ConfigOption>(configContent);
+            SaveConfigFile();
         }
         public static void RandoStatExecute(ProgramOptions options)
         {

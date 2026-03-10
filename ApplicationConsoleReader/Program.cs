@@ -5,14 +5,14 @@ using NoNiDev.CLIParser;
 using NoNiDev.SpoilerArchipelagoParser;
 using System.Text;
 
+
+const string VERSION = "1.2.0";
+
+Console.WriteLine($"Application Console Reader - Version {VERSION} by NoNiDev");
+
 string spoilerFilePath="";
 string initFilePath="";
-int i = 0;
-foreach (var item in args)
-{
-    Console.WriteLine($"Argument n°{i} : {item}");
-    i++;
-}
+
 
 var option = CommandLineParser.Parse<ProgramOptions>(args);
 spoilerFilePath = args.Length > 0 ? args[args.Length - 1] : string.Empty;
