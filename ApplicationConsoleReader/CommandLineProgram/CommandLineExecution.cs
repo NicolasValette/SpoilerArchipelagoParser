@@ -53,7 +53,7 @@ namespace NoNiDev.ApplicationConsoleReader.CommandLineProgram
             }
             string configContent = File.ReadAllText(initFilePath);
             _confOption = JsonSerializer.Deserialize<ConfigOption>(configContent);
-            SaveConfigFile();
+            //SaveConfigFile();
         }
         public static void RandoStatExecute(ProgramOptions options)
         {
