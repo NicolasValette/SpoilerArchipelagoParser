@@ -1,10 +1,24 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using NoNiDev.ApplicationConsoleReader;
+using NoNiDev.ApplicationConsoleReader.CommandLineProgram;
+using NoNiDev.CLIParser;
 using NoNiDev.SpoilerArchipelagoParser;
 using System.Text;
 
+
+const string VERSION = "1.2.0";
+
+Console.WriteLine($"Application Console Reader - Version {VERSION} by NoNiDev");
+
 string spoilerFilePath="";
 string initFilePath="";
+
+
+var option = CommandLineParser.Parse<ProgramOptions>(args);
+spoilerFilePath = args.Length > 0 ? args[args.Length - 1] : string.Empty;
+
+CommandLineExecution.Execute(option, spoilerFilePath);
+/*
 Console.WriteLine("MENU");
 Console.WriteLine("[1] : Send Ship Of Harkinian options");
 Console.WriteLine("[2] : Ping");
@@ -86,4 +100,4 @@ OptionsSender.SendOptions(archipOptions, api);
 #if RELEASE
 Console.WriteLine("Press any keys to quit.");
 Console.ReadLine();
-#endif
+#endif*/

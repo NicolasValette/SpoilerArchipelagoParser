@@ -9,7 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CallAPI\CallAPI.csproj" />
+    <ProjectReference Include="..\CLIParser\CLIParser.csproj" />
     <ProjectReference Include="..\SpoilerArchipelagoParser\SpoilerArchipelagoParser.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="CommandLineExec\" />
   </ItemGroup>
 
 </Project>
