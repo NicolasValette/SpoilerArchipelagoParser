@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="NoNiDev.ArchipelagoParser.Views.CustomUserControl.ArchipelagoEditor.ArchipelagoGamesEditorLine"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NoNiDev.ArchipelagoParser.Views.CustomUserControl.ArchipelagoEditor"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <TextBox Grid.Column="0" Text="{Binding ArchipelID}" Margin="5"/>
+        <TextBox Grid.Column="1" Text="{Binding GameID}" Margin="5"/>
+        <TextBox Grid.Column="2" Text="{Binding PlayerName}" Margin="5"/>
+        <TextBox Grid.Column="3" Text="{Binding GameName}" Margin="5"/>
+        <TextBox Grid.Column="4" Text="{Binding GameState}" Margin="5"/>
+        <TextBox Grid.Column="5" Text="{Binding CheckAmount}" Margin="5"/>
+        <TextBox Grid.Column="6" Text="{Binding ReleaseReason}" Margin="5"/>
+    </Grid>
+</UserControl>

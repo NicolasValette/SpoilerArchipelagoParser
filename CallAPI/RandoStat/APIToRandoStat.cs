@@ -85,6 +85,29 @@ namespace NoNiDev.CallAPI.RandoStat
             return responseText;
         }
 
+        public static async Task<string[]> GetArchipelGames(int archipelID)
+        {
+            using var client = new HttpClient();
+            var baseURI = _baseURL + "?action=archipelGames&archipelID=" + archipelID;
+            var response = await client.GetAsync(baseURI);
+            var responseText = await response.Content.ReadAsStringAsync();
+            string[]? games = JsonSerializer.Deserialize<string[]>(responseText);
+            if (games == null)
+                return Array.Empty<string>();
+            return games;
+        }
+        public static async Task<List<ArchipelagoRoom>> GetArchipel()
+        {
+            using var client = new HttpClient();
+            var baseURI = _baseURL + "?action=archipel&id=25";
+            var response = await client.GetAsync(baseURI);
+            var responseText = await response.Content.ReadAsStringAsync();
+            List<ArchipelagoRoom>? games = JsonSerializer.Deserialize<List<ArchipelagoRoom>>(responseText);
+            if (games == null)
+                return [];
+            return games;
+        }
+
 
     }
 }

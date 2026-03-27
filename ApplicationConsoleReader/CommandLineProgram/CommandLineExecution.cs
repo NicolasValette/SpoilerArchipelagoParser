@@ -26,8 +26,8 @@ namespace NoNiDev.ApplicationConsoleReader.CommandLineProgram
             SpoilerArchipelagoReader spoilerReader = new();
             _archOption = spoilerReader.ReadSpoiler(sr);
 
-            //RandoStatExecute(options);
-            AddRandomGameStatExecute(options);
+            RandoStatExecute(options);
+            //AddRandomGameStatExecute(options);
 
             Console.WriteLine("Execution completed.");
         }

@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="NoNiDev.ArchipelagoParser.Views.ArchipelagoEditor.ArchipelagoEditorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:uc="clr-namespace:NoNiDev.ArchipelagoParser.Views.CustomUserControl"
+             xmlns:local="clr-namespace:NoNiDev.ArchipelagoParser.Views.ArchipelagoEditor"
+             xmlns:ucArchiEditor="clr-namespace:NoNiDev.ArchipelagoParser.Views.CustomUserControl.ArchipelagoEditor"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <uc:APIConnect Grid.Row="0" 
+                       DataContext="{Binding RandoStatAPIVM}"/>
+        <Grid Grid.Row="1" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="1" 
+        Command="{Binding ButtonGetArchipelRC}" IsEnabled="{Binding IsEnabled}"
+        Content="Get archipels" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5" Background="{Binding StringColor}" Width="100"/>
+        </Grid>
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+            <ListView ItemsSource="{Binding Rooms}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="ID" Width="50" DisplayMemberBinding="{Binding ArchipelId}"/>
+                        <GridViewColumn Header="Name" Width="350">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextWrapping="Wrap">
+                                        <Hyperlink NavigateUri="{Binding ArchipelURL}">
+                                            <TextBlock Text="{Binding ArchipelName}"/>        
+                                        </Hyperlink>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Nb Joueurs" Width="75" DisplayMemberBinding="{Binding NumberOfPlayers}"/>
+                        <GridViewColumn Header="Nb Jeux" Width="75" DisplayMemberBinding="{Binding NumberOfGames}"/>
+                        <GridViewColumn Header="Etat" Width="150" DisplayMemberBinding="{Binding State}"/>
+                        <GridViewColumn Header="Checks" Width="75" DisplayMemberBinding="{Binding NumberOfChecks}"/>
+                        <GridViewColumn>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Command="{Binding ButtonEditArchipelRC}" Content="Edit"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>  
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </ScrollViewer>
+        <uc:CustomProgressBar Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" DataContext="{Binding AEVM}"/>
+    </Grid>
+</UserControl>

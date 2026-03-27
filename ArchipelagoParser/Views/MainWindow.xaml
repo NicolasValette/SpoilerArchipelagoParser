@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:NoNiDev.ArchipelagoParser.Views"
         xmlns:rando="clr-namespace:NoNiDev.ArchipelagoParser.Views.RandoStat"
         xmlns:sohar="clr-namespace:NoNiDev.ArchipelagoParser.Views.SOHAR"
+        xmlns:archEdit="clr-namespace:NoNiDev.ArchipelagoParser.Views.ArchipelagoEditor"
          xmlns:spoiler="clr-namespace:NoNiDev.ArchipelagoParser.Views.SpoilerView"
         xmlns:uc="clr-namespace:NoNiDev.ArchipelagoParser.Views.CustomUserControl"
         mc:Ignorable="d"
@@ -40,6 +41,12 @@
             </TabItem>
             <TabItem Header="Spoiler View">
                 <spoiler:SpoilerView />
+            </TabItem>
+            <TabItem Header="Archipel">
+                <archEdit:ArchipelagoEditorView />
+            </TabItem>
+            <TabItem Header="Archipel Games">
+                <archEdit:ArchipelagoGamesEditor />
             </TabItem>
         </TabControl>
     </Grid>
