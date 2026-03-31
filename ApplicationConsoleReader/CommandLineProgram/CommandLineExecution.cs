@@ -19,6 +19,7 @@ namespace NoNiDev.ApplicationConsoleReader.CommandLineProgram
         public static void Execute(ProgramOptions options, string spoilerFilePath)
         {
             Console.WriteLine($"Config File: {options.ConfigFile}");
+            Console.WriteLine($"Spoiler File: {spoilerFilePath}");
             Console.WriteLine($"Add Archipel: {options.AddArchipel}");
             Console.WriteLine("Games:");
             
