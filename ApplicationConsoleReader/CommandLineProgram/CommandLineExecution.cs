@@ -1,7 +1,9 @@
-﻿using NoNiDev.CallAPI.AllRandomGame;
+﻿using Microsoft.VisualBasic.FileIO;
+using NoNiDev.CallAPI.AllRandomGame;
 using NoNiDev.CallAPI.RandoStat;
 using NoNiDev.SpoilerArchipelagoParser;
 using NoNiDev.SpoilerArchipelagoParser.Attributes;
+using NoNiDev.SpoilerArchipelagoParser.RandoStats;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -26,8 +28,9 @@ namespace NoNiDev.ApplicationConsoleReader.CommandLineProgram
             SpoilerArchipelagoReader spoilerReader = new();
             _archOption = spoilerReader.ReadSpoiler(sr);
 
-            RandoStatExecute(options);
-            //AddRandomGameStatExecute(options);
+            if (options.AddArchipel)
+                RandoStatExecute(options);
+            AddRandomGameStatExecute(options);
 
             Console.WriteLine("Execution completed.");
         }
@@ -64,27 +67,47 @@ namespace NoNiDev.ApplicationConsoleReader.CommandLineProgram
                 Console.Write(".");
                 Thread.Sleep(500);
             }
+            Console.WriteLine();
             if (_archOption != null)
             {
-                foreach (var game in _archOption.Games)
+                
+                List<ArchippelagoSlot> slots = new List<ArchippelagoSlot>();
+                foreach (var gameSlot in _archOption.RandoStats.Slots)
                 {
-                    if (task.Result.Contains(game))
+                    ArchippelagoSlot slot = new ArchippelagoSlot(gameSlot.Name, gameSlot.Game, gameSlot.LocationCount);
+                    if (task.Result.Contains(gameSlot.Game))
                     {
-                        Console.WriteLine($"Game {game} already exists in RandoStat.");
+                        Console.WriteLine($"Game {gameSlot.Game} already exists in RandoStat.");
+                    }
+                    else if (gameSlot.Game.Contains("Manual", StringComparison.OrdinalIgnoreCase))
+                    {
+                        slot.Game = "Manual";
+                        Console.WriteLine($"Game {gameSlot.Game} is a manual game, changing its name to Manual.");
                     }
                     else
                     {
-                        //Task<string> addGameTask = APIToRandoStat.AddGame(game);
-                        //while (!addGameTask.IsCompleted)
-                        //{
-                        //    Console.Write(".");
-                        //    Thread.Sleep(500);
-                        //}
-                        //Console.WriteLine($"Added game {game} to RandoStat: {addGameTask.Result}");
-                        Console.WriteLine($"Add Game {game}");
+                        Task<string> addGameTask = APIToRandoStat.AddGame(gameSlot.Game);
+                        while (!addGameTask.IsCompleted)
+                        {
+                            Console.Write(".");
+                            Thread.Sleep(500);
+                        }
+                        Console.WriteLine($"\nAdded game {gameSlot.Game} to RandoStat: {addGameTask.Result}");
+                        Console.WriteLine($"Add Game {gameSlot.Game}");
                     }
+                    slots.Add(slot);
                 }
+                RandoStatData data = new RandoStatData();
+                Task<string> addArchTask = APIToRandoStat.AddArchipel(options.ArchipelagoName, options.Url, slots);
+                while (!addArchTask.IsCompleted)
+                {
+                    Console.Write(".");
+                    Thread.Sleep(500);
+                }
+                Console.WriteLine($"\nAdded Archipelago to RandoStat sheet : {addArchTask.Result}");
+        
             }
+
         }
 
         public static void AddRandomGameStatExecute(ProgramOptions options)

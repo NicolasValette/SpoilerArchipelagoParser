@@ -6,7 +6,7 @@ using NoNiDev.SpoilerArchipelagoParser;
 using System.Text;
 
 
-const string VERSION = "1.2.0";
+const string VERSION = "1.3.0";
 
 Console.WriteLine($"Application Console Reader - Version {VERSION} by NoNiDev");
 

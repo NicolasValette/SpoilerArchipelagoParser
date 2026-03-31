@@ -10,7 +10,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.RandoStats
         [JsonPropertyName("joueur")]
         public string Name { get; set; } = name;
         [JsonPropertyName("jeu")]
-        public string Game { get; init; } = game;
+        public string Game { get; set; } = game;
         [JsonPropertyName("checks")]
         public int LocationCount { get; set; } = locCount;
     }

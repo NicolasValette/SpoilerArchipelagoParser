@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NoNiDev.SpoilerArchipelagoParser.RandoStats;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -69,6 +70,16 @@ namespace NoNiDev.CallAPI.RandoStat
             var responseText = await response.Content.ReadAsStringAsync();
             return responseText;
         }
+        public static async Task<string> AddArchipel(string archipelagoName, string url, List<ArchippelagoSlot> slots) => await AddArchipel(new RandoStatData
+        {
+            Action = RandoStatAction.addArchipel,
+            Payload = new PayloadAddArchipel
+             {
+                 Url = url,
+                 Name = archipelagoName,
+                 Slots = slots
+            }
+        });
         public static async Task<string> AddArchipel(RandoStatData randoStat)
         {
             var options = new JsonSerializerOptions
