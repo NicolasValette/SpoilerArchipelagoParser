@@ -18,8 +18,4 @@
     <ProjectReference Include="..\SpoilerArchipelagoParser\SpoilerArchipelagoParser.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ViewModel\ArchipelagoEditor\" />
-  </ItemGroup>
-
 </Project>

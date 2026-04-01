@@ -1,4 +1,7 @@
-﻿using NoNiDev.CallAPI.RandoStat;
+﻿using NoNiDev.ArchipelagoParser.ViewModel.ArchipelagoEditor;
+using NoNiDev.ArchipelagoParser.Views;
+using NoNiDev.ArchipelagoParser.Views.CustomWindows;
+using NoNiDev.CallAPI.RandoStat;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -54,7 +57,7 @@ namespace NoNiDev.ArchipelagoParser.ViewModel.CustomUserControl
                 NotifyPropertyChanged();
             }
         }
-        public string State
+        public State State
         {
             get => field;
             set
@@ -82,13 +85,28 @@ namespace NoNiDev.ArchipelagoParser.ViewModel.CustomUserControl
             NumberOfChecks = room.CheckNumber;
             NumberOfGames = room.GameNumber;
             ArchipelURL = room.Url;
-            State = room.State;
+            State = room.ArchState;
             ButtonEditArchipelRC = new RelayCommand(o => EditArchipel());
             _archipelagoEditorVM = parentVM;
         }
+        private ArchipelagoRoom GetRoom() => new ArchipelagoRoom()
+        {
+            Id = ArchipelId,
+            Name = ArchipelName,
+            Url = ArchipelURL,
+            PlayerNumber = NumberOfPlayers,
+            GameNumber = NumberOfGames,
+            ArchState = State,
+            CheckNumber = NumberOfChecks
+        };
+
         public void EditArchipel()
         {
-            MessageBox.Show("Edit " + ArchipelName);
+            var EditWindow = new EditArchipelWindow();
+            EditWindow.DataContext = new EditArchipelagoWindowViewModel(GetRoom());
+            EditWindow.ShowDialog();
+
+          
         }
     }
 }

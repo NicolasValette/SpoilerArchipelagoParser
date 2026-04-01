@@ -5,6 +5,12 @@ using System.Text.Json.Serialization;
 
 namespace NoNiDev.CallAPI.RandoStat
 {
+    public enum State
+    {
+        Finie,
+        EnCours,
+        Release
+    }
     public class ArchipelagoRoom
     {
         [JsonPropertyName("id")]
@@ -18,7 +24,8 @@ namespace NoNiDev.CallAPI.RandoStat
         [JsonPropertyName("nbJeux")]
         public int GameNumber { get; set; }
         [JsonPropertyName("etat")]
-        public string State { get; set; } = string.Empty;
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public State ArchState { get; set; }
         [JsonPropertyName("checks")]
         public int CheckNumber { get; set; }
     }
