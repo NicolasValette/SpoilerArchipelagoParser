@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Windows;
 
 namespace NoNiDev.ArchipelagoParser.ViewModel
 {
@@ -78,5 +79,18 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
                 Rooms.Add(new ArchipelagoEditorLineViewModel(room, this));
             }
         }
+        public async Task EditArchipel(ArchipelagoRoom room)
+        {
+            IsEnabled = false;
+            IsAPICallInPrgress = true;
+            ApiCallName = "Calling Edit Archipel";
+            APIToRandoStat.InitURL(RandoStatAPIVM.ApiURL);
+            string response = await APIToRandoStat.EditArchipel(room);
+            IsAPICallInPrgress = false;
+            ApiCallName = "Request suceed";
+            IsEnabled = true;
+            MessageBox.Show(response);
+        }
+        
     }
 }

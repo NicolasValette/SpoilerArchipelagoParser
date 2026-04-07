@@ -11,6 +11,7 @@ namespace NoNiDev.CallAPI.RandoStat
        addJoueur,
        addJeu,
        addArchipel,
+       editArchipel,
        ping
     }
 
@@ -27,19 +28,33 @@ namespace NoNiDev.CallAPI.RandoStat
         public string Name { get; set; }
     }
 
+    
     public class RandoStatData
     {
         [JsonIgnore]
         public RandoStatAction Action { get; set; }
         [JsonPropertyName("action")]
         public string ActionStr => Action.ToString();
-        public PayloadAddArchipel Payload { get; set; }
+        public RandoStatPayload Payload { get; set; }
     }
-    public class PayloadAddArchipel
+
+    [JsonDerivedType(typeof(RandoStatPayload), "base")]
+    [JsonDerivedType(typeof(PayloadAddArchipel), "add_archipel")]
+    [JsonDerivedType(typeof(PayloadEditArchipel), "edit_archipel")]
+    public class RandoStatPayload
     {
         public string Name { get; set; }
+    }
+    public class PayloadAddArchipel : RandoStatPayload
+    {
         public string Url { get; set; }
         [JsonPropertyName("games")]
         public List<ArchippelagoSlot> Slots { get; set; }
+    }
+    public class PayloadEditArchipel : RandoStatPayload
+    {
+        public int Id { get; set; }
+        public string Url { get; set; }
+        public string Etat { get; set; }
     }
 }

@@ -86,7 +86,7 @@ namespace NoNiDev.ArchipelagoParser.ViewModel.CustomUserControl
             NumberOfGames = room.GameNumber;
             ArchipelURL = room.Url;
             State = room.ArchState;
-            ButtonEditArchipelRC = new RelayCommand(o => EditArchipel());
+            ButtonEditArchipelRC = new RelayCommand(async o => await EditArchipel());
             _archipelagoEditorVM = parentVM;
         }
         private ArchipelagoRoom GetRoom() => new ArchipelagoRoom()
@@ -100,13 +100,31 @@ namespace NoNiDev.ArchipelagoParser.ViewModel.CustomUserControl
             CheckNumber = NumberOfChecks
         };
 
-        public void EditArchipel()
+        public async Task EditArchipel()
         {
             var EditWindow = new EditArchipelWindow();
-            EditWindow.DataContext = new EditArchipelagoWindowViewModel(GetRoom());
-            EditWindow.ShowDialog();
+            var room = GetRoom();
+            var vm = new EditArchipelagoWindowViewModel(room);
+            EditWindow.DataContext = vm;
 
-          
+            if (EditWindow.ShowDialog() == false)
+            {
+                return;
+            }
+            
+            // EDIT
+            ArchipelId = vm.Id;
+            ArchipelName = vm.Name;
+            ArchipelURL = vm.Url;
+            State = vm.State switch
+            {
+                "Finie" => State.Finie,
+                "Release" => State.Release,
+                _ => State.EnCours,
+            };
+            await _archipelagoEditorVM.EditArchipel(GetRoom());
+            
+
         }
     }
 }

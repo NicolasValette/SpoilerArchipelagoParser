@@ -24,7 +24,24 @@ namespace NoNiDev.CallAPI.RandoStat
         [JsonPropertyName("nbJeux")]
         public int GameNumber { get; set; }
         [JsonPropertyName("etat")]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public string ArchipelagoStateString 
+        { 
+            get
+            {
+                return ArchState.ToString();
+            }
+            set
+            {
+                ArchState = value switch
+                {
+                    "Finie" => State.Finie,
+                    "Release" => State.Release,
+                    _ => State.EnCours,
+                };
+                ;
+            }
+        }
+        [JsonIgnore]
         public State ArchState { get; set; }
         [JsonPropertyName("checks")]
         public int CheckNumber { get; set; }

@@ -95,6 +95,34 @@ namespace NoNiDev.CallAPI.RandoStat
             var responseText = await response.Content.ReadAsStringAsync();
             return responseText;
         }
+        public static async Task<string> EditArchipel(ArchipelagoRoom room)
+        {
+            var options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                WriteIndented = true
+            };
+
+            RandoStatData randoStat = new RandoStatData
+            {
+                Action = RandoStatAction.editArchipel,
+                Payload = new PayloadEditArchipel
+                {
+                    Id = room.Id,
+                    Name = room.Name,
+                    Url = room.Url,
+                    Etat = room.ArchState.ToString(),
+                }
+            };
+
+            string jsonString = JsonSerializer.Serialize<RandoStatData>(randoStat, options);
+
+            using var client = new HttpClient();
+            using var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
+            var response = await client.PostAsync(_baseURL, content);
+            var responseText = await response.Content.ReadAsStringAsync();
+            return responseText;
+        }
 
         public static async Task<string[]> GetArchipelGames(int archipelID)
         {
@@ -110,7 +138,7 @@ namespace NoNiDev.CallAPI.RandoStat
         public static async Task<List<ArchipelagoRoom>> GetArchipel()
         {
             using var client = new HttpClient();
-            var baseURI = _baseURL + "?action=archipel&id=25";
+            var baseURI = _baseURL + "?action=archipel&id=27";
             var response = await client.GetAsync(baseURI);
             var responseText = await response.Content.ReadAsStringAsync();
             List<ArchipelagoRoom>? games = JsonSerializer.Deserialize<List<ArchipelagoRoom>>(responseText);

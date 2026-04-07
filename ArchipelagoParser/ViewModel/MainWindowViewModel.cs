@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using NoNiDev.ArchipelagoParser.App;
+using System.Windows;
 
 namespace NoNiDev.ArchipelagoParser.ViewModel
 {
@@ -19,7 +20,8 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
         }
         public void About()
         {
-            MessageBox.Show("Archipelago Parser\nVersion 1.0\nDeveloped by NoNiDev");
+            string appVersion = $"Version {AppInfoService.AssemblyVersion}";
+            MessageBox.Show($"Archipelago Parser\n{appVersion}\nDeveloped by NoNiDev");
         }
     }
 }

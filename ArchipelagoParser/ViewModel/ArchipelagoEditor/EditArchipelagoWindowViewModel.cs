@@ -8,6 +8,7 @@ namespace NoNiDev.ArchipelagoParser.ViewModel.ArchipelagoEditor
 {
     public class EditArchipelagoWindowViewModel : NotifyableViewModel
     {
+        public int Id { get; set; }
         public string Name
         {
             get => field;
@@ -41,6 +42,7 @@ namespace NoNiDev.ArchipelagoParser.ViewModel.ArchipelagoEditor
         public RelayCommand ExitRC { get; }
         public EditArchipelagoWindowViewModel(ArchipelagoRoom room)
         {
+            Id = room.Id;
             Name = room.Name;
             Url = room.Url;
             State = room.ArchState.ToString();
