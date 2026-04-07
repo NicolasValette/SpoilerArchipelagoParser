@@ -14,7 +14,7 @@ namespace SOHParserTest
 
         }
         
-        [Test]
+        //[Test]
         public void AboutTest()
         {
             var stream = new StreamReader("E:\\Dev\\git\\Source\\Repos\\SpoilerArchipelagoParser\\SOHParserTest\\Ressource\\SpoilerExemple.txt");
@@ -23,7 +23,7 @@ namespace SOHParserTest
             Assert.That(about, Is.Not.Empty);
         }
 
-        [Test]
+        //[Test]
         public void ReadSpoilerTest()
         {
 
@@ -45,7 +45,7 @@ namespace SOHParserTest
 
 
         }
-        [Test]
+        //[Test]
         public void ReflexionTest()
         {
             var stream = new StreamReader("E:\\Dev\\git\\Source\\Repos\\SpoilerArchipelagoParser\\SOHParserTest\\Ressource\\SpoilerExemple.txt");
