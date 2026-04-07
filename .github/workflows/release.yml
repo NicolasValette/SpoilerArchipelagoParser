@@ -38,3 +38,19 @@ jobs:
           files: ArchipelagoParser-${{ github.ref_name }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 8. Notification Discord
+        uses: sarisia/actions-status-discord@v1
+        # S'exécute même si une étape précédente a échoué
+        if: always()                          
+        with:
+            webhook: ${{ secrets.DISCORD_WEBHOOK }}
+            status: ${{ job.status }}
+            title: "Build SpoilerArchipelagoParser : ${{ github.ref_name }}"
+            # On utilise une condition ternaire pour le message
+            description: |
+              ${{ job.status == 'success' 
+                  && format('✅ **Succès !** La version est prête. [Accéder à la Release](https://github.com/{0}/releases/tag/{1})', github.repository, github.ref_name) 
+                  || '❌ **Échec !** La compilation ou les tests ont échoué. Vérifie les logs sur GitHub.' 
+              }}
+            color: ${{ job.status == 'success' && '0x00ff00' || '0xff0000' }}
