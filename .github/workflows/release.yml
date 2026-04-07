@@ -8,7 +8,8 @@ on:
 jobs:
   build-and-release:            #le nom du groupe de taches
     runs-on: windows-latest     #L'environnement des taches
-
+    permissions:
+      contents: write
     steps:
       - name: 1. Récuperer les sources
         uses: actions/checkout@v4
