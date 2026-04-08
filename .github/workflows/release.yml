@@ -25,21 +25,35 @@ jobs:
       - name: 4. Exécuter les tests unitaires    # On exécute les test unitaire
         run: dotnet test --no-restore --verbosity normal
 
-      - name: 5. Compiler et Publier l'App WPF
-        # On cible le dossier/projet spécifique de ton application WPF
-        run: dotnet publish ArchipelagoParser/ArchipelagoParser.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o ./publish
+      - name: 5. Préparer le numéro de version
+        id: prep_version  # On donne un ID pour pouvoir le cibler plus tard
+        shell: bash
+        run: echo "CLEAN_VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
 
-      - name: 6. Compresser le fichier de sortie
+      - name: 6. Publier l'application WPF
+        # Ici, on appelle le résultat de l'étape "prep_version"
+        run: >
+          dotnet publish ArchipelagoParser/ArchipelagoParser.csproj 
+          -c Release 
+          -r win-x64 
+          --self-contained true 
+          -p:PublishSingleFile=true 
+          -p:Version=${{ steps.prep_version.outputs.CLEAN_VERSION }}
+          -p:FileVersion=${{ steps.prep_version.outputs.CLEAN_VERSION }}
+          -p:AssemblyVersion=${{ steps.prep_version.outputs.CLEAN_VERSION }}
+          -o ./publish
+
+      - name: 7. Compresser le fichier de sortie
         run: Compress-Archive -Path ./publish/* -DestinationPath ArchipelagoParser-${{ github.ref_name }}.zip
 
-      - name: 7. Créer la Release sur GitHub
+      - name: 8. Créer la Release sur GitHub
         uses: softprops/action-gh-release@v2
         with:
           files: ArchipelagoParser-${{ github.ref_name }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: 8. Notification Discord
+      - name: 9. Notification Discord
         uses: sarisia/actions-status-discord@v1
         # S'exécute même si une étape précédente a échoué
         if: always()                          
