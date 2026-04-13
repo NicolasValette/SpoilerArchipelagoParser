@@ -23,6 +23,8 @@
             <MenuItem Header="_File">
                 <MenuItem Header="Reload Spoiler" />
                 <Separator/>
+                <MenuItem Header="_Options" Command="{Binding OpenOptionRC}"/>
+                <Separator/>
                 <MenuItem Header="E_xit" Command="{Binding ExitRC}"/>
             </MenuItem>
             <MenuItem Header="_Help">

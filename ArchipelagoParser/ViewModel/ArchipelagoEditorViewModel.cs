@@ -1,4 +1,5 @@
-﻿using NoNiDev.ArchipelagoParser.ViewModel.CustomUserControl;
+﻿using NoNiDev.ArchipelagoParser.App.API;
+using NoNiDev.ArchipelagoParser.ViewModel.CustomUserControl;
 using NoNiDev.ArchipelagoParser.Views.CustomUserControl.ArchipelagoEditor;
 using NoNiDev.CallAPI.RandoStat;
 using System;
@@ -11,7 +12,7 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
 {
     class ArchipelagoEditorViewModel : NotifyableViewModel
     {
-        public RandoStatAPIViewModel RandoStatAPIVM { get; private set; }
+       
         public ArchipelagoEditorViewModel AEVM => this;
         public bool IsReady
         {
@@ -58,7 +59,7 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
 
         public ArchipelagoEditorViewModel()
         {
-            RandoStatAPIVM = new RandoStatAPIViewModel(APICallType.Get, () => IsReady = true);
+            
             ButtonGetArchipelRC = new RelayCommand(async o=> await GetArchipel());
             IsEnabled = true;
         }
@@ -68,7 +69,7 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
             IsEnabled = false;
             IsAPICallInPrgress = true;
             ApiCallName = "Calling Get Archipel";
-            APIToRandoStat.InitURL(RandoStatAPIVM.ApiURL);
+            APIToRandoStat.InitURL(APIConfigService.RandoStatApiURL);
             List<ArchipelagoRoom> response = await APIToRandoStat.GetArchipel();
             IsAPICallInPrgress = false;
             ApiCallName = "Request suceed";
@@ -84,7 +85,7 @@ namespace NoNiDev.ArchipelagoParser.ViewModel
             IsEnabled = false;
             IsAPICallInPrgress = true;
             ApiCallName = "Calling Edit Archipel";
-            APIToRandoStat.InitURL(RandoStatAPIVM.ApiURL);
+            APIToRandoStat.InitURL(APIConfigService.RandoStatApiURL);
             string response = await APIToRandoStat.EditArchipel(room);
             IsAPICallInPrgress = false;
             ApiCallName = "Request suceed";
