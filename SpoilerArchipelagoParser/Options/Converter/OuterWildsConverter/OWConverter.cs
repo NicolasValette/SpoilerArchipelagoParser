@@ -10,12 +10,12 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.Converter.OuterWildsConverter
         public string Convert(string spoilerValue) => spoilerValue switch
         {
             "Song Of Five" => "Song of Five",
-            "Song Of the Nomai" => "Song of the Nomai",
-            "Song Of the Stranger" => "Song of the Stranger",
+            "Song Of The Nomai" => "Song of the Nomai",
+            "Song Of The Stranger" => "Song of the Stranger",
             "Song Of Six" => "Song of Six",
             "Song Of Seven" => "Song of Seven",
-            "Song Of the Universe" => "Song of the Universe",
-            "Echoes Of the Eye" => "Echoes of the Eye",
+            "Song Of The Universe" => "Song of the Universe",
+            "Echoes Of The Eye" => "Echoes of the Eye",
             _ => "unknown"
         };
     }
