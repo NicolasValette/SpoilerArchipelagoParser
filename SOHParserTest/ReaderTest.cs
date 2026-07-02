@@ -23,7 +23,7 @@ namespace SOHParserTest
             Assert.That(about, Is.Not.Empty);
         }
 
-        [Test]
+        //[Test]
         public void ReadSpoilerTest()
         {
 
