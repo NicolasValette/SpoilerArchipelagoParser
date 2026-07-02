@@ -18,7 +18,7 @@ namespace NoNiDev.SpoilerArchipelagoParser
     /// is not guaranteed; concurrent access should be managed externally if required.</remarks>
     public class SpoilerArchipelagoReader
     {
-        private const string ARCHI_READER_VERSION = "2.2";
+        private const string ARCHI_READER_VERSION = "2.3";
 
         private HashSet<string> _players = [];
         private HashSet<string> _games = [];

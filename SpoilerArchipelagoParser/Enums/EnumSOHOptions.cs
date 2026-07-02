@@ -64,10 +64,15 @@ namespace NoNiDev.SpoilerArchipelagoParser.Enums
         Anywhere,
         LACS_Vanilla,
         LACS_Stones,
-        LACS_MEdallions,
+        LACS_Medallions,
         LACS_Rewards,
         LACS_Dungeons,
-        LACS_Skull_Tokens
+        Lacs_Skull_Tokens
+    }
+    public enum EGanonsTrials
+    {
+        Skip,
+        Set_number
     }
     #endregion
     #region DUNGEONS

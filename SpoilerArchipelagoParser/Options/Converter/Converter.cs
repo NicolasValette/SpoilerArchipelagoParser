@@ -29,8 +29,8 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.Converter
     {
         public string Convert(string spoilerValue) => spoilerValue switch
         {
-            "Yes" => "None",
-            "No" => "All",
+            "Skip" => "None",
+            //"No" => "All",
             _ => "unknown"
         };
     }

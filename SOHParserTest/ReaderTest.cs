@@ -23,7 +23,7 @@ namespace SOHParserTest
             Assert.That(about, Is.Not.Empty);
         }
 
-        //[Test]
+        [Test]
         public void ReadSpoilerTest()
         {
 
@@ -34,8 +34,9 @@ namespace SOHParserTest
                 var option = spoilerReader.ReadSpoiler(stream);
                 Assert.That(option, Is.Not.Null);
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 Assert.Fail();
             }
 

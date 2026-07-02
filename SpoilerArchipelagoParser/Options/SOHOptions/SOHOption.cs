@@ -68,19 +68,21 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
         public int RainbowBridgeValue { get; set; } = 0;
         [SpoilerName("Rainbow Bridge Greg Modifier"), ConvertValue(typeof(GregConverter))]
         public string RainbowBridgeGregModifier { get; set; } = string.Empty;
-        [SpoilerName("Skip Ganon's Trials"), RestrictEnumValues<EYesNo>, ConvertValue(typeof(SkipTrialsConverter))]
+        [SpoilerName("Ganon's Trials"), RestrictEnumValues<EGanonsTrials>, ConvertValue(typeof(SkipTrialsConverter))]
         public string GanonTrials { get; set; } = string.Empty;
-        [SpoilerName("Ganons Castle Boss Key"), RestrictEnumValues<EBossKeyCondition>, ConvertValue(typeof(GanonBossKeyConditionConverter))]
+        [SpoilerName("Ganon's Trials Count"), ConvertValue(typeof(StringToInt))]
+        public int GanonTrialsValue { get; set; } = 0;
+        [SpoilerName("Ganon's Castle Boss Key"), RestrictEnumValues<EBossKeyCondition>, ConvertValue(typeof(GanonBossKeyConditionConverter))]
         public string GanonBossKeyCondition { get; set; } = string.Empty;
-        [ComboConverter<int>(["Ganons Castle Boss Key",
-            "Ganons Castle Boss Key Stones Required",
-            "Ganons Castle Boss Key Medallions Required",
-            "Ganons Castle Boss Key Dungeon Rewards Required",
-            "Ganons Castle Boss Key Dungeons Required",
-            "Ganons Castle Boss Key Skull Tokens Required"],
+        [ComboConverter<int>(["Ganon's Castle Boss Key",
+            "Ganon's Castle Boss Key Stones Required",
+            "Ganon's Castle Boss Key Medallions Required",
+            "Ganon's Castle Boss Key Dungeon Rewards Required",
+            "Ganon's Castle Boss Key Dungeons Required",
+            "Ganon's Castle Boss Key Skull Tokens Required"],
             typeof(GanonCastleBossKeyComboConverter))]
         public int GanonBossKeyValue { get; set; } = 0;
-        [SpoilerName("Ganons Castle Boss Key Greg Wildcard"), ConvertValue(typeof(GregConverter))]
+        [SpoilerName("Ganon's Castle Boss Key Greg Wildcard"), ConvertValue(typeof(GregConverter))]
         public string GanonBossKeyGregModifier { get; set; } = string.Empty;
         #endregion
         #region DUNGEONS
@@ -187,6 +189,8 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
         public string ShuffleScrubs { get; set; } = string.Empty;
         [SpoilerName("Shuffle Merchants"), RestrictEnumValues<EMerchantSanity>, ConvertValue(typeof(MerchantConverter))] 
         public string ShuffleMerchants { get; set; } = string.Empty;
+        [SpoilerName("Medallion Locked Trials"), ConvertValue(typeof(YesNoToBool))]
+        public bool MedallionsLockedTrials { get; set; } = false;
         #endregion
         #region EXTRA
         [SpoilerName("Shuffle 100 GS Reward"), ConvertValue(typeof(YesNoToBool))] 
