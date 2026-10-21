@@ -94,5 +94,13 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.Converter
             _ => "unknown"
         };
     }
+    public class DungeonRewardConverter : IConverter<string, string>
+    {
+        public string Convert(string spoilerValue) => spoilerValue switch
+        {
+            "Off" => "Vanilla",
+            _ => spoilerValue
+        };
+    }
 
 }

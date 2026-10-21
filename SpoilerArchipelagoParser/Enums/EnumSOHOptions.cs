@@ -47,6 +47,13 @@ namespace NoNiDev.SpoilerArchipelagoParser.Enums
         Child,
         Adult
     }
+    public enum ELinksPocket
+    {
+        Dungeon_Reward,
+        Advancement,
+        Anything,
+        Nothing
+    }
     public enum EBridgeCondition
     {
         Vanilla,
@@ -116,6 +123,13 @@ namespace NoNiDev.SpoilerArchipelagoParser.Enums
         Overworld,
         All
     }
+    public enum ESongSanity
+    {
+        Off,
+        Song_Locations,
+        Dungeon_Rewards,
+        Anywhere
+    }
     /// <summary>
     /// shuffle_boss_souls options
     /// </summary>
@@ -177,6 +191,17 @@ namespace NoNiDev.SpoilerArchipelagoParser.Enums
         Condensed_Progressive
     }
     #endregion
+    #region POOL
+    public enum EDungonReward
+    {
+        Off,
+        end_of_dungeons,
+        any_dungeon,
+        overworld,
+        anywhere
+    }
+    #endregion
+
 
 
 }

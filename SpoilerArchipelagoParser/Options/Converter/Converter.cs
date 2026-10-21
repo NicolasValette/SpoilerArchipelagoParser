@@ -100,5 +100,13 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.Converter
             _ => spoilerValue
         };
     }
+    public class  LinksPockerConverter : IConverter<string, string>
+    {
+        public string Convert(string spoilerValue) => spoilerValue switch
+        {
+            "Advancement" => "Major Item",
+            _ => spoilerValue
+        };
+    }
 
 }

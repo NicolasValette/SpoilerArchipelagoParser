@@ -16,7 +16,7 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
         [NotParserValue]
         public string Goal
         {
-            get => TriforceHunt ? "Triforce Hunt" : "Ganon";
+            get => field = TriforceHunt ? "Triforce Hunt" : "Ganon";
             set;
         } = string.Empty;
         [SpoilerName("Triforce Hunt"), ConvertValue(typeof(YesNoToBool))]
@@ -53,9 +53,16 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
         [SpoilerName("Lock Overworld Doors"), RestrictEnumValues<EYesNo>, ConvertValue(typeof(LockOverworldConverter))]
         public string OverworldDoors { get; set; } = string.Empty;
         #endregion
-        #region GANON
+        #region STARTING
         [SpoilerName("Starting Age"), RestrictEnumValues<EStartingAge>]
+        
         public string StartAge { get; set; } = string.Empty;
+        [SpoilerName("Link's Pocket"),RestrictEnumValues<ELinksPocket>, ConvertValue(typeof(LinksPockerConverter))]
+        public string LinksPocket { get; set; } = string.Empty;
+        [SpoilerName("Starting Hearts Count"), ConvertValue(typeof(StringToInt))]
+        public int StartHearts { get; set; } = 3;
+        #endregion
+        #region GANON
         [SpoilerName("Rainbow Bridge"), RestrictEnumValues<EBridgeCondition>, ConvertValue(typeof(RainbowBridgeConditionCoverter))]
         public string RainbowBridgeCondition { get; set; } = string.Empty;
         [ComboConverter<int>(["Rainbow Bridge",
@@ -68,10 +75,21 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
         public int RainbowBridgeValue { get; set; } = 0;
         [SpoilerName("Rainbow Bridge Greg Modifier"), ConvertValue(typeof(GregConverter))]
         public string RainbowBridgeGregModifier { get; set; } = string.Empty;
+        
         [SpoilerName("Ganon's Trials"), RestrictEnumValues<EGanonsTrials>, ConvertValue(typeof(SkipTrialsConverter))]
-        public string GanonTrials { get; set; } = string.Empty;
+        [JsonIgnore]
+        public string GanonTrialsSetup { get; set; } = string.Empty;
         [SpoilerName("Ganon's Trials Count"), ConvertValue(typeof(StringToInt))]
+        [JsonIgnore]
         public int GanonTrialsValue { get; set; } = 0;
+        [NotParserValue]
+        public int GanonTrials 
+        {
+            get => GanonTrialsSetup == "None" ? 0 : GanonTrialsValue;
+        }
+        [SpoilerName("Medallion Locked Trials"), ConvertValue(typeof(YesNoToBool))]
+        public bool GanonTrialsMedaillonLocked { get;set; } = false;
+ 
         [SpoilerName("Ganon's Castle Boss Key"), RestrictEnumValues<EBossKeyCondition>, ConvertValue(typeof(GanonBossKeyConditionConverter))]
         public string GanonBossKeyCondition { get; set; } = string.Empty;
         [ComboConverter<int>(["Ganon's Castle Boss Key",
@@ -140,6 +158,8 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
         public string Ocarinasanity { get; set; } = string.Empty;
         [SpoilerName("Shuffle Ocarina Buttons"), ConvertValue(typeof(YesNoToBool))]
         public bool OcarinaButtonSanity { get; set; } = false;
+        [SpoilerName("Shuffle Songs"), RestrictEnumValues<ESongSanity>]
+        public string SongSanity { get; set; } = string.Empty;
         [SpoilerName("Shuffle Fairies in Fountains"), ConvertValue(typeof(YesNoToBool))]
         public bool FairysanityFountains { get; set; } = false;
         [SpoilerName("Shuffle Gossip Stone Fairies"), ConvertValue(typeof(YesNoToBool))]
@@ -177,8 +197,9 @@ namespace NoNiDev.SpoilerArchipelagoParser.Options.SOHOptions
         public string SkeletonKey { get; set; } = string.Empty;
         [SpoilerName("Roc's Feather"), RestrictEnumValues<EYesNo>, ConvertValue(typeof(YesNoToAddedWithout))] 
         public string RocsFeather { get; set; } = string.Empty;
-        [SpoilerName("Shuffle Dungeon Rewards")] 
+        [SpoilerName("Shuffle Dungeon Rewards"),RestrictEnumValues<EDungonReward>, ConvertValue(typeof(DungeonRewardConverter))] 
         public string DungeonRewards { get; set; } = string.Empty;
+        
         #endregion
         #region SHOPS
         [SpoilerName("Shuffle Shops"), ConvertValue(typeof(YesNoToBool))] 
